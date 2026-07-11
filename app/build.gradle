@@ -1,14 +1,31 @@
-apply plugin: 'com.android.application'
+plugins {
+    id 'com.android.application'
+}
 
 android {
-    compileSdkVersion 19
+    namespace 'app.openconnect'
+    compileSdk 36
+
     defaultConfig {
         applicationId "app.openconnect"
-        minSdkVersion 14
-        targetSdkVersion 19
+        minSdk 14
+        targetSdk 19
         versionCode 1119
         versionName "1.11"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    buildFeatures {
+        aidl true
+    }
+    sourceSets {
+        main.java.srcDirs += [
+                '../external/openconnect/java/src/org/infradead/libopenconnect',
+                '../external/stoken/java/src/org/stoken'
+        ]
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
     signingConfigs {
         release {
@@ -27,7 +44,7 @@ android {
             signingConfig signingConfigs.release
         }
     }
-    lintOptions {
+    lint {
         disable 'MissingTranslation'
         disable 'ExtraTranslation'
     }
@@ -35,7 +52,7 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.1'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test:runner:1.7.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.7.0'
 }
