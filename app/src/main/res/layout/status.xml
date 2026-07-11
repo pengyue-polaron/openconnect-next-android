@@ -11,38 +11,43 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?attr/colorSurfaceContainer"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:padding="16dp" >
 
         <TextView
             android:id="@+id/connection_state"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAppearance="?attr/textAppearanceTitleMedium"
             android:textColor="?attr/colorOnSurface"
             android:gravity="left" />
 
-        <Space
-            android:layout_width="0dip"
+        <TextView
+            android:id="@+id/connection_message"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            android:layout_marginTop="6dp"
+            android:textAppearance="?attr/textAppearanceBodyMedium"
+            android:textColor="?attr/colorOnSurfaceVariant"
+            android:gravity="left" />
 
         <TextView
             android:id="@+id/connection_time"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="invisible"
-            android:textAppearance="?attr/textAppearanceTitleMedium"
+            android:layout_marginTop="10dp"
+            android:visibility="gone"
+            android:textAppearance="?attr/textAppearanceLabelLarge"
             android:textColor="?attr/colorOnSurfaceVariant"
-            android:gravity="right" />
+            android:gravity="left" />
 
     </LinearLayout>
 
     <View
-    android:layout_width="match_parent"
-    android:layout_height="1dp"
-    android:layout_marginBottom="12dp"
-    android:background="@color/oc_outline_variant"/>
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginBottom="12dp"
+        android:background="@color/oc_outline_variant"/>
 
     <LinearLayout
         android:id="@+id/connection_rows"

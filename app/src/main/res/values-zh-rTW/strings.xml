@@ -37,5 +37,26 @@
   <string name="setting_loadtun">載入Tun模組</string>
   <string name="getproxy_error">取得代理伺服器資訊時發生錯誤: %s</string>
   <string name="send_minidump">向開發人員傳送Minidump</string>
+  <string name="no_vpn_profiles_defined">還沒有 VPN 設定檔</string>
+  <string name="add_new_vpn_hint">新增一個設定檔並填寫 VPN 閘道位址。憑證、權杖和免密登入可以稍後再設定。</string>
+  <string name="faq_hint">新增設定檔後，點選它即可連線。如果失敗，Log 分頁會說明原因。</string>
+  <string name="empty_profiles_cta">新增 VPN 設定檔</string>
+  <string name="profile_server_summary">伺服器：%1$s</string>
+  <string name="profile_server_not_set">尚未填寫伺服器位址</string>
+  <string name="reconnect_available_hint">可以不編輯設定檔，直接重試上一次工作階段。</string>
+  <string name="connected_for">已連線 %1$s</string>
+  <string name="connection_status_disconnected">已中斷連線</string>
+  <string name="connection_status_disconnected_message">到 Profiles 分頁選擇一個設定檔來啟動 VPN 連線。</string>
+  <string name="connection_status_reconnect_message">上一次工作階段是 %1$s。可以重新連線重試，或選擇其他設定檔。</string>
+  <string name="connection_status_connected_message">VPN 流量正在透過此設定檔轉送。使用完畢後請中斷連線。</string>
+  <string name="connection_status_progress_message">保持 OpenConnect 開啟，並依 VPN 伺服器要求完成登入、憑證或權杖提示。</string>
+  <string name="log_state_disconnected">已中斷 - 請選擇一個設定檔連線</string>
+  <string name="log_state_reconnect">已中斷 - 可重新連線至 %1$s，或選擇其他設定檔</string>
+  <string name="log_state_connected">已連線%1$s</string>
+  <string name="log_state_progress">%1$s - 請依 VPN 伺服器提示繼續</string>
+  <string name="batch_mode">免密登入（Batch 模式）</string>
+  <string name="batch_mode_disabled_summary">每次都詢問登入資訊。若要免密，請先儲存憑證，再選擇使用已儲存憑證的模式。</string>
+  <string name="batch_mode_empty_only_summary">使用已儲存的資訊，只詢問缺少的內容。</string>
+  <string name="batch_mode_enabled_summary">只使用已儲存的資訊。如果缺少必要資訊，連線會失敗而不是彈出輸入提示。</string>
   <!--OpenConnect preference strings-->
 </resources>

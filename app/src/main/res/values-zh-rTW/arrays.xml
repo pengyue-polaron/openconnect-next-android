@@ -1,2 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<resources/>
+<resources>
+  <string-array name="batch_mode_entries">
+    <item>每次都詢問</item>
+    <item>使用已儲存憑證，缺少時再詢問</item>
+    <item>僅使用已儲存憑證</item>
+  </string-array>
+</resources>
