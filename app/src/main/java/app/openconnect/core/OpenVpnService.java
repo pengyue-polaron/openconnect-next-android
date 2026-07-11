@@ -28,6 +28,7 @@ package app.openconnect.core;
 
 import android.Manifest.permission;
 import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -88,6 +89,7 @@ public class OpenVpnService extends VpnService {
 	private Context mDialogContext;
 
 	private final int NOTIFICATION_ID = 1;
+	private static final String NOTIFICATION_CHANNEL_ID = "vpn_input";
 	private int mActivityConnections;
 	private boolean mNotificationActive;
 
@@ -129,6 +131,24 @@ public class OpenVpnService extends VpnService {
 
 		mVPNLog.restoreFromFile(getCacheDir().getAbsolutePath() + "/logdata.ser");
 		mConnectionStateNames = getResources().getStringArray(R.array.connection_states);
+		createNotificationChannel();
+	}
+
+	private void createNotificationChannel() {
+		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+			return;
+		}
+
+		NotificationChannel channel = new NotificationChannel(
+				NOTIFICATION_CHANNEL_ID,
+				getString(R.string.app),
+				NotificationManager.IMPORTANCE_DEFAULT);
+		channel.setDescription(getString(R.string.notification_touch_here));
+
+		NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+		if (manager != null) {
+			manager.createNotificationChannel(channel);
+		}
 	}
 
 	@Override
@@ -351,8 +371,10 @@ public class OpenVpnService extends VpnService {
 		if (mDialog != null && mActivityConnections == 0 && !mNotificationActive) {
 			mNotificationActive = true;
 
-			Notification.Builder builder = new Notification.Builder(this)
-		            .setSmallIcon(R.drawable.ic_stat_vpn)
+			Notification.Builder builder = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O
+					? new Notification.Builder(this, NOTIFICATION_CHANNEL_ID)
+					: new Notification.Builder(this);
+			builder.setSmallIcon(R.drawable.ic_stat_vpn)
 		            .setContentTitle(getString(R.string.notification_input_needed))
 		            .setContentText(getString(R.string.notification_touch_here))
 		            .setContentIntent(getMainActivityIntent());

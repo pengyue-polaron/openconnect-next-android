@@ -26,14 +26,13 @@ package app.openconnect;
 
 import app.openconnect.core.ProfileManager;
 import app.openconnect.fragments.ConnectionEditorFragment;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class ConnectionEditorActivity extends Activity {
+public class ConnectionEditorActivity extends ToolbarActivity {
 
     private String mName = "";
     private String mUUID;
@@ -41,6 +40,8 @@ public class ConnectionEditorActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_fragment);
+		setupToolbar(R.id.toolbar, getString(R.string.app), true);
 
         ConnectionEditorFragment frag = new ConnectionEditorFragment();
         mUUID = getIntent().getStringExtra(getPackageName() + ".profileUUID");
@@ -50,21 +51,23 @@ public class ConnectionEditorActivity extends Activity {
 
         // Display the fragment as the main content.
         getFragmentManager().beginTransaction()
-                .replace(android.R.id.content, frag)
+                .replace(R.id.content_frame, frag)
                 .commit();
+		invalidateToolbarMenu();
     }
 
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
+	protected void onCreateToolbarMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.vpnpreferences_menu, menu);
-		return super.onCreateOptionsMenu(menu);
 	}
 
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		if(item.getItemId() == R.id.remove_vpn)
+	protected boolean onToolbarMenuItemSelected(MenuItem item) {
+		if(item.getItemId() == R.id.remove_vpn) {
 			askProfileRemoval();
-		return super.onOptionsItemSelected(item);
+			return true;
+		}
+		return super.onToolbarMenuItemSelected(item);
 	}
 
 	public void setProfileName(String name) {

@@ -28,9 +28,6 @@ package app.openconnect;
 
 import java.util.ArrayList;
 
-import android.app.ActionBar;
-import android.app.ActionBar.Tab;
-import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
@@ -39,11 +36,13 @@ import app.openconnect.core.OpenVpnService;
 import app.openconnect.core.VPNConnector;
 import app.openconnect.fragments.*;
 
-public class MainActivity extends Activity {
+import com.google.android.material.tabs.TabLayout;
+
+public class MainActivity extends ToolbarActivity {
 
 	public static final String TAG = "OpenConnect";
 
-	private ActionBar mBar;
+	private TabLayout mTabs;
 
 	private ArrayList<TabContainer> mTabList = new ArrayList<TabContainer>();
 
@@ -58,20 +57,45 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 
 		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_tabbed);
+		setupToolbar(R.id.toolbar, getString(R.string.app), false);
+		mTabs = (TabLayout)findViewById(R.id.tabs);
 
 		mTabsActive = false;
 		if (savedInstanceState != null) {
 			mLastTab = savedInstanceState.getInt("active_tab");
 		}
 
-		mBar = getActionBar();
-		mBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+		mTabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+			@Override
+			public void onTabSelected(TabLayout.Tab tab) {
+				TabContainer tc = (TabContainer)tab.getTag();
+				if (tc != null) {
+					showTab(tc);
+				}
+			}
+
+			@Override
+			public void onTabUnselected(TabLayout.Tab tab) {
+			}
+
+			@Override
+			public void onTabReselected(TabLayout.Tab tab) {
+			}
+		});
 
 		mTabList.add(new TabContainer(0, R.string.vpn_list_title, new VPNProfileList()));
 		mTabList.add(new TabContainer(1, R.string.log, new LogFragment()));
 		mTabList.add(new TabContainer(2, R.string.faq, new FaqFragment()));
 
 		mConnectionTab = mTabList.get(0);
+
+		int selectedTab = Math.max(0, Math.min(mLastTab, mTabList.size() - 1));
+		for (TabContainer tc : mTabList) {
+			mTabs.addTab(tc.tab, false);
+		}
+		mTabs.selectTab(mTabList.get(selectedTab).tab);
+		mTabsActive = true;
 
 		FeedbackFragment.recordUse(this, false);
 	}
@@ -96,17 +120,7 @@ public class MainActivity extends Activity {
 			mConnectionState = newState;
 		}
 
-		if (!mTabsActive) {
-			// NOTE: addTab may cause mLastTab to change, so cache the value here
-			int lastTab = mLastTab;
-			for (TabContainer tc : mTabList) {
-				mBar.addTab(tc.tab);
-				if (tc.idx == lastTab) {
-					mBar.selectTab(tc.tab);
-				}
-			}
-			mTabsActive = true;
-		}
+		invalidateToolbarMenu();
 	}
 
 	@Override
@@ -128,66 +142,53 @@ public class MainActivity extends Activity {
 		super.onPause();
 	}
 
-	protected class TabContainer implements ActionBar.TabListener {
+	private void showTab(TabContainer tc) {
+		FragmentTransaction ft = getFragmentManager().beginTransaction();
+		if (mTabsActive) {
+			if (tc.idx < mLastTab) {
+				ft.setCustomAnimations(R.animator.fragment_slide_right_enter,
+						R.animator.fragment_slide_right_exit);
+			} else if (tc.idx > mLastTab) {
+				ft.setCustomAnimations(R.animator.fragment_slide_left_enter,
+						R.animator.fragment_slide_left_exit);
+			}
+		}
+
+		mLastTab = tc.idx;
+		for (TabContainer tab : mTabList) {
+			tab.mActive = tab == tc;
+		}
+			ft.replace(R.id.content_frame, tc.mFragment);
+			ft.commit();
+			getFragmentManager().executePendingTransactions();
+			setToolbarMenuFragment(tc.mFragment);
+		}
+
+	protected class TabContainer {
 		private Fragment mFragment;
 		private boolean mActive;
-		public Tab tab;
+		public TabLayout.Tab tab;
 		public int idx;
 
 		public void replace(int titleResId, Fragment frag) {
-			if (mActive) {
-				getFragmentManager().beginTransaction().remove(mFragment).commit();
-			}
-
 			mFragment = frag;
 			tab.setText(titleResId);
 
-			if (idx == mLastTab) {
-				getFragmentManager().beginTransaction()
-					.setCustomAnimations(R.animator.fade_in, R.animator.fade_out)
-					.replace(android.R.id.content, mFragment)
-					.commit();
-				mActive = true;
-			} else {
-				mActive = false;
+			if (mActive) {
+					getFragmentManager().beginTransaction()
+						.setCustomAnimations(R.animator.fade_in, R.animator.fade_out)
+						.replace(R.id.content_frame, mFragment)
+						.commit();
+					getFragmentManager().executePendingTransactions();
+					setToolbarMenuFragment(mFragment);
+				}
 			}
-		}
 
 		public TabContainer(int idx, int titleResId, Fragment frag) {
 			this.idx = idx;
 			this.mFragment = frag;
-			tab = getActionBar().newTab()
-					.setText(titleResId)
-					.setTabListener(this);
-		}
-
-		@Override
-		public void onTabSelected(Tab tab, FragmentTransaction ft) {
-			if (mTabsActive) {
-				if (idx < mLastTab) {
-					ft.setCustomAnimations(R.animator.fragment_slide_right_enter,
-							R.animator.fragment_slide_right_exit);
-				} else if (idx > mLastTab) {
-					ft.setCustomAnimations(R.animator.fragment_slide_left_enter,
-							R.animator.fragment_slide_left_exit);
-				}
-			}
-
-			mLastTab = idx;
-			ft.replace(android.R.id.content, mFragment);
-			mActive = true;
-		}
-
-		@Override
-		public void onTabUnselected(Tab tab, FragmentTransaction ft) {
-			if (mActive) {
-				ft.remove(mFragment);
-				mActive = false;
-			}
-		}
-
-		@Override
-		public void onTabReselected(Tab tab, FragmentTransaction ft) {
+			tab = mTabs.newTab().setText(titleResId);
+			tab.setTag(this);
 		}
 	}
 }

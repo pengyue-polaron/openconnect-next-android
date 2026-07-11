@@ -20,9 +20,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dip"
+                android:background="?attr/colorSurface"
+                android:minHeight="72dp"
                 android:gravity="center_vertical" >
 
-    <Button
+    <com.google.android.material.button.MaterialButton
             android:id="@+id/file_select_button"
             style="@style/accountSetupButton"
             android:layout_width="wrap_content"
@@ -38,6 +40,8 @@
             android:layout_alignParentTop="true"
             android:layout_toLeftOf="@+id/file_select_button"
             android:text="@string/client_certificate_title"
+            android:textAppearance="?attr/textAppearanceBodyLarge"
+            android:textColor="?attr/colorOnSurface"
             android:textStyle="bold" />
 
     <TextView
@@ -50,6 +54,8 @@
             android:layout_toLeftOf="@+id/file_select_button"
             android:ellipsize="end"
             android:singleLine="true"
+            android:textAppearance="?attr/textAppearanceBodyMedium"
+            android:textColor="?attr/colorOnSurfaceVariant"
             android:text="@string/file_nothing_selected" />
 
     <TextView
@@ -61,6 +67,8 @@
             android:layout_below="@+id/file_selected_item"
             android:layout_marginLeft="16dip"
             android:layout_toLeftOf="@+id/file_select_button"
+            android:textAppearance="?attr/textAppearanceBodySmall"
+            android:textColor="?attr/colorOnSurfaceVariant"
             android:ellipsize="end" />
 
 </RelativeLayout>

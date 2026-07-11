@@ -3,8 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="?attr/colorSurface"
     android:paddingLeft="@dimen/stdpadding"
-    android:paddingRight="@dimen/stdpadding" >
+    android:paddingTop="@dimen/stdpadding"
+    android:paddingRight="@dimen/stdpadding"
+    android:paddingBottom="@dimen/stdpadding" >
 
     <WebView
     	android:id="@+id/faq_text"

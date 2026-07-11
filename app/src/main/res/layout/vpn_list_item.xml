@@ -19,7 +19,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center_vertical"
-    android:minHeight="?android:attr/listPreferredItemHeight" >
+    android:minHeight="64dp"
+    android:orientation="horizontal" >
 
     <LinearLayout
         android:id="@+id/vpn_list_item_left"
@@ -27,7 +28,10 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:background="?android:attr/selectableItemBackground"
-        android:gravity="center_vertical" >
+        android:gravity="center_vertical"
+        android:minHeight="64dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="8dp" >
 
         <LinearLayout
             android:id="@android:id/widget_frame"
@@ -43,27 +47,27 @@
                 android:ellipsize="marquee"
                 android:fadingEdge="horizontal"
                 android:singleLine="true"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+                android:textAppearance="?attr/textAppearanceBodyLarge"
+                android:textColor="?attr/colorOnSurface" />
 
     </LinearLayout>
 
     <View
-        android:layout_width="2dip"
+        android:layout_width="1dp"
         android:layout_height="match_parent"
-        android:layout_marginBottom="5dip"
+        android:layout_marginBottom="8dp"
         android:focusable="false"
-        android:layout_marginTop="5dip"
-        android:background="@android:drawable/divider_horizontal_dark" />
+        android:layout_marginTop="8dp"
+        android:background="@color/oc_outline_variant" />
 
     <ImageView
         android:id="@+id/quickedit_settings"
-        android:layout_width="wrap_content"
-        android:layout_height="fill_parent"
+        android:layout_width="56dp"
+        android:layout_height="match_parent"
         android:layout_gravity="center"
         android:background="?android:attr/selectableItemBackground"
         android:contentDescription="@string/configure_the_vpn"
-        android:paddingLeft="15dip"
-        android:paddingRight="?android:attr/scrollbarSize"
-        android:src="@drawable/ic_sysbar_quicksettings" />
+        android:padding="16dp"
+        android:src="@drawable/ic_settings_24" />
 
 </LinearLayout>

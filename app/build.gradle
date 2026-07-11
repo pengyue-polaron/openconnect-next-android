@@ -3,29 +3,29 @@ plugins {
 }
 
 android {
-    namespace 'app.openconnect'
-    compileSdk 36
+    namespace = 'app.openconnect'
+    compileSdk = 36
 
     defaultConfig {
-        applicationId "app.openconnect"
-        minSdk 14
-        targetSdk 19
-        versionCode 1119
-        versionName "1.11"
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        applicationId = "app.openconnect"
+        minSdk = 23
+        targetSdk = 28
+        versionCode = 1119
+        versionName = "1.11"
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
     buildFeatures {
-        aidl true
+        aidl = true
     }
     sourceSets {
         main.java.srcDirs += [
                 '../external/openconnect/java/src/org/infradead/libopenconnect',
-                '../external/stoken/java/src/org/stoken'
+                '../external/stoken/java/src/org/stoken',
         ]
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
     signingConfigs {
         release {
@@ -39,9 +39,9 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled = false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.release
+            signingConfig = signingConfigs.release
         }
     }
     lint {
@@ -52,6 +52,7 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'com.google.android.material:material:1.14.0'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test:runner:1.7.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.7.0'

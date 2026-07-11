@@ -104,18 +104,18 @@ public class LogFragment extends ListFragment {
     	if (service != null) {
     		int state = service.getConnectionState();
     		if (mCancelButton != null) {
-    			String title;
-    			if (state == OpenConnectManagementThread.STATE_DISCONNECTED) {
-    				title = getString(R.string.reconnect);
-    				mCancelButton.setIcon(R.drawable.ic_action_refresh);
+			String title;
+			if (state == OpenConnectManagementThread.STATE_DISCONNECTED) {
+				title = getString(R.string.reconnect);
+                mCancelButton.setIcon(R.drawable.ic_refresh_24);
 					mCancelButton.setVisible(service.getReconnectName() != null);
-    				mDisconnected = true;
-    			} else {
-    				title = getString(R.string.disconnect);
-    				mCancelButton.setIcon(android.R.drawable.ic_menu_close_clear_cancel);
+				mDisconnected = true;
+			} else {
+				title = getString(R.string.disconnect);
+                mCancelButton.setIcon(R.drawable.ic_close_24);
 					mCancelButton.setVisible(true);
-    				mDisconnected = false;
-    			}
+				mDisconnected = false;
+			}
 				mCancelButton.setTitle(title);
 				mCancelButton.setTitleCondensed(title);
     		}

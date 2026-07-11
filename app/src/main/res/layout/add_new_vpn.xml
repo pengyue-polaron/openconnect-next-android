@@ -6,16 +6,17 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:paddingTop="9dip"
-    android:paddingBottom="3dip"
-    android:paddingStart="14dip"
-    android:paddingEnd="10dip">
+    android:paddingTop="8dp"
+    android:paddingBottom="8dp"
+    android:paddingStart="4dp"
+    android:paddingEnd="4dp">
 
     <EditText
         android:id="@+id/entry"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="textUri"
+        android:textAppearance="?attr/textAppearanceBodyLarge"
         android:ems="10" >
         <requestFocus />
     </EditText>
@@ -23,7 +24,10 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:textStyle="italic"
+        android:textAppearance="?attr/textAppearanceBodySmall"
+        android:textColor="?attr/colorOnSurfaceVariant"
         android:text="@string/hostname_examples" />
 
 </LinearLayout>

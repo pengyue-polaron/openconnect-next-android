@@ -133,7 +133,7 @@ public class VPNProfileList extends ListFragment {
 		public Drawable getDrawable(String source) {
 			Drawable d = null;
 			if ("ic_menu_add".equals(source))
-				d = getActivity().getResources().getDrawable(android.R.drawable.ic_menu_add);
+				d = getActivity().getResources().getDrawable(R.drawable.ic_add_24);
 			else if("ic_menu_archive".equals(source))
 				d = getActivity().getResources().getDrawable(R.drawable.ic_menu_archive);
 
@@ -217,7 +217,7 @@ public class VPNProfileList extends ListFragment {
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		menu.add(Menu.NONE, MENU_ADD_PROFILE, Menu.NONE, R.string.menu_add_profile)
-			.setIcon(android.R.drawable.ic_menu_add)
+			.setIcon(R.drawable.ic_add_24)
 			.setAlphabeticShortcut('a')
 			.setTitleCondensed(getActivity().getString(R.string.add))
 			.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS | MenuItem.SHOW_AS_ACTION_WITH_TEXT);
