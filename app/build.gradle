@@ -7,7 +7,7 @@ android {
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "app.openconnect"
+        applicationId = "io.pengyue.openconnectnext"
         minSdk = 23
         targetSdk = 28
         versionCode = 1119

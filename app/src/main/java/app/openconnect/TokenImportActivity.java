@@ -54,7 +54,7 @@ public class TokenImportActivity extends ToolbarActivity {
 
 	public static final String TAG = "OpenConnect";
 
-	public static final String EXTRA_UUID = "app.openconnect.UUID";
+	public static final String EXTRA_UUID = "io.pengyue.openconnectnext.UUID";
 
 	private static final int ALERT_NONE = 0;
 	private static final int ALERT_BAD_TOKEN = 1;

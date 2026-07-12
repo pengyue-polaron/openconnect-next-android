@@ -45,7 +45,7 @@ public class KeepAlive extends BroadcastReceiver {
 
 	public static final String TAG = "OpenConnect";
 
-	public static final String ACTION_KEEPALIVE_ALARM = "app.openconnect.KEEPALIVE_ALARM";
+	public static final String ACTION_KEEPALIVE_ALARM = "io.pengyue.openconnectnext.KEEPALIVE_ALARM";
 
 	private boolean mConnectionActive;
 
@@ -209,7 +209,7 @@ public class KeepAlive extends BroadcastReceiver {
 	}
 
 	private void scheduleNext(Context context, int delayMs) {
-		Intent intent = new Intent("app.openconnect.KEEPALIVE_ALARM");
+		Intent intent = new Intent(ACTION_KEEPALIVE_ALARM);
 		mPendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
 		AlarmManager am = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);

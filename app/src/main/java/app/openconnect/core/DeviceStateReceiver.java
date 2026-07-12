@@ -37,7 +37,7 @@ public class DeviceStateReceiver extends BroadcastReceiver {
 
 	public static final String TAG = "OpenConnect";
 
-	public static final String PREF_CHANGED = "app.openconnect.PREF_CHANGED";
+	public static final String PREF_CHANGED = "io.pengyue.openconnectnext.PREF_CHANGED";
 
     private OpenVPNManagement mManagement;
 

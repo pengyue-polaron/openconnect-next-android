@@ -9,7 +9,7 @@ F-Droid repository.
 - Upstream metadata is being added under `fastlane/metadata/android/en-US`.
 - GitHub releases are tagged, but `versionName` still needs to be aligned with
   the public release tag before a real F-Droid merge request.
-- The Android application ID is still `app.openconnect`.
+- The Android application ID is `io.pengyue.openconnectnext`.
 
 ## Important Finding
 
@@ -17,23 +17,23 @@ F-Droid already has an active OpenConnect package at
 `net.openconnect_vpn.android`, and older F-Droid metadata/history exists for
 `app.openconnect`.
 
-Because this project is a fork, the recommended submission path is:
+Because this project is a fork, the submission path is:
 
 1. Keep the user-facing name distinct: **OpenConnect Next**.
-2. Change the Android application ID before submission.
-3. Update affected authorities, permissions, remote API strings, and migration
-   notes.
+2. Keep the Android application ID distinct from existing OpenConnect packages.
+3. Keep affected authorities, permissions, remote API strings, and metadata
+   aligned with that ID.
 
-Recommended future application ID:
+Application ID:
 
 ```text
-io.github.pengyuepolaron.openconnectnext
+io.pengyue.openconnectnext
 ```
 
-This was not changed in the README/documentation pass because changing the
-application ID also changes install/update behavior and requires testing the
-VPN service, file provider authority, remote API permission, and Android
-backup/migration behavior.
+Changing the application ID means this installs as a new app and does not
+upgrade any previously installed `app.openconnect` build. Before F-Droid
+submission, test the VPN service, file provider authority, remote API
+permission, and Android backup/migration behavior.
 
 ## Official Submission Path
 
@@ -59,8 +59,7 @@ backup/migration behavior.
 
 ## Metadata Draft
 
-This is a starting point for the eventual `fdroiddata` metadata file after the
-application ID migration.
+This is a starting point for the eventual `fdroiddata` metadata file.
 
 ```yaml
 Categories:
@@ -89,12 +88,12 @@ CurrentVersionCode: 1119
 ```
 
 Before submitting this metadata, update `versionName`, `versionCode`, `commit`,
-`CurrentVersion`, and `CurrentVersionCode` to the final post-application-ID
-release.
+`CurrentVersion`, and `CurrentVersionCode` to the final release that contains
+the `io.pengyue.openconnectnext` application ID.
 
 ## Pre-Submission Checklist
 
-- [ ] Change application ID from `app.openconnect`.
+- [x] Change application ID from `app.openconnect`.
 - [ ] Update app label, About page, README, and fastlane title consistently.
 - [ ] Decide whether GitHub releases should remain debug-signed or switch to
       a reproducible release signing process.

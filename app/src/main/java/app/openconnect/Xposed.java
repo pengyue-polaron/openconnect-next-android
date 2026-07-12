@@ -38,7 +38,7 @@ import de.robv.android.xposed.XposedHelpers;
 
 public class Xposed implements IXposedHookZygoteInit {
 
-	public static final String PKG_NAME = "app.openconnect";
+	public static final String PKG_NAME = "io.pengyue.openconnectnext";
 
 	@Override
 	public void initZygote(StartupParam startupParam) throws Throwable {
@@ -53,7 +53,7 @@ public class Xposed implements IXposedHookZygoteInit {
 			protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
 				Object a[] = param.args;
 				if (PKG_NAME.equals(a[0]) && a[1] == null) {
-					// Normally ConfirmDialog calls prepare("app.openconnect", null) to see whether
+					// Normally ConfirmDialog calls prepare(PKG_NAME, null) to see whether
 					// to prompt the user.  prepare() returns false unless we've already been authorized.
 					// We will swap the argument order so the prepare() call succeeds.
 					a[1] = a[0];

@@ -19,8 +19,7 @@ project documentation.
 - Stores: not published on Google Play, F-Droid, or other app stores yet.
 - F-Droid: planned; see [docs/fdroid.md](docs/fdroid.md).
 - App name: **OpenConnect Next**.
-- Android application ID: currently still `app.openconnect`; this should be
-  changed before an F-Droid submission because this is a fork.
+- Android application ID: `io.pengyue.openconnectnext`.
 
 ## Features
 
@@ -124,11 +123,9 @@ F-Droid inclusion is not automatic. The app needs source metadata, a buildable
 tagged release, and a merge request to the `fdroiddata` repository. The current
 preparation notes and checklist live in [docs/fdroid.md](docs/fdroid.md).
 
-The main remaining packaging decision is the Android application ID. Because
-this project is a fork and older OpenConnect packages already exist in the
-F-Droid ecosystem, the recommended path is to migrate from `app.openconnect`
-to a fresh ID such as `io.github.pengyuepolaron.openconnectnext` before
-submission.
+The Android application ID has been migrated to `io.pengyue.openconnectnext`
+so this fork can be submitted separately from existing OpenConnect packages in
+the F-Droid ecosystem.
 
 ## Contributing
 

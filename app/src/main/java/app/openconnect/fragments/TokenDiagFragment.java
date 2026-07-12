@@ -62,9 +62,9 @@ public class TokenDiagFragment extends Fragment {
 
 	public static final String TAG = "OpenConnect";
 
-	public static final String EXTRA_UUID = "app.openconnect.UUID";
-	public static final String EXTRA_PIN = "app.openconnect.PIN";
-	public static final String EXTRA_PIN_PROMPTED = "app.openconnect.PIN_PROMPTED";
+	public static final String EXTRA_UUID = "io.pengyue.openconnectnext.UUID";
+	public static final String EXTRA_PIN = "io.pengyue.openconnectnext.PIN";
+	public static final String EXTRA_PIN_PROMPTED = "io.pengyue.openconnectnext.PIN_PROMPTED";
 
 	private LibStoken mStoken;
 	private TextView mTokencode;

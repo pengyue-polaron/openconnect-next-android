@@ -58,13 +58,13 @@ public class OpenVpnService extends VpnService {
 
 	public static final String TAG = "OpenConnect";
 
-	public static final String START_SERVICE = "app.openconnect.START_SERVICE";
-	public static final String START_SERVICE_STICKY = "app.openconnect.START_SERVICE_STICKY";
-	public static final String ALWAYS_SHOW_NOTIFICATION = "app.openconnect.NOTIFICATION_ALWAYS_VISIBLE";
+	public static final String START_SERVICE = "io.pengyue.openconnectnext.START_SERVICE";
+	public static final String START_SERVICE_STICKY = "io.pengyue.openconnectnext.START_SERVICE_STICKY";
+	public static final String ALWAYS_SHOW_NOTIFICATION = "io.pengyue.openconnectnext.NOTIFICATION_ALWAYS_VISIBLE";
 
-	public static final String ACTION_VPN_STATUS = "app.openconnect.VPN_STATUS";
-	public static final String EXTRA_CONNECTION_STATE = "app.openconnect.connectionState";
-	public static final String EXTRA_UUID = "app.openconnect.UUID";
+	public static final String ACTION_VPN_STATUS = "io.pengyue.openconnectnext.VPN_STATUS";
+	public static final String EXTRA_CONNECTION_STATE = "io.pengyue.openconnectnext.connectionState";
+	public static final String EXTRA_UUID = "io.pengyue.openconnectnext.UUID";
 
 	// These are valid in the CONNECTED state
 	public VpnProfile profile;

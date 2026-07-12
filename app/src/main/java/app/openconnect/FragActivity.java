@@ -32,7 +32,7 @@ public class FragActivity extends ToolbarActivity {
 
 	public static final String TAG = "OpenConnect";
 
-	public static final String EXTRA_FRAGMENT_NAME = "app.openconnect.fragment_name";
+	public static final String EXTRA_FRAGMENT_NAME = "io.pengyue.openconnectnext.fragment_name";
 
 	public static final String FRAGMENT_PREFIX = "app.openconnect.fragments.";
 
