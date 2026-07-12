@@ -32,13 +32,15 @@ import java.util.regex.Pattern;
 import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
+import android.text.Html;
 import android.text.TextUtils;
+import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import app.openconnect.R;
-import app.openconnect.core.AssetExtractor;
 
 public class FaqFragment extends Fragment  {
 
@@ -67,32 +69,68 @@ public class FaqFragment extends Fragment  {
 		return out.toString();
 	}
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-    		Bundle savedInstanceState) {
-    	View v = inflater.inflate(R.layout.faq, container, false);
-    	Activity act = getActivity();
+	private int dp(Activity act, float value) {
+		float scale = act.getResources().getDisplayMetrics().density;
+		return (int)(value * scale + 0.5f);
+	}
 
-    	String items[] = getResources().getStringArray(R.array.faq_text);
-    	StringBuilder html = new StringBuilder();
-    	html.append(AssetExtractor.readString(act, "header.html"));
+	private TextView newText(Activity act, CharSequence text, float sp, int colorAttr) {
+		TextView tv = new TextView(act);
+		tv.setText(text);
+		tv.setTextSize(sp);
+		tv.setTextColor(resolveColor(act, colorAttr));
+		tv.setLineSpacing(dp(act, 2), 1.0f);
+		tv.setMovementMethod(LinkMovementMethod.getInstance());
+		return tv;
+	}
 
-    	// "Q: " and "A: "
-    	String q_abbrev = act.getString(R.string.question_abbrev) + " ";
-    	String a_abbrev = act.getString(R.string.answer_abbrev) + " ";
+	private int resolveColor(Activity act, int attr) {
+		android.util.TypedValue out = new android.util.TypedValue();
+		if (act.getTheme().resolveAttribute(attr, out, true)) {
+			if (out.resourceId != 0) {
+				return act.getResources().getColor(out.resourceId, act.getTheme());
+			}
+			return out.data;
+		}
+		return 0xff000000;
+	}
 
-    	for (int i = 0; i < items.length; i += 2) {
-    		html.append("<b>" + q_abbrev + htmlEncode(items[i]) + "</b><br><br>");
-    		html.append(a_abbrev + htmlEncode(items[i + 1]) + "<br><br>");
-    	}
-    	html.append(AssetExtractor.readString(act, "footer.html"));
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+		View v = inflater.inflate(R.layout.faq, container, false);
+		Activity act = getActivity();
 
-    	WebView contents = (WebView)v.findViewById(R.id.faq_text);
-    	contents.loadDataWithBaseURL("file:///android_asset/", html.toString(), null, null, null);
+		String items[] = getResources().getStringArray(R.array.faq_text);
+		LinearLayout contents = (LinearLayout)v.findViewById(R.id.faq_container);
 
-    	// setting this through CSS breaks the gradient background
-    	contents.setBackgroundColor(0);
+		for (int i = 0; i < items.length; i += 2) {
+			LinearLayout card = new LinearLayout(act);
+			card.setOrientation(LinearLayout.VERTICAL);
+			card.setBackgroundResource(R.drawable.bg_surface_panel);
+			card.setPadding(dp(act, 16), dp(act, 14), dp(act, 16), dp(act, 14));
+
+			LinearLayout.LayoutParams cardParams = new LinearLayout.LayoutParams(
+					LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+			cardParams.setMargins(0, 0, 0, dp(act, 12));
+			card.setLayoutParams(cardParams);
+
+			TextView question = newText(act, items[i], 16,
+					com.google.android.material.R.attr.colorOnSurface);
+			question.setTypeface(null, android.graphics.Typeface.BOLD);
+			card.addView(question);
+
+			TextView answer = newText(act, Html.fromHtml(htmlEncode(items[i + 1])), 14,
+					com.google.android.material.R.attr.colorOnSurfaceVariant);
+			LinearLayout.LayoutParams answerParams = new LinearLayout.LayoutParams(
+					LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+			answerParams.setMargins(0, dp(act, 8), 0, 0);
+			answer.setLayoutParams(answerParams);
+			card.addView(answer);
+
+			contents.addView(card);
+		}
 
 		return v;
-    }
+	}
 }

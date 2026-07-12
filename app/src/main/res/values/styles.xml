@@ -44,7 +44,7 @@
         <item name="android:colorControlActivated">@color/oc_primary</item>
         <item name="android:navigationBarColor">@color/oc_surface</item>
         <item name="android:statusBarColor">@color/oc_surface</item>
-        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightStatusBar">@bool/oc_light_status_bar</item>
         <item name="android:fontFamily">sans</item>
         <item name="materialButtonStyle">@style/Widget.OpenConnect.Button</item>
         <item name="textInputStyle">@style/Widget.OpenConnect.TextInputLayout</item>

@@ -17,7 +17,7 @@
   <string name="send_logfile">分享記錄檔</string>
   <string name="send">分享</string>
   <string name="copied_entry">已將記錄複製到剪貼簿</string>
-  <string name="faq">FAQ</string>
+  <string name="faq">常見問題</string>
   <string name="file_explorer_tab">檔案瀏覽器</string>
   <string name="inline_file_tab">內嵌檔案</string>
   <string name="error_importing_file">匯入過程中發生錯誤</string>
@@ -38,15 +38,18 @@
   <string name="getproxy_error">取得代理伺服器資訊時發生錯誤: %s</string>
   <string name="send_minidump">向開發人員傳送Minidump</string>
   <string name="no_vpn_profiles_defined">設定你的第一個 VPN</string>
-  <string name="add_new_vpn_hint">先填寫公司或學校提供的 VPN 閘道位址。憑證、權杖和免密登入可以之後再補。</string>
+  <string name="add_new_vpn_hint">填寫公司或學校提供的 VPN 閘道位址。憑證、權杖和免輸入登入可以之後再補。</string>
   <string name="faq_hint">儲存後，點選設定檔即可連線。如果連不上，到日誌頁查看原因。</string>
   <string name="empty_profiles_cta">新增 VPN 設定檔</string>
   <string name="profile_server_summary">伺服器：%1$s</string>
   <string name="profile_server_not_set">尚未填寫伺服器位址</string>
-  <string name="profile_ready_summary">伺服器：%1$s - 點選連線</string>
-  <string name="profile_incomplete_summary">缺少伺服器位址 - 點選設定</string>
-  <string name="reconnect_available_hint">可以不編輯設定檔，直接重試上一次工作階段。</string>
+  <string name="profile_ready_summary">就緒 - %1$s</string>
+  <string name="profile_incomplete_summary">需要填寫伺服器位址</string>
   <string name="add_profile_input_hint">VPN 閘道位址</string>
+  <string name="login_title">%s 登入</string>
+  <string name="save_password">儲存密碼</string>
+  <string name="show_password">顯示密碼</string>
+  <string name="save_password_hint">儲存後下次可重複使用。若想略過已儲存欄位，請在此設定檔中把免輸入登入設為使用已儲存憑證。</string>
   <string name="connected_for">已連線 %1$s</string>
   <string name="connection_status_disconnected">已中斷連線</string>
   <string name="connection_status_disconnected_message">到 Profiles 分頁選擇一個設定檔來啟動 VPN 連線。</string>
@@ -57,9 +60,10 @@
   <string name="log_state_reconnect">已中斷 - 可重新連線至 %1$s，或選擇其他設定檔</string>
   <string name="log_state_connected">已連線%1$s</string>
   <string name="log_state_progress">%1$s - 請依 VPN 伺服器提示繼續</string>
-  <string name="batch_mode">免密登入（Batch 模式）</string>
-  <string name="batch_mode_disabled_summary">每次都詢問登入資訊。若要免密，請先儲存憑證，再選擇使用已儲存憑證的模式。</string>
-  <string name="batch_mode_empty_only_summary">使用已儲存的資訊，只詢問缺少的內容。</string>
-  <string name="batch_mode_enabled_summary">只使用已儲存的資訊。如果缺少必要資訊，連線會失敗而不是彈出輸入提示。</string>
+  <string name="batch_mode">免輸入登入</string>
+  <string name="batch_mode_dialog_message">免輸入登入需要先在登入視窗中儲存憑證。日常使用建議選擇中間選項。</string>
+  <string name="batch_mode_disabled_summary">每次都顯示 VPN 伺服器的登入提示。</string>
+  <string name="batch_mode_empty_only_summary">重複使用已儲存欄位，只詢問缺少或變更的提示。</string>
+  <string name="batch_mode_enabled_summary">完全不顯示登入提示。若缺少必要資訊，連線會停止，方便你回到設定檔中補齊。</string>
   <!--OpenConnect preference strings-->
 </resources>

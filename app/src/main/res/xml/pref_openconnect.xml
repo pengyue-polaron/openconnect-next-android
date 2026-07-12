@@ -59,6 +59,7 @@
             android:title="@string/batch_mode"
             android:summary="@string/batch_mode_disabled_summary"
             android:dialogTitle="@string/batch_mode"
+            android:dialogMessage="@string/batch_mode_dialog_message"
             android:entries="@array/batch_mode_entries"
             android:entryValues="@array/batch_mode_values"
             android:defaultValue="disabled" />

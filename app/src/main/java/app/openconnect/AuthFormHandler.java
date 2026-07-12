@@ -37,7 +37,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.text.InputType;
-import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -46,10 +45,12 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 public class AuthFormHandler extends UserDialog
 		implements DialogInterface.OnClickListener, DialogInterface.OnDismissListener {
@@ -178,24 +179,51 @@ public class AuthFormHandler extends UserDialog
 	private LinearLayout.LayoutParams fillWidth =
 			new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
 
-	private LinearLayout newHorizLayout(String label) {
+	private int dp(float value) {
+		float scale = mContext.getResources().getDisplayMetrics().density;
+		return (int)(value * scale + 0.5f);
+	}
+
+	private LinearLayout.LayoutParams blockParams() {
+		LinearLayout.LayoutParams lp =
+				new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+		lp.setMargins(0, 0, 0, dp(12));
+		return lp;
+	}
+
+	private String cleanLabel(String label) {
+		if (label == null) {
+			return "";
+		}
+		return label.replaceFirst("\\s*[:：]\\s*$", "");
+	}
+
+	private LinearLayout newLabeledBlock(String label) {
 		LinearLayout ll = new LinearLayout(mContext);
-		ll.setOrientation(LinearLayout.HORIZONTAL);
-		ll.setLayoutParams(fillWidth);
+		ll.setOrientation(LinearLayout.VERTICAL);
+		ll.setLayoutParams(blockParams());
 		fixPadding(ll);
 
 		TextView tv = new TextView(mContext);
-		tv.setText(label);
+		tv.setText(cleanLabel(label));
+		tv.setTextSize(13);
+		tv.setAlpha(0.72f);
+		tv.setPadding(0, 0, 0, dp(6));
 		ll.addView(tv);
 
 		return ll;
 	}
 
 	private LinearLayout newTextBlank(LibOpenConnect.FormOpt opt, String defval) {
-		LinearLayout ll = newHorizLayout(opt.label);
+		TextInputLayout ll = new TextInputLayout(mContext);
+		ll.setLayoutParams(blockParams());
+		ll.setHint(cleanLabel(opt.label));
+		ll.setBoxBackgroundMode(TextInputLayout.BOX_BACKGROUND_OUTLINE);
 
-		TextView tv = new EditText(mContext);
+		TextInputEditText tv = new TextInputEditText(mContext);
 		tv.setLayoutParams(fillWidth);
+		tv.setSingleLine(true);
+		tv.setMinHeight(dp(56));
 		if (defval == null) {
 			defval = opt.value != null ? opt.value : "";
 		}
@@ -211,8 +239,11 @@ public class AuthFormHandler extends UserDialog
 		int baseType = (opt.flags & LibOpenConnect.OC_FORM_OPT_NUMERIC) != 0 ?
 				InputType.TYPE_CLASS_NUMBER : InputType.TYPE_CLASS_TEXT;
 		if (opt.type == LibOpenConnect.OC_FORM_OPT_PASSWORD) {
-			tv.setInputType(baseType | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-			tv.setTransformationMethod(PasswordTransformationMethod.getInstance());
+			int variation = baseType == InputType.TYPE_CLASS_NUMBER ?
+					InputType.TYPE_NUMBER_VARIATION_PASSWORD : InputType.TYPE_TEXT_VARIATION_PASSWORD;
+			tv.setInputType(baseType | variation);
+			ll.setEndIconMode(TextInputLayout.END_ICON_PASSWORD_TOGGLE);
+			ll.setEndIconContentDescription(R.string.show_password);
 		} else {
 			tv.setInputType(baseType | InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
 		}
@@ -282,7 +313,7 @@ public class AuthFormHandler extends UserDialog
 			}
 		});
 
-		LinearLayout ll = newHorizLayout(opt.label);
+		LinearLayout ll = newLabeledBlock(opt.label);
 		ll.addView(sp);
 
 		return ll;
@@ -294,6 +325,16 @@ public class AuthFormHandler extends UserDialog
 		cb.setChecked(isChecked);
 		fixPadding(cb);
 		return cb;
+	}
+
+	private TextView newSavePasswordHintView() {
+		TextView tv = new TextView(mContext);
+		tv.setLayoutParams(blockParams());
+		tv.setText(R.string.save_password_hint);
+		tv.setTextSize(13);
+		tv.setAlpha(0.72f);
+		tv.setPadding(dp(38), 0, 0, dp(2));
+		return tv;
 	}
 
 	private void saveAndStore() {
@@ -460,6 +501,7 @@ public class AuthFormHandler extends UserDialog
 			boolean savePass = !getStringPref(formPfx + "savePass").equals("false");
 			savePassword = newSavePasswordView(savePass);
 			v.addView(savePassword);
+			v.addView(newSavePasswordHintView());
 		}
 
 		if (batchMode == BATCH_MODE_ABORTED) {

@@ -36,6 +36,12 @@ The app is not currently published through any app marketplace.
 </p>
 
 <p>
+  <img src="screenshots/verification/profiles-empty-dark.png" width="220" alt="Dark mode first VPN setup screen">
+  <img src="screenshots/verification/profile-list-dark.png" width="220" alt="Dark mode profile list">
+  <img src="screenshots/verification/login-dialog-password-toggle.png" width="220" alt="Login dialog with password visibility controls">
+</p>
+
+<p>
   <img src="screenshots/verification/log-blue-polish.png" width="220" alt="Disconnected log status">
   <img src="screenshots/verification/profile-list-blue-polish-zh-cn.png" width="220" alt="Simplified Chinese profile list">
 </p>
@@ -52,14 +58,14 @@ The app is not currently published through any app marketplace.
 
 ## Automatic Login
 
-The setting named **Automatic login (Batch mode)** controls whether the app uses
-saved credentials without prompting every time.
+**Automatic login** is the passwordless flow formerly exposed as Batch mode. It
+uses credentials saved from a normal login prompt.
 
-- **Ask every time**: always prompt for login details.
-- **Use saved credentials, ask if missing**: skip saved fields and prompt only
-  for missing information.
-- **Use saved credentials only**: attempt a fully unattended login. If required
-  information is missing, the connection fails instead of showing a prompt.
+- **Ask every time**: always show the VPN server login prompt.
+- **Use saved credentials when available**: reuse saved fields and only ask for
+  missing or changed prompts.
+- **Use saved credentials only**: never show login prompts. If required data is
+  missing, the connection stops so the profile can be updated.
 
 ## Build From Source
 

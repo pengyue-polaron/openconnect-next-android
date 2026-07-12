@@ -14,7 +14,7 @@
 
     <string-array name="batch_mode_entries">
         <item>Ask every time</item>
-        <item>Use saved credentials, ask if missing</item>
+        <item>Use saved credentials when available</item>
         <item>Use saved credentials only</item>
     </string-array>
     <string-array name="batch_mode_values" translatable="false">
@@ -73,41 +73,26 @@
     </string-array>
 
     <string-array name="faq_text">
-        <item>What is this app used for?</item>
-        <item>OpenConnect is used to access virtual private networks (VPNs) which utilize the Cisco AnyConnect SSL VPN protocol.  A typical use case might involve logging into your workplace remotely to check email after hours.\n\nIf in doubt, check with your I.T. administrator to see if a suitable service is available.</item>
+        <item>How do I add a VPN profile?</item>
+        <item>Tap Add VPN profile, enter the gateway address from your school or company, then save. Most users only need the server address at first. Certificates, software tokens, and advanced network options can stay empty unless your VPN administrator asks for them.</item>
 
-        <item>How do I get started?</item>
-        <item>In most cases, you\'ll just need to create a profile and enter the hostname of the VPN gateway.  The other fields in the profile are all optional and should be left alone unless there is a specific need to change them.\n\nOnce you\'ve set up the profile, select the VPN entry and OpenConnect will attempt to establish a new session.  If this fails, the \"Log\" tab may provide helpful diagnostic information.</item>
+        <item>What happens after I tap a profile?</item>
+        <item>The app asks Android for VPN permission, connects to the server, then shows the login fields sent by that server. Keep the app open until the username, password, certificate, or token prompts are complete.</item>
 
-        <item>How do I authenticate using an SSL client certificate?</item>
-        <item>Copy your certificate files to Android\'s external storage directory (nominally /sdcard or the Downloads folder), then edit the VPN profile and make the following changes:\n\nP12 or PFX file: select \"User certificate\", pick the file from the list, then touch \"select\".  Leave \"Private key\" blank.\n\nSingle PEM/CRT/CER file: same as above.\n\nSeparate PEM/CRT/CER and KEY files: populate \"User certificate\" with the certificate file, and \"Private key\" with the key file.\n\nWhen finished, delete the certificate files from external storage so they cannot be stolen by other apps.\n\nIf you are generating your own keys (e.g. for use with your ocserv gateway), some basic CA setup instructions are posted [here](http://forum.xda-developers.com/showpost.php?p=52119253&amp;postcount=25).</item>
+        <item>How does Automatic login work?</item>
+        <item>Automatic login is the old Batch mode, renamed around the job it does: reusing saved credentials.\n\nAsk every time always shows the login prompt.\n\nUse saved credentials when available skips fields that were saved before and still asks for anything missing.\n\nUse saved credentials only never shows prompts. If a required value is missing or changed, the connection stops so you can update the profile.</item>
 
-        <item>Will OpenConnect work with non-AnyConnect VPNs?</item>
-        <item>Unfortunately the software design is tied very closely to the AnyConnect requirements and the libopenconnect interfaces.  Therefore it only works with Cisco AnyConnect and ocserv gateways.</item>
+        <item>Why does the login dialog ask to save my password?</item>
+        <item>If Save password stays checked, this profile can reuse the password on later connections. To avoid typing it again, save the password once, then set Automatic login to Use saved credentials when available.</item>
 
-        <item>Will OpenConnect work with Cisco IPsec VPNs running on an ASA?</item>
-        <item>OpenConnect supports SSL VPN (CSTP + DTLS) only.</item>
+        <item>Where do I check connection problems?</item>
+        <item>Open the Log tab. It shows DNS, certificate, authentication, and tunnel setup messages from the current connection attempt. If login fails before the VPN connects, the log usually explains which prompt or server step failed.</item>
 
-        <item>How do I import a SecurID software token?</item>
-        <item>If you have an URL that starts with \"com.rsa.securid.iphone://\" or \"http://127.0.0.1/securid/\" in your email, click on it and tell OpenConnect to add it to the desired VPN profile.  If you just have a raw token string then write it to a text file, copy it under /sdcard, click \"Token string\" in the VPN profile editor, then select the filename.\n\nIf you have an \"sdtid\" XML file, copy it to /sdcard and then import it.</item>
+        <item>When should I edit certificate or token settings?</item>
+        <item>Only edit them when your VPN server requires them. User certificate is for client certificate authentication. Software token is for SecurID or TOTP flows. If your server only asks for username and password, leave these fields empty.</item>
 
-        <item>Is it possible to skip all login prompts when connecting?</item>
-        <item>Yes. In the profile editor, use \"Automatic login (Batch mode)\" after you have saved the username, password, group, certificate, or software token that your VPN server requires.\n\n\"Use saved credentials, ask if missing\" skips fields that are already saved and still prompts for anything missing. \"Use saved credentials only\" attempts a fully unattended login; if required data is missing, the connection fails instead of showing a prompt.\n\nThe VPN warning dialog is a security feature built into the Android OS.  If your device is rooted, you can bypass it by installing the [Xposed framework](http://forum.xda-developers.com/xposed/xposed-installer-versions-changelog-t2714053), enabling the OpenConnect module, then rebooting.\n\nDue to the user interaction required by these dialogs, it is not always possible to reliably start up the VPN in the background.  So a \"start-on-boot\" feature is not currently provided.</item>
-
-        <item>How do I improve battery life while the VPN is up?</item>
-        <item>One option is to select \"Pause when asleep\" under Settings.  The downside is that VPN access will be temporarily stopped when the screen is off.  Also, ASA gateways sometimes get annoyed with constant reconnections and may prematurely terminate your session after a few days.\n\nAnother option is to contact your server administrator and request that they disable dead peer detection (DPD), increase the idle timeout to >1hr, and increase the keepalive interval to ~5min or so.</item>
-
-        <item>How do I use OpenConnect with AFWall+?</item>
-        <item>There are a few caveats to keep in mind when using an Android firewall with VPN:\n\n* If you run KitKat, use Android 4.4.2 or higher and AFWall 1.2.8 or higher.  Android 4.4 and 4.4.1 have a serious TCP MSS bug which causes stalled connections and/or poor performance.  AFWall &lt;=1.2.7 does not have the extra logic needed to handle the routing changes in KitKat.\n* Always allow traffic from the VPN app on all interfaces.  In particular, you should whitelist VPN traffic from OpenConnect, as OpenConnect sends DNS requests over the VPN interface every few minutes to help keep the connection from timing out.</item>
-
-        <item>Are any apps incompatible with VPN?</item>
-        <item>Apps which perform their own DNS resolution, such as Firefox, may have issues picking up the latest system DNS settings when connecting to the VPN.  This can be a problem if your system DNS servers are not accessible over the VPN\'s routes, or if you are trying to look up hostnames that do not have public (internet) DNS entries.</item>
-
-        <item>Under what circumstances will OpenConnect request root?</item>
-        <item>There are two root-only features shown under Settings; both are disabled by default.  One setting works around a ROM bug in CM9 which sets incorrect permissions on /dev/tun, preventing VpnService from passing traffic to the tunnel interface; the other setting loads tun.ko on ROMs that neglect to load it by default.\n\nBased on user feedback and testing, future releases may autodetect these conditions.</item>
-
-        <item>How do I send a problem report?</item>
-        <item>Navigate to Log -&gt; (menu) -&gt; Send log file.  Please be sure to furnish a complete, accurate description of the issue you are seeing, as the logs do not always show a smoking gun.</item>
+        <item>Can this app connect to every VPN?</item>
+        <item>No. This client is for OpenConnect-compatible SSL VPN servers such as Cisco AnyConnect-compatible gateways and ocserv. It does not connect to unrelated VPN protocols such as WireGuard, OpenVPN, or IPsec-only VPNs.</item>
     </string-array>
 
 </resources>
