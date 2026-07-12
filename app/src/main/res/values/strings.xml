@@ -40,7 +40,7 @@
     <string name="file_select">Select…</string>
     <string name="file_nothing_selected">You must select a file</string>
     <string name="configure_the_vpn">Configure the VPN</string>
-    <string name="menu_add_profile">Add Profile</string>
+    <string name="menu_add_profile">Add VPN profile</string>
     <string name="add_profile_hostname_prompt">Enter the hostname, IP address, or URL:</string>
     <string name="hostname_examples">Valid formats include:\nvpn.example.com (typical usage)\nvpn.example.com:443 (host:port)\nhttps://vpn.example.com/my-group-url</string>
     <string name="disconnect">Disconnect</string>

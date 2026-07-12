@@ -30,21 +30,14 @@ The app is not currently published through any app marketplace.
 ## Screenshots
 
 <p>
-  <img src="screenshots/verification/profiles-empty-copy-refresh.png" width="220" alt="First VPN setup screen">
-  <img src="screenshots/verification/add-profile-visual-refresh.png" width="220" alt="Add profile dialog">
-  <img src="screenshots/verification/profile-list-visual-refresh.png" width="220" alt="Profile list with connect shortcut">
+  <img src="screenshots/verification/profiles-empty-blue-polish.png" width="220" alt="First VPN setup screen">
+  <img src="screenshots/verification/add-profile-blue-polish.png" width="220" alt="Add profile dialog">
+  <img src="screenshots/verification/profile-list-blue-polish.png" width="220" alt="Profile list with connect shortcut">
 </p>
 
 <p>
-  <img src="screenshots/verification/log-visual-refresh.png" width="220" alt="Disconnected log status">
-  <img src="screenshots/verification/editor-batch-summary-ux.png" width="220" alt="Automatic login setting summary">
-  <img src="screenshots/verification/batch-mode-dialog-ux.png" width="220" alt="Automatic login mode selector">
-</p>
-
-<p>
-  <img src="screenshots/verification/profiles-empty-copy-refresh-zh-cn.png" width="220" alt="Simplified Chinese first VPN setup screen">
-  <img src="screenshots/verification/profile-list-zh-cn-visual-refresh.png" width="220" alt="Simplified Chinese profile list">
-  <img src="screenshots/verification/batch-dialog-zh-cn-ux.png" width="220" alt="Simplified Chinese automatic login mode selector">
+  <img src="screenshots/verification/log-blue-polish.png" width="220" alt="Disconnected log status">
+  <img src="screenshots/verification/profile-list-blue-polish-zh-cn.png" width="220" alt="Simplified Chinese profile list">
 </p>
 
 ## Basic Use

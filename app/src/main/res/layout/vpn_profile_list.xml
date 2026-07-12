@@ -7,7 +7,7 @@
     android:background="?attr/colorSurface"
     android:clipToPadding="false"
     android:orientation="vertical"
-    android:paddingTop="8dp"
+    android:paddingTop="10dp"
     android:paddingLeft="@dimen/stdpadding"
     android:paddingRight="@dimen/stdpadding"
     android:paddingBottom="16dp" >
@@ -18,9 +18,10 @@
         android:layout_height="0dip"
         android:cacheColorHint="@android:color/transparent"
         android:clipToPadding="false"
-        android:divider="@color/oc_outline_variant"
-        android:dividerHeight="1dp"
-        android:paddingTop="4dp"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="8dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="4dp"
         android:layout_weight="1" />
 
     <LinearLayout
@@ -58,19 +59,22 @@
         android:id="@android:id/empty"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
+        android:gravity="top|center_horizontal"
         android:orientation="vertical"
-        android:padding="@dimen/stdpadding" >
+        android:paddingStart="20dp"
+        android:paddingTop="96dp"
+        android:paddingEnd="20dp"
+        android:paddingBottom="24dp" >
 
         <FrameLayout
-            android:layout_width="72dp"
-            android:layout_height="72dp"
-            android:layout_marginBottom="22dp"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_marginBottom="20dp"
             android:background="@drawable/bg_empty_vpn_badge" >
 
             <ImageView
-                android:layout_width="36dp"
-                android:layout_height="36dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_gravity="center"
                 android:contentDescription="@string/empty_profiles_cta"
                 android:src="@drawable/ic_add_24"
@@ -83,12 +87,12 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="@string/no_vpn_profiles_defined"
-            android:textAppearance="?attr/textAppearanceHeadlineSmall"
+            android:textAppearance="?attr/textAppearanceTitleLarge"
             android:textColor="?attr/colorOnSurface" />
 
         <Space
             android:layout_width="match_parent"
-            android:layout_height="12sp" />
+            android:layout_height="10dp" />
 
         <TextView
             android:id="@+id/add_new_vpn_hint"
@@ -103,13 +107,14 @@
             android:id="@+id/empty_add_profile_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="24dp"
+            android:minHeight="48dp"
             android:text="@string/empty_profiles_cta"
             app:icon="@drawable/ic_add_24" />
 
         <Space
             android:layout_width="match_parent"
-            android:layout_height="12sp" />
+            android:layout_height="18dp" />
 
         <TextView
             android:layout_width="match_parent"

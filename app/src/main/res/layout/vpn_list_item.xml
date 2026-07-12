@@ -18,8 +18,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@drawable/bg_surface_panel"
     android:gravity="center_vertical"
-    android:minHeight="72dp"
+    android:minHeight="76dp"
     android:orientation="horizontal" >
 
     <LinearLayout
@@ -29,15 +30,15 @@
         android:layout_weight="1"
         android:background="?android:attr/selectableItemBackground"
         android:gravity="center_vertical"
-        android:minHeight="72dp"
+        android:minHeight="76dp"
         android:paddingStart="16dp"
-        android:paddingEnd="8dp" >
+        android:paddingEnd="10dp" >
 
         <View
             android:id="@+id/vpn_item_status_dot"
-            android:layout_width="10dp"
-            android:layout_height="10dp"
-            android:layout_marginEnd="14dp"
+            android:layout_width="9dp"
+            android:layout_height="9dp"
+            android:layout_marginEnd="13dp"
             android:background="@drawable/bg_status_connected" />
 
         <LinearLayout
@@ -78,14 +79,14 @@
     <View
         android:layout_width="1dp"
         android:layout_height="match_parent"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="10dp"
         android:focusable="false"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="10dp"
         android:background="@color/oc_outline_variant" />
 
     <ImageView
         android:id="@+id/quickedit_settings"
-        android:layout_width="60dp"
+        android:layout_width="56dp"
         android:layout_height="match_parent"
         android:layout_gravity="center"
         android:background="?android:attr/selectableItemBackground"
