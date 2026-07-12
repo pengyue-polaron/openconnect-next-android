@@ -34,12 +34,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 import app.openconnect.R;
 import app.openconnect.core.OpenConnectManagementThread;
 import app.openconnect.core.OpenVpnService;
 import app.openconnect.core.VPNConnector;
+
+import com.google.android.material.button.MaterialButton;
 
 import org.infradead.libopenconnect.LibOpenConnect;
 
@@ -49,7 +50,8 @@ public class StatusFragment extends Fragment {
 	private VPNConnector mConn;
 
 	private CommonMenu mDropdown;
-	private Button mDisconnectButton;
+	private MaterialButton mDisconnectButton;
+	private View mActionBar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -57,7 +59,8 @@ public class StatusFragment extends Fragment {
     	super.onCreateView(inflater, container, savedInstanceState);
 
     	mView = inflater.inflate(R.layout.status, container, false);
-    	mDisconnectButton = (Button)mView.findViewById(R.id.disconnect_button);
+		mDisconnectButton = (MaterialButton)mView.findViewById(R.id.disconnect_button);
+		mActionBar = mView.findViewById(R.id.status_action_bar);
 
     	mDisconnectButton.setOnClickListener(new OnClickListener() {
 			@Override
@@ -132,7 +135,7 @@ public class StatusFragment extends Fragment {
 
 			String s = getString(R.string.state_connected_to, service.profile.getName());
 			writeText(R.id.connection_state, s);
-			writeText(R.id.connection_message, getString(R.string.connection_status_connected_message));
+			mView.findViewById(R.id.connection_message).setVisibility(View.GONE);
 			writeText(R.id.connection_time, getString(R.string.connected_for,
 					OpenVpnService.formatElapsedTime(service.startTime.getTime())));
 
@@ -161,6 +164,7 @@ public class StatusFragment extends Fragment {
 
 			writeStatusField(R.id.local_ip6, R.string.local_ip6, ip.netmask6 != null ? ip.netmask6 : dis);
 		} else {
+			mView.findViewById(R.id.connection_message).setVisibility(View.VISIBLE);
 			writeText(R.id.connection_state, service.getConnectionStateName());
 			if (state == OpenConnectManagementThread.STATE_DISCONNECTED) {
 				String profileName = service.getReconnectName();
@@ -185,13 +189,18 @@ public class StatusFragment extends Fragment {
 		if (state == OpenConnectManagementThread.STATE_DISCONNECTED) {
 			String profileName = service.getReconnectName();
 			if (profileName != null) {
+				mActionBar.setVisibility(View.VISIBLE);
 				mDisconnectButton.setVisibility(View.VISIBLE);
+				mDisconnectButton.setIconResource(R.drawable.ic_refresh_24);
 				mDisconnectButton.setText(getString(R.string.reconnect_to, profileName));
 			} else {
+				mActionBar.setVisibility(View.GONE);
 				mDisconnectButton.setVisibility(View.INVISIBLE);
 			}
 		} else {
+			mActionBar.setVisibility(View.VISIBLE);
 			mDisconnectButton.setVisibility(View.VISIBLE);
+			mDisconnectButton.setIconResource(R.drawable.ic_close_24);
 			mDisconnectButton.setText(R.string.disconnect);
 		}
     }

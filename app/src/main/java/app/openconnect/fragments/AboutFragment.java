@@ -27,41 +27,57 @@ package app.openconnect.fragments;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebView;
+import android.widget.Button;
 import android.widget.TextView;
 import app.openconnect.R;
 
 public class AboutFragment extends Fragment  {
 
 	public static final String TAG = "OpenConnect";
+	private static final String REPO_URL = "https://github.com/pengyue-polaron/openconnect-next-android";
+	private static final String ISSUES_URL = REPO_URL + "/issues";
+	private static final String RELEASES_URL = REPO_URL + "/releases";
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-    		Bundle savedInstanceState) {
-    	Activity activity = getActivity();
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+		Activity activity = getActivity();
 
-    	View v = inflater.inflate(R.layout.about, container, false);
-    	TextView ver = (TextView) v.findViewById(R.id.version);
+		View v = inflater.inflate(R.layout.about, container, false);
+		TextView ver = (TextView) v.findViewById(R.id.version);
 
 		try {
 			PackageInfo packageinfo = activity.getPackageManager().getPackageInfo(activity.getPackageName(), 0);
-			ver.setText("OpenConnect for Android v" + packageinfo.versionName);
+			ver.setText(getString(R.string.about_version, packageinfo.versionName));
 		} catch (NameNotFoundException e) {
 			Log.e(TAG, "can't retrieve package version");
+			ver.setText(R.string.app);
 		}
 
-    	WebView contents = (WebView)v.findViewById(R.id.about_contents);
-    	contents.loadUrl("file:///android_asset/about.html");
-    	contents.setBackgroundColor(0);
+		bindUrl(v, R.id.about_source_button, REPO_URL);
+		bindUrl(v, R.id.about_issues_button, ISSUES_URL);
+		bindUrl(v, R.id.about_releases_button, RELEASES_URL);
 
-    	return v;
-    }
+		return v;
+	}
+
+	private void bindUrl(View root, int id, final String url) {
+		Button button = (Button)root.findViewById(id);
+		button.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+			}
+		});
+	}
 
 }

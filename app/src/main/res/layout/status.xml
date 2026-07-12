@@ -1,216 +1,246 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/colorSurface"
-    android:orientation="vertical"
-    android:padding="@dimen/stdpadding" >
+    android:background="?attr/colorSurface" >
 
-    <!-- row 1: general connection info -->
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/bg_surface_panel"
-        android:orientation="vertical"
-        android:padding="16dp" >
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:fillViewport="true"
+        android:paddingBottom="96dp" >
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="horizontal" >
+            android:orientation="vertical"
+            android:padding="@dimen/stdpadding" >
+
+            <!-- row 1: general connection info -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_surface_panel"
+                android:orientation="vertical"
+                android:padding="16dp" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal" >
+
+                    <View
+                        android:id="@+id/connection_status_dot"
+                        android:layout_width="9dp"
+                        android:layout_height="9dp"
+                        android:layout_marginEnd="12dp"
+                        android:background="@drawable/bg_status_idle" />
+
+                    <TextView
+                        android:id="@+id/connection_state"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="left"
+                        android:textAppearance="?attr/textAppearanceTitleMedium"
+                        android:textColor="?attr/colorOnSurface" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/connection_message"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:gravity="left"
+                    android:textAppearance="?attr/textAppearanceBodyMedium"
+                    android:textColor="?attr/colorOnSurfaceVariant" />
+
+                <TextView
+                    android:id="@+id/connection_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="left"
+                    android:textAppearance="?attr/textAppearanceLabelLarge"
+                    android:textColor="?attr/colorOnSurfaceVariant"
+                    android:visibility="gone" />
+
+            </LinearLayout>
 
             <View
-                android:id="@+id/connection_status_dot"
-                android:layout_width="9dp"
-                android:layout_height="9dp"
-                android:layout_marginEnd="12dp"
-                android:background="@drawable/bg_status_idle" />
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="12dp"
+                android:background="@color/oc_outline_variant" />
 
-            <TextView
-                android:id="@+id/connection_state"
-                android:layout_width="0dp"
+            <LinearLayout
+                android:id="@+id/connection_rows"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textAppearance="?attr/textAppearanceTitleMedium"
-                android:textColor="?attr/colorOnSurface"
-                android:gravity="left" />
+                android:background="@drawable/bg_surface_panel"
+                android:orientation="vertical"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:visibility="invisible" >
+
+                <!-- row 2: traffic stats -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:minHeight="56dp"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:id="@+id/tx"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="left"
+                        android:textAppearance="?attr/textAppearanceBodyMedium"
+                        android:textColor="?attr/colorOnSurface" />
+
+                    <Space
+                        android:layout_width="0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1" />
+
+                    <TextView
+                        android:id="@+id/rx"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="right"
+                        android:textAppearance="?attr/textAppearanceBodyMedium"
+                        android:textColor="?attr/colorOnSurface" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/oc_outline_variant" />
+
+                <!-- row 3: server name -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:minHeight="56dp"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:id="@+id/server_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="left"
+                        android:textAppearance="?attr/textAppearanceBodyMedium"
+                        android:textColor="?attr/colorOnSurface" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/oc_outline_variant" />
+
+                <!-- row 4: local IPv4, netmask -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:minHeight="56dp"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:id="@+id/local_ip4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="left"
+                        android:textAppearance="?attr/textAppearanceBodyMedium"
+                        android:textColor="?attr/colorOnSurface" />
+
+                    <Space
+                        android:layout_width="0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1" />
+
+                    <TextView
+                        android:id="@+id/local_ip4_netmask"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="right"
+                        android:textAppearance="?attr/textAppearanceBodyMedium"
+                        android:textColor="?attr/colorOnSurface" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/oc_outline_variant" />
+
+                <!-- row 5: local IPv6 (this can be wide so it deserves a dedicated row) -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:minHeight="56dp"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:id="@+id/local_ip6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="left"
+                        android:textAppearance="?attr/textAppearanceBodyMedium"
+                        android:textColor="?attr/colorOnSurface" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/oc_outline_variant" />
+
+            </LinearLayout>
 
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/connection_message"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
-            android:textAppearance="?attr/textAppearanceBodyMedium"
-            android:textColor="?attr/colorOnSurfaceVariant"
-            android:gravity="left" />
-
-        <TextView
-            android:id="@+id/connection_time"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:visibility="gone"
-            android:textAppearance="?attr/textAppearanceLabelLarge"
-            android:textColor="?attr/colorOnSurfaceVariant"
-            android:gravity="left" />
-
-    </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginBottom="12dp"
-        android:background="@color/oc_outline_variant"/>
+    </ScrollView>
 
     <LinearLayout
-        android:id="@+id/connection_rows"
+        android:id="@+id/status_action_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="invisible"
-        android:background="@drawable/bg_surface_panel"
+        android:layout_gravity="bottom"
+        android:background="?attr/colorSurface"
+        android:elevation="8dp"
         android:orientation="vertical"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp" >
-
-        <!-- row 2: traffic stats -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="56dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal" >
-
-            <TextView
-                android:id="@+id/tx"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?attr/textAppearanceBodyMedium"
-                android:textColor="?attr/colorOnSurface"
-                android:gravity="left" />
-
-            <Space
-                android:layout_width="0dip"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
-
-            <TextView
-                android:id="@+id/rx"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?attr/textAppearanceBodyMedium"
-                android:textColor="?attr/colorOnSurface"
-                android:gravity="right" />
-
-        </LinearLayout>
+        android:paddingStart="@dimen/stdpadding"
+        android:paddingTop="10dp"
+        android:paddingEnd="@dimen/stdpadding"
+        android:paddingBottom="16dp" >
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/oc_outline_variant"/>
+            android:layout_marginBottom="10dp"
+            android:background="@color/oc_outline_variant" />
 
-        <!-- row 3: server name -->
-        <LinearLayout
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/disconnect_button"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="56dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal" >
-
-            <TextView
-                android:id="@+id/server_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?attr/textAppearanceBodyMedium"
-                android:textColor="?attr/colorOnSurface"
-                android:gravity="left" />
-
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/oc_outline_variant"/>
-
-        <!-- row 4: local IPv4, netmask -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="56dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal" >
-
-            <TextView
-                android:id="@+id/local_ip4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?attr/textAppearanceBodyMedium"
-                android:textColor="?attr/colorOnSurface"
-                android:gravity="left" />
-
-            <Space
-                android:layout_width="0dip"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
-
-            <TextView
-                android:id="@+id/local_ip4_netmask"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?attr/textAppearanceBodyMedium"
-                android:textColor="?attr/colorOnSurface"
-                android:gravity="right" />
-
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/oc_outline_variant"/>
-
-        <!-- row 5: local IPv6 (this can be wide so it deserves a dedicated row) -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="56dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal" >
-
-            <TextView
-                android:id="@+id/local_ip6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?attr/textAppearanceBodyMedium"
-                android:textColor="?attr/colorOnSurface"
-                android:gravity="left" />
-
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/oc_outline_variant"/>
+            android:layout_height="52dp"
+            android:text="@string/disconnect"
+            android:visibility="invisible"
+            app:icon="@drawable/ic_close_24"
+            app:iconGravity="textStart"
+            app:iconPadding="10dp" />
 
     </LinearLayout>
 
-    <!-- big hole in the middle of the page -->
-    <Space
-            android:layout_width="match_parent"
-            android:layout_height="0dip"
-            android:layout_weight="1" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/disconnect_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/disconnect"
-        android:visibility="invisible" />
-
-    <Space
-            android:layout_width="match_parent"
-            android:layout_height="20dip" />
-
-</LinearLayout>
+</FrameLayout>

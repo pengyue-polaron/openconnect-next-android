@@ -24,10 +24,6 @@
 
 package app.openconnect.fragments;
 
-import org.acra.ACRA;
-import org.acra.ACRAConfiguration;
-import org.acra.ErrorReporter;
-
 import android.content.Context;
 import android.content.Intent;
 import android.view.Menu;
@@ -39,7 +35,6 @@ public class CommonMenu {
 
 	private static final int MENU_SETTINGS = 15;
 	private static final int MENU_SECURID = 20;
-	private static final int MENU_REPORT_PROBLEM = 25;
 	private static final int MENU_ABOUT = 30;
 
 	private Context mContext;
@@ -49,8 +44,6 @@ public class CommonMenu {
 		menu.add(Menu.NONE, MENU_SETTINGS, Menu.NONE, R.string.generalsettings)
 			.setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
 		menu.add(Menu.NONE, MENU_SECURID, Menu.NONE, R.string.securid_info)
-			.setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
-		menu.add(Menu.NONE, MENU_REPORT_PROBLEM, Menu.NONE, R.string.report_problem)
 			.setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
 		menu.add(Menu.NONE, MENU_ABOUT, Menu.NONE, R.string.about_openconnect)
 			.setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
@@ -63,32 +56,12 @@ public class CommonMenu {
 		return true;
 	}
 
-	private void sendProblemReport() {
-		ACRAConfiguration cfg = ACRA.getConfig();
-		cfg.setResDialogText(R.string.problem_dialog_text);
-		cfg.setResDialogCommentPrompt(R.string.problem_dialog_comment_prompt);
-		ACRA.setConfig(cfg);
-		ACRA.getErrorReporter().handleException(null);
-
-		ErrorReporter er = ACRA.getErrorReporter();
-		er.putCustomData("cause", "sendProblemReport");
-		er.handleException(null);
-
-		// FIXME: we really want to restore the default strings after the report dialog
-		// is finished, but changing them here would override the problem_dialog_* strings
-		// set above.
-		//ACRA.setConfig(ACRA.getNewDefaultConfig((Application)getApplicationContext()));
-	}
-
 	public boolean onOptionsItemSelected(MenuItem item) {
 		final int itemId = item.getItemId();
 		if (itemId == MENU_ABOUT) {
 			return startFragActivity("AboutFragment");
 		} else if (itemId == MENU_SECURID) {
 			return startFragActivity("TokenParentFragment");
-		} else if (itemId == MENU_REPORT_PROBLEM) {
-			sendProblemReport();
-			return true;
 		} else if (itemId == MENU_SETTINGS) {
 			return startFragActivity("GeneralSettings");
 		} else {

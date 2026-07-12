@@ -13,16 +13,26 @@
     <string name="no_data">No Data</string>
     <string name="client_certificate_title">Client Certificate</string>
     <string name="securid_info">SecurID info</string>
-    <string name="report_problem">Report a problem</string>
+    <string name="send_feedback">Send feedback</string>
+    <string name="report_problem">GitHub Issues</string>
     <string name="feedback_plea">Taking a few seconds to rate an app is very important for the developer.  It allows us to continually improve the experience, and helps other users decide whether an app is right for them. How about telling us what you think?</string>
     <string name="i_love_it">I love it</string>
     <string name="needs_work">Needs work</string>
     <string name="maybe_later">Maybe later</string>
     <string name="help_with_translations">Help with translations</string>
     <string name="about_openconnect">About OpenConnect</string>
+    <string name="about_version">OpenConnect for Android v%1$s</string>
+    <string name="about_summary">A modern Android client for OpenConnect-compatible SSL VPN servers. This fork focuses on a current Android build, clearer setup, saved-credential login, and a cleaner Material interface.</string>
+    <string name="about_project_links">Project links</string>
+    <string name="about_project_links_summary">Use the GitHub repository for source code, issues, APK releases, and project updates.</string>
+    <string name="about_source_code">Source code on GitHub</string>
+    <string name="about_github_issues">GitHub Issues</string>
+    <string name="about_releases">GitHub Releases</string>
+    <string name="about_credits_title">Credits and license</string>
+    <string name="about_credits_body">OpenConnect for Android is released under the GPLv2 license. Much of the Java code was derived from OpenVPN for Android by Arne Schwabe. This package also includes OpenConnect, GnuTLS, GMP, Nettle, Libxml2, OATH Toolkit, stoken, LibTomCrypt, and cURL components.</string>
     <string name="securid_none_defined">None of your VPN profiles have a SecurID token string set.\n\nTo add one, import an \"sdtid\" file or click on a \"http://127.0.0.1/securid\" URL from your email.  See the FAQ for more information.</string>
     <string name="securid_parse_error">Unable to parse the SecurID token string in this profile.</string>
-    <string name="securid_internal_error">Unable to access the VPN profile.  Please file a bug report with the author.</string>
+    <string name="securid_internal_error">Unable to access the VPN profile. Please open a GitHub Issue from the About page.</string>
     <string name="securid_encrypted">This profile\'s SecurID token string is encrypted. Try re-importing it.</string>
     <string name="copy">Copy</string>
     <string name="next_tokencode">Next tokencode:</string>
@@ -50,6 +60,7 @@
     <string name="remove_vpn">Remove VPN</string>
     <string name="remove_vpn_query">Remove the VPN Profile \'%s\'?</string>
     <string name="clear">Clear</string>
+    <string name="send_logfile">Send log file</string>
 
     <string name="send">Send</string>
     <string name="enter_problem">ENTER PROBLEM DESCRIPTION HERE:</string>
@@ -58,8 +69,8 @@
     <string name="crash_dialog_text">An unexpected error occurred forcing the application to stop. You can help us fix this by sending us error data.</string>
     <string name="crash_dialog_comment_prompt">Please describe what was happening when the problem occurred:</string>
 
-    <string name="problem_dialog_text">Thanks for offering your feedback for improving OpenConnect. We\'re sorry you encountered an issue but we\'ll review your report and track down the bug.</string>
-    <string name="problem_dialog_comment_prompt">Please describe the nature of the problem. If you\'re willing to help the author troubleshoot it, make sure you include your email address:</string>
+    <string name="problem_dialog_text">Thanks for helping improve OpenConnect. Please use GitHub Issues from the About page for project support and bug reports.</string>
+    <string name="problem_dialog_comment_prompt">Describe the problem and include the VPN gateway, Android version, and relevant log lines if you can:</string>
 
     <string name="bad_rom_text">Unfortunately your Android device does not have proper VpnService support.  If you click OK we will report this to the vendor, but they may or may not fix the bug.</string>
     <string name="bad_rom_comment_prompt">If you have customized your device in any way (rooting, ROM, Xposed) please note the changes below:</string>
@@ -88,6 +99,7 @@
     <string name="rx">RX:</string>
     <string name="local_ip4">Local IPv4:</string>
     <string name="local_ip6">Local IPv6:</string>
+    <string name="local_ip">Local IP:</string>
     <string name="disabled">disabled</string>
     <string name="subnet_mask">Subnet mask:</string>
     <string name="server_name">Server name:</string>
@@ -116,7 +128,6 @@
     <string name="connection_status_disconnected">Disconnected</string>
     <string name="connection_status_disconnected_message">Choose a profile from the Profiles tab to start a VPN connection.</string>
     <string name="connection_status_reconnect_message">Last session was %1$s. Reconnect to try again, or choose another profile.</string>
-    <string name="connection_status_connected_message">VPN traffic is routed through this profile. Disconnect when you are finished.</string>
     <string name="connection_status_progress_message">Keep OpenConnect open and respond to any login, certificate, or token prompts.</string>
     <string name="log_state_disconnected">Disconnected - choose a profile to connect</string>
     <string name="log_state_reconnect">Disconnected - reconnect to %1$s or choose another profile</string>
@@ -127,6 +138,7 @@
     <string name="error_cant_connect">Error connecting to host \'%1$s\'. See log for details.</string>
     <string name="oneway_bytecount">%1$s/s %2$s</string>
     <string name="statusline_bytecount">↓%2$s/s %1$s - ↑%4$s/s %3$s</string>
+    <string name="toggle_timestamps">Toggle timestamps</string>
     <string name="login_title">%s login</string>
     <string name="make_selection_inline">Copy into profile</string>
     <string name="add">Add</string>
@@ -141,7 +153,7 @@
     <string name="save_password">Save password</string>
     <string name="show_password">Show password</string>
     <string name="save_password_hint">Saved credentials are reused next time. To skip saved fields, set Automatic login to use saved credentials in this profile.</string>
-    <string name="device_specific">Device-specific Hacks</string>
+    <string name="device_specific">Device compatibility</string>
     <string name="cannotparsecert">Cannot display certificate information</string>
     <string name="vpnbehaviour">VPN behavior</string>
     <string name="allow_vpn_changes">Allow changes to VPN Profiles</string>
