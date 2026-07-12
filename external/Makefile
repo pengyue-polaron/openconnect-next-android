@@ -107,6 +107,7 @@ $(ARCH_STOKEN_TARGETS) : %/libstoken.so : %/toolchain/.installed stoken/configur
 	cp -L $*/out/lib/libstoken.so $*/
 
 $(ARCH_OC_TARGETS) : %/libopenconnect.so : .openconnect-sources
+	$(MAKE) patch-openconnect-sources
 	rm -rf $*/openconnect
 	mkdir -p $*/openconnect
 	cp -a openconnect $*/
@@ -116,7 +117,17 @@ $(ARCH_OC_TARGETS) : %/libopenconnect.so : .openconnect-sources
 
 .openconnect-sources:
 	$(MAKE) -C openconnect/android sources
+	$(MAKE) patch-openconnect-sources
 	touch $@
+
+.PHONY: patch-openconnect-sources
+patch-openconnect-sources:
+	if [ ! -f openconnect/android/sources/gnutls-3.5.17/gl/vasnprintf.c ]; then \
+		$(MAKE) -C openconnect/android sources; \
+	fi
+	if ! grep -q "defined __ANDROID__" openconnect/android/sources/gnutls-3.5.17/gl/vasnprintf.c; then \
+		patch -d openconnect/android/sources/gnutls-3.5.17 -p1 < patches/gnutls-3.5.17-android-no-printf-n.patch; \
+	fi
 
 # use openconnect to run make-standalone-toolchain.sh and install
 # GnuTLS/nettle into the sysroot for us
