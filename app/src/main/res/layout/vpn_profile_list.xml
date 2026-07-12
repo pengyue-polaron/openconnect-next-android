@@ -1,51 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="?attr/colorSurface"
+    android:clipToPadding="false"
     android:orientation="vertical"
+    android:paddingTop="8dp"
     android:paddingLeft="@dimen/stdpadding"
-    android:paddingRight="@dimen/stdpadding" >
+    android:paddingRight="@dimen/stdpadding"
+    android:paddingBottom="16dp" >
 
     <ListView
         android:id="@android:id/list"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="0dip"
+        android:cacheColorHint="@android:color/transparent"
+        android:clipToPadding="false"
+        android:divider="@color/oc_outline_variant"
+        android:dividerHeight="1dp"
+        android:paddingTop="4dp"
         android:layout_weight="1" />
 
     <LinearLayout
         android:id="@+id/reconnect_box"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-		android:visibility="gone" >
+        android:visibility="gone" >
 
         <View
-	    	android:layout_width="fill_parent"
-	    	android:layout_height="1dp"
-	    	android:layout_marginTop="10dp"
-	    	android:layout_marginBottom="10dp"
-	    	android:background="@android:color/darker_gray"/>
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@color/oc_outline_variant"/>
 
-	    <Button
-	        android:id="@+id/reconnect_button"
-	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/reconnect_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
-	</LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingTop="8dp"
+            android:text="@string/reconnect_available_hint"
+            android:textAppearance="?attr/textAppearanceBodySmall"
+            android:textColor="?attr/colorOnSurfaceVariant"
+            tools:ignore="SelectableText" />
+
+    </LinearLayout>
 
     <LinearLayout
         android:id="@android:id/empty"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:orientation="vertical" >
+        android:orientation="vertical"
+        android:padding="@dimen/stdpadding" >
+
+        <FrameLayout
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:layout_marginBottom="22dp"
+            android:background="@drawable/bg_empty_vpn_badge" >
+
+            <ImageView
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_gravity="center"
+                android:contentDescription="@string/empty_profiles_cta"
+                android:src="@drawable/ic_add_24"
+                android:tint="?attr/colorPrimary" />
+
+        </FrameLayout>
 
         <TextView
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:text="@string/no_vpn_profiles_defined"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:textAppearance="?attr/textAppearanceHeadlineSmall"
+            android:textColor="?attr/colorOnSurface" />
 
         <Space
             android:layout_width="match_parent"
@@ -53,18 +92,32 @@
 
         <TextView
             android:id="@+id/add_new_vpn_hint"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textAppearance="?attr/textAppearanceBodyMedium"
+            android:textColor="?attr/colorOnSurfaceVariant"
             tools:ignore="SelectableText" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/empty_add_profile_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/empty_profiles_cta"
+            app:icon="@drawable/ic_add_24" />
 
         <Space
             android:layout_width="match_parent"
             android:layout_height="12sp" />
 
         <TextView
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:text="@string/faq_hint"
+            android:textAppearance="?attr/textAppearanceBodyMedium"
+            android:textColor="?attr/colorOnSurfaceVariant"
             tools:ignore="SelectableText" />
 
     </LinearLayout>

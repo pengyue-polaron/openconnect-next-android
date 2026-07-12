@@ -67,6 +67,7 @@ public class LogFragment extends ListFragment {
 	private Activity mActivity;
 
 	private TextView mSpeedView;
+	private View mSpeedDot;
 
     @Override
 	public boolean onOptionsItemSelected(MenuItem item) {
@@ -100,32 +101,32 @@ public class LogFragment extends ListFragment {
 		}
 	}
 
-    private synchronized void updateUI(OpenVpnService service) {
-    	if (service != null) {
-    		int state = service.getConnectionState();
-    		if (mCancelButton != null) {
-    			String title;
-    			if (state == OpenConnectManagementThread.STATE_DISCONNECTED) {
-    				title = getString(R.string.reconnect);
-    				mCancelButton.setIcon(R.drawable.ic_action_refresh);
+	private synchronized void updateUI(OpenVpnService service) {
+		if (service != null) {
+			int state = service.getConnectionState();
+			if (mCancelButton != null) {
+				String title;
+				if (state == OpenConnectManagementThread.STATE_DISCONNECTED) {
+					title = getString(R.string.reconnect);
+					mCancelButton.setIcon(R.drawable.ic_refresh_24);
 					mCancelButton.setVisible(service.getReconnectName() != null);
-    				mDisconnected = true;
-    			} else {
-    				title = getString(R.string.disconnect);
-    				mCancelButton.setIcon(android.R.drawable.ic_menu_close_clear_cancel);
+					mDisconnected = true;
+				} else {
+					title = getString(R.string.disconnect);
+					mCancelButton.setIcon(R.drawable.ic_close_24);
 					mCancelButton.setVisible(true);
-    				mDisconnected = false;
-    			}
+					mDisconnected = false;
+				}
 				mCancelButton.setTitle(title);
 				mCancelButton.setTitleCondensed(title);
-    		}
+			}
 
-    		String byteCountSummary = "";
-    		if (state == OpenConnectManagementThread.STATE_CONNECTED) {
+			String byteCountSummary = "";
+			if (state == OpenConnectManagementThread.STATE_CONNECTED) {
 				byteCountSummary = " - " + mConn.getByteCountSummary();
-    		}
-    		String states[] = getResources().getStringArray(R.array.connection_states);
-    		mSpeedView.setText(states[state] + byteCountSummary);
+			}
+			mSpeedView.setText(getLogStatusText(service, state, byteCountSummary));
+			mSpeedDot.setBackgroundResource(getLogStatusDot(service, state));
 
     		if (mLogAdapter == null) {
     			mLogAdapter = service.getArrayAdapter(mActivity);
@@ -135,8 +136,34 @@ public class LogFragment extends ListFragment {
 
     		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
     		mLogAdapter.setTimeFormat(prefs.getString("timestamp_format", VPNLog.DEFAULT_TIME_FORMAT));
-    	}
-    }
+		}
+	}
+
+	private String getLogStatusText(OpenVpnService service, int state, String byteCountSummary) {
+		if (state == OpenConnectManagementThread.STATE_CONNECTED) {
+			return getString(R.string.log_state_connected, byteCountSummary);
+		}
+		if (state == OpenConnectManagementThread.STATE_DISCONNECTED) {
+			String profileName = service.getReconnectName();
+			if (profileName != null) {
+				return getString(R.string.log_state_reconnect, profileName);
+			}
+			return getString(R.string.log_state_disconnected);
+		}
+		String states[] = getResources().getStringArray(R.array.connection_states);
+		return getString(R.string.log_state_progress, states[state]);
+	}
+
+	private int getLogStatusDot(OpenVpnService service, int state) {
+		if (state == OpenConnectManagementThread.STATE_CONNECTED) {
+			return R.drawable.bg_status_connected;
+		}
+		if (state == OpenConnectManagementThread.STATE_DISCONNECTED) {
+			return service.getReconnectName() != null ?
+					R.drawable.bg_status_warning : R.drawable.bg_status_idle;
+		}
+		return R.drawable.bg_status_warning;
+	}
 
 	@Override
 	public void onResume() {
@@ -189,6 +216,7 @@ public class LogFragment extends ListFragment {
 		});
 
 		mSpeedView = (TextView)v.findViewById(R.id.speed);
+		mSpeedDot = v.findViewById(R.id.log_status_dot);
 		return v;
     }
 

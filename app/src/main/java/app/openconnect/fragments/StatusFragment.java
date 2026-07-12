@@ -113,23 +113,28 @@ public class StatusFragment extends Fragment {
     	tv.setText(Html.fromHtml(html));
     }
 
+    private void writeText(int id, CharSequence value) {
+        TextView tv = (TextView)mView.findViewById(id);
+        tv.setText(value);
+    }
+
+    private void setStatusDot(int resId) {
+        mView.findViewById(R.id.connection_status_dot).setBackgroundResource(resId);
+    }
+
     private void updateUI(OpenVpnService service) {
 		int state = service.getConnectionState();
-		int visibility = View.INVISIBLE;
+		int detailVisibility = View.GONE;
 
 		if (state == OpenConnectManagementThread.STATE_CONNECTED) {
-
-			visibility = View.VISIBLE;
+			detailVisibility = View.VISIBLE;
+			setStatusDot(R.drawable.bg_status_connected);
 
 			String s = getString(R.string.state_connected_to, service.profile.getName());
-			if (s.length() < 25) {
-				writeStatusField(R.id.connection_state, R.string.netstatus, s);
-			} else {
-				writeStatusField(R.id.connection_state, R.string.netstatus,
-					service.getConnectionStateName());
-			}
-			writeStatusField(R.id.connection_time, R.string.uptime,
-					OpenVpnService.formatElapsedTime(service.startTime.getTime()));
+			writeText(R.id.connection_state, s);
+			writeText(R.id.connection_message, getString(R.string.connection_status_connected_message));
+			writeText(R.id.connection_time, getString(R.string.connected_for,
+					OpenVpnService.formatElapsedTime(service.startTime.getTime())));
 
 			int statsVisibility = mConn.statsValid ? View.VISIBLE : View.INVISIBLE;
 			mView.findViewById(R.id.tx).setVisibility(statsVisibility);
@@ -156,12 +161,25 @@ public class StatusFragment extends Fragment {
 
 			writeStatusField(R.id.local_ip6, R.string.local_ip6, ip.netmask6 != null ? ip.netmask6 : dis);
 		} else {
-			writeStatusField(R.id.connection_state, R.string.netstatus,
-					service.getConnectionStateName());
+			writeText(R.id.connection_state, service.getConnectionStateName());
+			if (state == OpenConnectManagementThread.STATE_DISCONNECTED) {
+				String profileName = service.getReconnectName();
+				if (profileName != null) {
+					setStatusDot(R.drawable.bg_status_warning);
+					writeText(R.id.connection_message,
+							getString(R.string.connection_status_reconnect_message, profileName));
+				} else {
+					setStatusDot(R.drawable.bg_status_idle);
+					writeText(R.id.connection_message, getString(R.string.connection_status_disconnected_message));
+				}
+			} else {
+				setStatusDot(R.drawable.bg_status_warning);
+				writeText(R.id.connection_message, getString(R.string.connection_status_progress_message));
+			}
 		}
 
-		mView.findViewById(R.id.connection_rows).setVisibility(visibility);
-		mView.findViewById(R.id.connection_time).setVisibility(visibility);
+		mView.findViewById(R.id.connection_rows).setVisibility(detailVisibility);
+		mView.findViewById(R.id.connection_time).setVisibility(detailVisibility);
 
 		// Check explicitly for "disconnected" so the user can cancel connections-in-progress
 		if (state == OpenConnectManagementThread.STATE_DISCONNECTED) {

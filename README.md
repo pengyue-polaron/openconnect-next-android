@@ -1,81 +1,105 @@
-OpenConnect for Android
-=======================
+# OpenConnect for Android
 
-[![License: GPL v2](https://img.shields.io/badge/License-GPL%20v2-blue.svg)](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html)
-[![Build Status](https://travis-ci.org/cernekee/ics-openconnect.svg?branch=master)](https://travis-ci.org/cernekee/ics-openconnect)
+OpenConnect for Android is a VPN client for Android based on the Linux
+[OpenConnect](https://www.infradead.org/openconnect/) client.
 
-This is a VPN client for Android, based on the Linux build of
-[OpenConnect](http://www.infradead.org/openconnect/).
+This fork modernizes the Android build and refreshes the app UI with Material 3.
+It keeps the core VPN workflow fast: add a gateway, save the profile, then tap
+the profile to connect.
 
-Much of the Java code was derived from [OpenVPN for Android](https://play.google.com/store/apps/details?id=de.blinkt.openvpn&hl=en) by Arne Schwabe.
+## Download
 
-OpenConnect for Android is released under the GPLv2 license.  For more
-information see the [COPYING](COPYING) and [doc/LICENSE.txt](doc/LICENSE.txt)
-files.
+This project is currently distributed only through
+[GitHub Releases](https://github.com/pengyue-polaron/openconnect-next-android/releases/latest).
 
-Changelog: see [doc/CHANGES.txt](doc/CHANGES.txt)
+Download the APK from the latest release and install it on your Android device.
+The app is not currently published through any app marketplace.
 
-To help out with translations, please visit
-[this project's page on Transifex](https://www.transifex.com/projects/p/ics-openconnect/).
+## Highlights
 
-## Downloads and support
-
-Official releases are posted in the [XDA thread](http://forum.xda-developers.com/showthread.php?t=2616121) and on [Google Play](https://play.google.com/store/apps/details?id=app.openconnect).
-
-Binary APK files are also available at [F-Droid](https://f-droid.org/repository/browse/?fdid=app.openconnect).
-
-No registration is required to download from XDA or F-Droid.
+- Material 3 app shell, tabs, dialogs, settings, and list rows.
+- Clear first-run setup for adding the first VPN gateway.
+- One-tap profile connection with a separate settings shortcut.
+- Log and connection status panels that explain disconnected, connecting, and
+  connected states.
+- Automatic login, formerly shown as Batch mode, described as the saved
+  credentials / passwordless login flow.
+- English, Simplified Chinese, and Traditional Chinese copy for the updated
+  onboarding and Batch mode settings.
 
 ## Screenshots
 
-![screenshot-0](screenshots/screenshot-0.png)&nbsp;
-![screenshot-1](screenshots/screenshot-1.png)
+<p>
+  <img src="screenshots/verification/profiles-empty-copy-refresh.png" width="220" alt="First VPN setup screen">
+  <img src="screenshots/verification/add-profile-visual-refresh.png" width="220" alt="Add profile dialog">
+  <img src="screenshots/verification/profile-list-visual-refresh.png" width="220" alt="Profile list with connect shortcut">
+</p>
 
-![screenshot-2](screenshots/screenshot-2.png)&nbsp;
-![screenshot-3](screenshots/screenshot-3.png)
+<p>
+  <img src="screenshots/verification/log-visual-refresh.png" width="220" alt="Disconnected log status">
+  <img src="screenshots/verification/editor-batch-summary-ux.png" width="220" alt="Automatic login setting summary">
+  <img src="screenshots/verification/batch-mode-dialog-ux.png" width="220" alt="Automatic login mode selector">
+</p>
 
-## Building from source
+<p>
+  <img src="screenshots/verification/profiles-empty-copy-refresh-zh-cn.png" width="220" alt="Simplified Chinese first VPN setup screen">
+  <img src="screenshots/verification/profile-list-zh-cn-visual-refresh.png" width="220" alt="Simplified Chinese profile list">
+  <img src="screenshots/verification/batch-dialog-zh-cn-ux.png" width="220" alt="Simplified Chinese automatic login mode selector">
+</p>
 
-### Prerequisites
+## Basic Use
 
-On the host side you'll need to install:
+1. Open the app and choose **Add VPN profile**.
+2. Enter the VPN gateway address from your organization.
+3. Save the profile.
+4. Tap the profile row to connect.
+5. Use the gear button to edit advanced settings such as certificates, tokens,
+   saved credentials, and automatic login.
+6. If a connection fails, open the **Log** tab for the reason.
 
-* Android SDK in your $PATH (both platform-tools/ and tools/ directories)
-* $ANDROID\_HOME pointed at the Android SDK directory
-* javac 1.8 and a recent version of Apache ant in your $PATH
-* Use the Android SDK Manager to install API 19
-* NDK r16b, nominally unzipped under /opt/android-sdk-linux\_x86/
-* Host-side gcc, make, etc. (Red Hat "Development Tools" group or Debian build-essential)
-* git, autoconf, automake, and libtool
+## Automatic Login
 
-### Compiling the external dependencies
+The setting named **Automatic login (Batch mode)** controls whether the app uses
+saved credentials without prompting every time.
 
-Building OpenConnect from source requires compiling several .jar files and
-native binaries from external packages.  These commands will build the binary
-components and copy them into the appropriate library and asset directories:
+- **Ask every time**: always prompt for login details.
+- **Use saved credentials, ask if missing**: skip saved fields and prompt only
+  for missing information.
+- **Use saved credentials only**: attempt a fully unattended login. If required
+  information is missing, the connection fails instead of showing a prompt.
 
-    git clone https://github.com/cernekee/ics-openconnect
-    cd ics-openconnect
-    git submodule init
-    git submodule update
-    make -C external
+## Build From Source
 
-This procedure only runs on a Linux PC.  If you are unable to build from
-source, you can try fetching the cached artifacts from a recent CI build:
+### Requirements
 
-    ./misc/download-artifacts.sh
+- Android SDK with platform tools installed.
+- JDK 17 or newer.
+- Git submodules initialized.
 
-### Compiling the app
+### Build
 
-After the binary components are built, this compiles the Java sources into
-an APK file:
+```bash
+git clone https://github.com/pengyue-polaron/openconnect-next-android.git
+cd openconnect-next-android
+git submodule update --init --recursive
+./gradlew assembleDebug
+```
 
-    cd ics-openconnect
-    ./gradlew assembleDebug
+The debug APK is written to:
 
-To install the APK on a device:
+```text
+app/build/outputs/apk/debug/app-debug.apk
+```
 
-    adb install -r app/build/outputs/apk/debug/app-debug.apk
+Install it on a connected device or emulator:
 
-Logs of successful (and not-so-successful) builds can be found on this project's
-[Travis CI page](https://travis-ci.org/cernekee/ics-openconnect).
+```bash
+adb install -r app/build/outputs/apk/debug/app-debug.apk
+```
+
+## License
+
+OpenConnect for Android is released under the GPLv2 license. See
+[COPYING](COPYING) and [doc/LICENSE.txt](doc/LICENSE.txt) for details.
+
+Much of the Java code was derived from OpenVPN for Android by Arne Schwabe.

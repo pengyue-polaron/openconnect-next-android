@@ -24,12 +24,11 @@
 
 package app.openconnect;
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
 
-public class FragActivity extends Activity {
+public class FragActivity extends ToolbarActivity {
 
 	public static final String TAG = "OpenConnect";
 
@@ -40,17 +39,41 @@ public class FragActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_fragment);
+		String fragName = getIntent().getStringExtra(EXTRA_FRAGMENT_NAME);
+		setupToolbar(R.id.toolbar, getTitleForFragment(fragName), true);
 
 		if(savedInstanceState == null) {
 			try {
-				String fragName = getIntent().getStringExtra(EXTRA_FRAGMENT_NAME);
-				Fragment frag = (Fragment)Class.forName(FRAGMENT_PREFIX + fragName).newInstance();
-				getFragmentManager().beginTransaction().add(android.R.id.content, frag).commit();
-			} catch (Exception e) {
+					Fragment frag = (Fragment)Class.forName(FRAGMENT_PREFIX + fragName).newInstance();
+					getFragmentManager().beginTransaction().add(R.id.content_frame, frag).commit();
+					getFragmentManager().executePendingTransactions();
+					setToolbarMenuFragment(frag);
+				} catch (Exception e) {
 				Log.e(TAG, "unable to create fragment", e);
 				finish();
 			}
+		} else {
+			Fragment frag = getFragmentManager().findFragmentById(R.id.content_frame);
+			if (frag != null) {
+				setToolbarMenuFragment(frag);
+			}
 		}
     }
+
+	private CharSequence getTitleForFragment(String fragName) {
+		if ("GeneralSettings".equals(fragName)) {
+			return getString(R.string.generalsettings);
+		} else if ("TokenParentFragment".equals(fragName)) {
+			return getString(R.string.securid_info);
+		} else if ("AboutFragment".equals(fragName)) {
+			return getString(R.string.about_openconnect);
+		} else if ("FeedbackFragment".equals(fragName)) {
+			return getString(R.string.report_problem);
+		} else if ("SendDumpFragment".equals(fragName)) {
+			return getString(R.string.send_minidump);
+		}
+		return getString(R.string.app);
+	}
 
 }

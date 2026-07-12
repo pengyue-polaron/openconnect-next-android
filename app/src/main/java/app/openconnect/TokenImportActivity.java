@@ -28,7 +28,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -38,7 +37,9 @@ import android.os.Environment;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -49,7 +50,7 @@ import app.openconnect.core.AssetExtractor;
 import app.openconnect.core.ProfileManager;
 import org.stoken.LibStoken;
 
-public class TokenImportActivity extends Activity {
+public class TokenImportActivity extends ToolbarActivity {
 
 	public static final String TAG = "OpenConnect";
 
@@ -155,8 +156,15 @@ public class TokenImportActivity extends Activity {
     	}
     }
 
+	private void setTokenContentView(int layoutResId) {
+		setContentView(R.layout.activity_fragment);
+		setupToolbar(R.id.toolbar, getString(R.string.securid_info), true);
+		ViewGroup content = (ViewGroup)findViewById(R.id.content_frame);
+		LayoutInflater.from(this).inflate(layoutResId, content, true);
+	}
+
     private void setupEnterTokenScreen() {
-		setContentView(R.layout.token_string);
+		setTokenContentView(R.layout.token_string);
 
 		((EditText)findViewById(R.id.token_string_entry)).setText(mTokenString);
 
@@ -195,7 +203,7 @@ public class TokenImportActivity extends Activity {
     }
 
     private void setupUnlockTokenScreen() {
-    	setContentView(R.layout.token_unlock);
+        setTokenContentView(R.layout.token_unlock);
 
     	if (mStoken.importString(mTokenString) != LibStoken.SUCCESS) {
     		// should never happen, as it passed in the previous screen
@@ -321,7 +329,7 @@ public class TokenImportActivity extends Activity {
     }
 
     private void setupSelectProfileScreen() {
-    	setContentView(R.layout.token_profile);
+        setTokenContentView(R.layout.token_profile);
 
     	if (mStoken.importString(mTokenString) != LibStoken.SUCCESS ||
     	    mStoken.decryptSeed(mTokenPassword, mTokenDevID) != LibStoken.SUCCESS) {
@@ -399,7 +407,7 @@ public class TokenImportActivity extends Activity {
 	@Override
 	public void onActivityResult(int idx, int resultCode, Intent data) {
 		super.onActivityResult(idx, resultCode, data);
-		if (resultCode == Activity.RESULT_OK) {
+		if (resultCode == RESULT_OK) {
 			readFromFile(data.getStringExtra(FileSelect.RESULT_DATA));
 			return;
 		}

@@ -36,11 +36,8 @@ import android.app.ListFragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.Editable;
-import android.text.Html;
-import android.text.Html.ImageGetter;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -87,6 +84,7 @@ public class VPNProfileList extends ListFragment {
 		@Override
 		public View getView(final int position, View convertView, ViewGroup parent) {
 			View v = super.getView(position, convertView, parent);
+			VpnProfile profile = (VpnProfile)getListAdapter().getItem(position);
 
 			View titleview = v.findViewById(R.id.vpn_list_item_left);
 			titleview.setOnClickListener(new OnClickListener() {
@@ -105,6 +103,21 @@ public class VPNProfileList extends ListFragment {
 					editVPN(editProfile);
 				}
 			});
+
+			TextView summary = (TextView)v.findViewById(R.id.vpn_item_summary);
+			View statusDot = v.findViewById(R.id.vpn_item_status_dot);
+			String server = profile.mPrefs.getString("server_address", "");
+			if (server == null) {
+				server = "";
+			}
+			server = server.trim();
+			if (server.equals("")) {
+				summary.setText(R.string.profile_incomplete_summary);
+				statusDot.setBackgroundResource(R.drawable.bg_status_warning);
+			} else {
+				summary.setText(getString(R.string.profile_ready_summary, server));
+				statusDot.setBackgroundResource(R.drawable.bg_status_connected);
+			}
 
 			return v;
 		}
@@ -128,31 +141,20 @@ public class VPNProfileList extends ListFragment {
 		}
 	}
 
-	class MiniImageGetter implements ImageGetter {
-		@Override
-		public Drawable getDrawable(String source) {
-			Drawable d = null;
-			if ("ic_menu_add".equals(source))
-				d = getActivity().getResources().getDrawable(android.R.drawable.ic_menu_add);
-			else if("ic_menu_archive".equals(source))
-				d = getActivity().getResources().getDrawable(R.drawable.ic_menu_archive);
-
-			if (d != null) {
-				d.setBounds(0, 0, d.getIntrinsicWidth(), d.getIntrinsicHeight());
-				return d;
-			} else {
-				return null;
-			}
-		}
-	}
-
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		final View v = inflater.inflate(R.layout.vpn_profile_list, container,false);
 
 		TextView newvpntext = (TextView) v.findViewById(R.id.add_new_vpn_hint);
-		newvpntext.setText(Html.fromHtml(getString(R.string.add_new_vpn_hint),new MiniImageGetter(),null));
+		newvpntext.setText(R.string.add_new_vpn_hint);
+
+		v.findViewById(R.id.empty_add_profile_button).setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				onAddProfileClicked("");
+			}
+		});
 
 		mArrayadapter = new VPNArrayAdapter(getActivity(), R.layout.vpn_list_item, R.id.vpn_item_title);
 		setListAdapter(mArrayadapter);
@@ -217,7 +219,7 @@ public class VPNProfileList extends ListFragment {
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		menu.add(Menu.NONE, MENU_ADD_PROFILE, Menu.NONE, R.string.menu_add_profile)
-			.setIcon(android.R.drawable.ic_menu_add)
+			.setIcon(R.drawable.ic_add_24)
 			.setAlphabeticShortcut('a')
 			.setTitleCondensed(getActivity().getString(R.string.add))
 			.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS | MenuItem.SHOW_AS_ACTION_WITH_TEXT);

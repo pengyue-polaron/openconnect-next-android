@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="oc_primary">#72D7AD</color>
+    <color name="oc_on_primary">#003827</color>
+    <color name="oc_primary_container">#00513A</color>
+    <color name="oc_on_primary_container">#8EF4C8</color>
+    <color name="oc_secondary">#BBC6E3</color>
+    <color name="oc_on_secondary">#21304A</color>
+    <color name="oc_secondary_container">#374761</color>
+    <color name="oc_on_secondary_container">#D7E2FF</color>
+    <color name="oc_tertiary">#ECB978</color>
+    <color name="oc_on_tertiary">#452B05</color>
+    <color name="oc_tertiary_container">#5F3A0D</color>
+    <color name="oc_on_tertiary_container">#FFDDB9</color>
+    <color name="oc_error">#FFB4AB</color>
+    <color name="oc_surface">#101411</color>
+    <color name="oc_surface_container">#1C211D</color>
+    <color name="oc_on_surface">#E0E4DD</color>
+    <color name="oc_on_surface_variant">#C2C9C1</color>
+    <color name="oc_outline">#8C938B</color>
+    <color name="oc_outline_variant">#424943</color>
+</resources>

@@ -2,7 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:background="?attr/colorSurface"
+    android:orientation="vertical"
+    android:padding="@dimen/stdpadding" >
 
 	<!-- row 1: tokencode, progress bar -->
     <TextView
@@ -10,6 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:textColor="?attr/colorPrimary"
         android:textSize="48sp" />
 
     <ProgressBar
@@ -25,12 +28,12 @@
 	    android:layout_height="wrap_content"
 	    android:orientation="horizontal" >
 
-        <Button
+        <com.google.android.material.button.MaterialButton
 	        android:id="@+id/change_pin_button"
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
 	        android:layout_weight="1"
-	        style="?android:attr/buttonBarButtonStyle"
+	        style="@style/Widget.Material3.Button.TextButton"
 	        android:text="@string/new_pin" />
 
 	    <View
@@ -38,22 +41,22 @@
 	    	android:layout_height="fill_parent"
 	    	android:background="@android:color/darker_gray"/>
 
-	    <Button
+	    <com.google.android.material.button.MaterialButton
 	        android:id="@+id/copy_button"
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
 	        android:layout_weight="1"
-	        style="?android:attr/buttonBarButtonStyle"
+	        style="@style/Widget.Material3.Button.TextButton"
 	        android:text="@string/copy" />
 
 	</LinearLayout>
 
     <View
-    	android:layout_width="fill_parent"
-    	android:layout_height="1dp"
-    	android:paddingTop="10dp"
-    	android:paddingBottom="10dp"
-    	android:background="@android:color/darker_gray"/>
+	android:layout_width="match_parent"
+	android:layout_height="1dp"
+	android:paddingTop="10dp"
+	android:paddingBottom="10dp"
+	android:background="@color/oc_outline_variant"/>
 
 	<!-- row 3: next tokencode, using_pin -->
     <LinearLayout
@@ -65,6 +68,8 @@
             android:id="@+id/next_tokencode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textAppearance="?attr/textAppearanceBodyMedium"
+            android:textColor="?attr/colorOnSurface"
             android:gravity="left" />
 
         <Space
@@ -76,14 +81,16 @@
             android:id="@+id/using_pin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textAppearance="?attr/textAppearanceBodyMedium"
+            android:textColor="?attr/colorOnSurface"
             android:gravity="right" />
 
 	</LinearLayout>
 
 	<View
-		android:layout_width="fill_parent"
+		android:layout_width="match_parent"
 		android:layout_height="1dp"
-		android:background="@android:color/darker_gray"/>
+		android:background="@color/oc_outline_variant"/>
 
 	<!-- row 4: token S/N, exp date -->
     <LinearLayout
@@ -95,6 +102,8 @@
             android:id="@+id/token_sn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textAppearance="?attr/textAppearanceBodyMedium"
+            android:textColor="?attr/colorOnSurface"
             android:gravity="left" />
 
         <Space
@@ -106,14 +115,16 @@
             android:id="@+id/exp_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textAppearance="?attr/textAppearanceBodyMedium"
+            android:textColor="?attr/colorOnSurface"
             android:gravity="right" />
 
 	</LinearLayout>
 
 	<View
-		android:layout_width="fill_parent"
+		android:layout_width="match_parent"
 		android:layout_height="1dp"
-		android:background="@android:color/darker_gray"/>
+		android:background="@color/oc_outline_variant"/>
 
 	<!-- row 5: GMT, device ID -->
     <LinearLayout
@@ -125,6 +136,8 @@
             android:id="@+id/gmt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textAppearance="?attr/textAppearanceBodyMedium"
+            android:textColor="?attr/colorOnSurface"
             android:gravity="left" />
 
         <Space
@@ -136,13 +149,15 @@
             android:id="@+id/dev_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textAppearance="?attr/textAppearanceBodyMedium"
+            android:textColor="?attr/colorOnSurface"
             android:gravity="right" />
 
 	</LinearLayout>
 
 	<View
-		android:layout_width="fill_parent"
+		android:layout_width="match_parent"
 		android:layout_height="1dp"
-		android:background="@android:color/darker_gray"/>
+		android:background="@color/oc_outline_variant"/>
 
 </LinearLayout>

@@ -2,12 +2,16 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:background="?attr/colorSurface"
+    android:orientation="vertical"
+    android:padding="@dimen/stdpadding" >
 
     <TextView
         android:id="@+id/token_need_devid"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textAppearance="?attr/textAppearanceBodyLarge"
+        android:textColor="?attr/colorOnSurface"
         android:text="@string/token_need_devid" />
 
     <EditText
@@ -15,6 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:textAppearance="?attr/textAppearanceBodyLarge"
         android:inputType="textNoSuggestions" >
 
         <requestFocus />
@@ -29,6 +34,8 @@
         android:id="@+id/token_need_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textAppearance="?attr/textAppearanceBodyLarge"
+        android:textColor="?attr/colorOnSurface"
         android:text="@string/token_need_password" />
 
     <EditText
@@ -36,6 +43,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:textAppearance="?attr/textAppearanceBodyLarge"
         android:inputType="textPassword" >
     </EditText>
 
@@ -48,10 +56,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/cancel_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            style="@style/Widget.Material3.Button.TextButton"
             android:text="@string/cancel" />
 
         <Space
@@ -59,7 +68,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/next_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

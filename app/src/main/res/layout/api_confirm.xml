@@ -21,7 +21,7 @@
     <LinearLayout android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="3mm">
+            android:padding="@dimen/stdpadding">
 
         <LinearLayout android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -36,7 +36,8 @@
             <TextView android:id="@+id/prompt"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="18sp"/>
+                    android:textAppearance="?attr/textAppearanceTitleMedium"
+                    android:textColor="?attr/colorOnSurface"/>
         </LinearLayout>
 
         <TextView android:id="@+id/warning"
@@ -45,13 +46,14 @@
                 android:paddingTop="1mm"
                 android:paddingBottom="1mm"
                 android:text="@string/remote_warning"
-                android:textSize="18sp"/>
+                android:textAppearance="?attr/textAppearanceBodyLarge"
+                android:textColor="?attr/colorOnSurface"/>
 
         <CheckBox android:id="@+id/check"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/remote_trust"
-                android:textSize="20sp"
+                android:textAppearance="?attr/textAppearanceBodyLarge"
                 android:checked="false"/>
     </LinearLayout>
 </ScrollView>

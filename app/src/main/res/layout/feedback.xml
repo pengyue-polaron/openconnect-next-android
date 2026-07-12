@@ -2,7 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:background="?attr/colorSurface"
+    android:orientation="vertical"
+    android:padding="@dimen/stdpadding" >
 
     <Space
             android:layout_width="match_parent"
@@ -11,13 +13,15 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textAppearance="?attr/textAppearanceBodyLarge"
+        android:textColor="?attr/colorOnSurface"
         android:text="@string/feedback_plea" />
 
     <Space
             android:layout_width="match_parent"
             android:layout_height="20dip" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/i_love_it"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -27,7 +31,7 @@
             android:layout_width="match_parent"
             android:layout_height="20dip" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/needs_work"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -37,7 +41,7 @@
             android:layout_width="match_parent"
             android:layout_height="20dip" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/maybe_later"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

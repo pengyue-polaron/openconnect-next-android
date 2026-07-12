@@ -83,6 +83,7 @@ public class ConnectionEditorFragment extends PreferenceFragment
         for (Map.Entry<String,?> entry : sp.getAll().entrySet()) {
             updatePref(sp, entry.getKey());
         }
+        updatePref(sp, "batch_mode");
     }
 
     @Override
@@ -113,8 +114,21 @@ public class ConnectionEditorFragment extends PreferenceFragment
 			if (pref instanceof ListPreference) {
 				/* update all spinner prefs so the summary shows the current value */
 				ListPreference lpref = (ListPreference)pref;
+				if (value.equals("")) {
+					value = lpref.getValue();
+				}
+				if (value == null && key.equals("batch_mode")) {
+					value = "disabled";
+				}
+				if (value == null) {
+					return;
+				}
 				lpref.setValue(value);
-				pref.setSummary(lpref.getEntry());
+				if (key.equals("batch_mode")) {
+					pref.setSummary(getBatchModeSummary(value));
+				} else {
+					pref.setSummary(lpref.getEntry());
+				}
 			} else {
 				/* for ShowTextPreference entries, hide the filename */
 				if (fileSelectMap.containsKey(key) && !value.equals("")) {
@@ -163,6 +177,15 @@ public class ConnectionEditorFragment extends PreferenceFragment
         	((ConnectionEditorActivity)getActivity()).setProfileName(value);
         }
     }
+
+	private String getBatchModeSummary(String value) {
+		if ("empty_only".equals(value)) {
+			return getString(R.string.batch_mode_empty_only_summary);
+		} else if ("enabled".equals(value)) {
+			return getString(R.string.batch_mode_enabled_summary);
+		}
+		return getString(R.string.batch_mode_disabled_summary);
+	}
 
 	public void onSharedPreferenceChanged(SharedPreferences sp, String key) {
 		updatePref(sp, key);
