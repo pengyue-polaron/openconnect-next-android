@@ -82,10 +82,9 @@
   <string name="trace_log_summary">为了调试目的，增加日志记录级别。这将会影响到性能。</string>
   <string name="trace_log">启用 TRACE 日志记录</string>
   <string name="getproxy_error">获取代理设置时发生错误：%s</string>
-  <string name="no_vpn_profiles_defined">还没有 VPN 配置</string>
-  <string name="add_new_vpn_hint">添加一个配置并填写 VPN 网关地址。证书、令牌和免密登录可以稍后再配置。</string>
-  <string name="empty_profiles_fast_path">最快路径：添加网关，保存凭据，然后连接</string>
-  <string name="faq_hint">添加配置后，点击它即可连接。如果失败，Log 标签页会说明原因。</string>
+  <string name="no_vpn_profiles_defined">设置你的第一个 VPN</string>
+  <string name="add_new_vpn_hint">先填写公司或学校提供的 VPN 网关地址。证书、令牌和免密登录可以之后再补。</string>
+  <string name="faq_hint">保存后，点击配置即可连接。如果连不上，到日志页查看原因。</string>
   <string name="empty_profiles_cta">添加 VPN 配置</string>
   <string name="profile_server_summary">服务器：%1$s</string>
   <string name="profile_server_not_set">尚未填写服务器地址</string>

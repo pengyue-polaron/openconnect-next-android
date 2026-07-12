@@ -99,16 +99,6 @@
             android:textColor="?attr/colorOnSurfaceVariant"
             tools:ignore="SelectableText" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="14dp"
-            android:gravity="center"
-            android:text="@string/empty_profiles_fast_path"
-            android:textAppearance="?attr/textAppearanceLabelLarge"
-            android:textColor="?attr/colorPrimary"
-            tools:ignore="SelectableText" />
-
         <com.google.android.material.button.MaterialButton
             android:id="@+id/empty_add_profile_button"
             android:layout_width="wrap_content"

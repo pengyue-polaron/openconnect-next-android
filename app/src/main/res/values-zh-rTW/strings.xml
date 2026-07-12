@@ -37,10 +37,9 @@
   <string name="setting_loadtun">載入Tun模組</string>
   <string name="getproxy_error">取得代理伺服器資訊時發生錯誤: %s</string>
   <string name="send_minidump">向開發人員傳送Minidump</string>
-  <string name="no_vpn_profiles_defined">還沒有 VPN 設定檔</string>
-  <string name="add_new_vpn_hint">新增一個設定檔並填寫 VPN 閘道位址。憑證、權杖和免密登入可以稍後再設定。</string>
-  <string name="empty_profiles_fast_path">最快路徑：新增閘道，儲存憑證，然後連線</string>
-  <string name="faq_hint">新增設定檔後，點選它即可連線。如果失敗，Log 分頁會說明原因。</string>
+  <string name="no_vpn_profiles_defined">設定你的第一個 VPN</string>
+  <string name="add_new_vpn_hint">先填寫公司或學校提供的 VPN 閘道位址。憑證、權杖和免密登入可以之後再補。</string>
+  <string name="faq_hint">儲存後，點選設定檔即可連線。如果連不上，到日誌頁查看原因。</string>
   <string name="empty_profiles_cta">新增 VPN 設定檔</string>
   <string name="profile_server_summary">伺服器：%1$s</string>
   <string name="profile_server_not_set">尚未填寫伺服器位址</string>

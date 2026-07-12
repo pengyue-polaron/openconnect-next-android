@@ -98,10 +98,9 @@
     <string name="trace_log_summary">Increase logging verbosity for debugging purposes. This will affect performance.</string>
     <string name="trace_log">Enable TRACE logging</string>
     <string name="getproxy_error">Error getting proxy settings: %s</string>
-    <string name="no_vpn_profiles_defined">No VPN profiles yet</string>
-    <string name="add_new_vpn_hint">Add a profile with your VPN gateway address. Certificates, tokens, and automatic login can be configured later.</string>
-    <string name="empty_profiles_fast_path">Fast path: add gateway, save credentials, connect</string>
-    <string name="faq_hint">After adding a profile, tap it to connect. If something fails, the Log tab will explain why.</string>
+    <string name="no_vpn_profiles_defined">Set up your first VPN</string>
+    <string name="add_new_vpn_hint">Start with the VPN gateway address from your organization. Certificates, tokens, and automatic login can be added later.</string>
+    <string name="faq_hint">After saving, tap the profile to connect. If it does not work, open Log for details.</string>
     <string name="empty_profiles_cta">Add VPN profile</string>
     <string name="profile_server_summary">Server: %1$s</string>
     <string name="profile_server_not_set">Server address not set</string>
