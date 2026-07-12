@@ -261,8 +261,6 @@ public class VPNProfileList extends ListFragment {
 			mDialogEntry.setText(savedEntry);
 
 			AlertDialog.Builder builder = new AlertDialog.Builder(context)
-				.setTitle(R.string.menu_add_profile)
-				.setMessage(R.string.add_profile_hostname_prompt)
 				.setView(v);
 
 			builder.setPositiveButton(android.R.string.ok,

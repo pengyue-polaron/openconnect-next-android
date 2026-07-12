@@ -38,7 +38,10 @@
         <item name="colorOnSurfaceVariant">@color/oc_on_surface_variant</item>
         <item name="colorOutline">@color/oc_outline</item>
         <item name="colorOutlineVariant">@color/oc_outline_variant</item>
+        <item name="colorAccent">@color/oc_primary</item>
+        <item name="colorControlActivated">@color/oc_primary</item>
         <item name="android:colorAccent">@color/oc_primary</item>
+        <item name="android:colorControlActivated">@color/oc_primary</item>
         <item name="android:navigationBarColor">@color/oc_surface</item>
         <item name="android:statusBarColor">@color/oc_surface</item>
         <item name="android:windowLightStatusBar">true</item>

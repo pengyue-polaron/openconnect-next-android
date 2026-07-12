@@ -38,7 +38,7 @@
   <string name="file_select">选择…</string>
   <string name="file_nothing_selected">您必须选择一个文件</string>
   <string name="configure_the_vpn">配置 VPN</string>
-  <string name="menu_add_profile">添加配置文件</string>
+  <string name="menu_add_profile">添加 VPN 配置</string>
   <string name="add_profile_hostname_prompt">输入主机名、IP 地址或网址：</string>
   <string name="hostname_examples">有效格式包括：vpn.example.com (典型用法) vpn.example.com:443 (主机：端口) https://vpn.example.com/my-group-url</string>
   <string name="disconnect">断开连接</string>
