@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <string name="app">OpenConnect</string>
+  <string name="app">OpenConnect Next</string>
   <string name="location">位置</string>
   <string name="cant_read_folder">目法讀取檔案目錄</string>
   <string name="cancel">取消</string>
@@ -12,8 +12,8 @@
   <string name="no_data">沒有資料</string>
   <string name="client_certificate_title">客戶端證書</string>
   <string name="securid_info">SecurID 資訊</string>
-  <string name="about_openconnect">關於 OpenConnect</string>
-  <string name="about_version">OpenConnect for Android v%1$s</string>
+  <string name="about_openconnect">關於 OpenConnect Next</string>
+  <string name="about_version">OpenConnect Next v%1$s</string>
   <string name="about_summary">一個適用於 OpenConnect 相容 SSL VPN 伺服器的現代 Android 客戶端。這個分支重點維護新的 Android 建置、更清楚的設定流程、已儲存憑證登入，以及更乾淨的 Material 介面。</string>
   <string name="about_project_links">專案連結</string>
   <string name="about_project_links_summary">GitHub 倉庫用於查看原始碼、提交問題、下載 APK Release 和追蹤專案更新。</string>
@@ -21,7 +21,7 @@
   <string name="about_github_issues">GitHub Issues</string>
   <string name="about_releases">GitHub Releases</string>
   <string name="about_credits_title">鳴謝與授權</string>
-  <string name="about_credits_body">OpenConnect for Android 以 GPLv2 授權發布。大量 Java 程式碼源自 Arne Schwabe 的 OpenVPN for Android。本應用還包含 OpenConnect、GnuTLS、GMP、Nettle、Libxml2、OATH Toolkit、stoken、LibTomCrypt 和 cURL 等元件。</string>
+  <string name="about_credits_body">OpenConnect Next 以 GPLv2 授權發布。大量 Java 程式碼源自 Arne Schwabe 的 OpenVPN for Android。本應用還包含 OpenConnect、GnuTLS、GMP、Nettle、Libxml2、OATH Toolkit、stoken、LibTomCrypt 和 cURL 等元件。</string>
   <string name="vpn_list_title">設定檔</string>
   <string name="status">狀態</string>
   <string name="log">日誌</string>
@@ -86,7 +86,7 @@
   <string name="connection_status_disconnected">已中斷連線</string>
   <string name="connection_status_disconnected_message">到設定檔頁選擇一個設定檔來啟動 VPN 連線。</string>
   <string name="connection_status_reconnect_message">上一次工作階段是 %1$s。可以重新連線重試，或選擇其他設定檔。</string>
-  <string name="connection_status_progress_message">保持 OpenConnect 開啟，並依 VPN 伺服器要求完成登入、憑證或權杖提示。</string>
+  <string name="connection_status_progress_message">保持 OpenConnect Next 開啟，並依 VPN 伺服器要求完成登入、憑證或權杖提示。</string>
   <string name="log_state_disconnected">已中斷 - 請選擇一個設定檔連線</string>
   <string name="log_state_reconnect">已中斷 - 可重新連線至 %1$s，或選擇其他設定檔</string>
   <string name="log_state_connected">已連線%1$s</string>
@@ -102,7 +102,7 @@
   <string name="make_selection_inline">複製到設定檔</string>
   <string name="add">新增</string>
   <string name="prompt">%1$s 正在嘗試控制 %2$s</string>
-  <string name="remote_warning">如果繼續，你將允許該應用完全控制 OpenConnect for Android，並攔截所有網路流量。<b>除非你信任該應用，否則請不要繼續。</b>如果該應用是惡意應用，你需要自行承擔所有後果。</string>
+  <string name="remote_warning">如果繼續，你將允許該應用完全控制 OpenConnect Next，並攔截所有網路流量。<b>除非你信任該應用，否則請不要繼續。</b>如果該應用是惡意應用，你需要自行承擔所有後果。</string>
   <string name="remote_trust">我信任此應用。</string>
   <string name="no_external_app_allowed">沒有允許使用外部 API 的應用</string>
   <string name="allowed_apps">已授權的應用：%s</string>

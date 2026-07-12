@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <string name="app">OpenConnect</string>
+  <string name="app">OpenConnect Next</string>
   <string name="permission_description">Anderen Anwendungen die Steuerung von OpenConnect gestatten</string>
   <string name="location">Ort</string>
   <string name="cant_read_folder">Verzeichnis kann nicht gelesen werden</string>

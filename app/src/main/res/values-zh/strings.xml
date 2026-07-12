@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <string name="app">OpenConnect</string>
-  <string name="permission_description">允许另一个应用程序来控制 OpenConnect</string>
+  <string name="app">OpenConnect Next</string>
+  <string name="permission_description">允许另一个应用程序来控制 OpenConnect Next</string>
   <string name="location">位置</string>
   <string name="cant_read_folder">无法读取目录</string>
   <string name="ok">确定</string>
@@ -18,8 +18,8 @@
   <string name="maybe_later">或许以后</string>
   <string name="help_with_translations">通过翻译帮助</string>
   <string name="report_problem">GitHub 问题反馈</string>
-  <string name="about_openconnect">关于 OpenConnect</string>
-  <string name="about_version">OpenConnect for Android v%1$s</string>
+  <string name="about_openconnect">关于 OpenConnect Next</string>
+  <string name="about_version">OpenConnect Next v%1$s</string>
   <string name="about_summary">一个适用于 OpenConnect 兼容 SSL VPN 服务器的现代 Android 客户端。这个分支重点维护新的 Android 构建、更清晰的配置流程、已保存凭据登录，以及更干净的 Material 界面。</string>
   <string name="about_project_links">项目链接</string>
   <string name="about_project_links_summary">GitHub 仓库用于查看源码、提交问题、下载 APK Release 和跟进项目更新。</string>
@@ -27,7 +27,7 @@
   <string name="about_github_issues">GitHub Issues</string>
   <string name="about_releases">GitHub Releases</string>
   <string name="about_credits_title">鸣谢与许可证</string>
-  <string name="about_credits_body">OpenConnect for Android 以 GPLv2 许可证发布。大量 Java 代码源自 Arne Schwabe 的 OpenVPN for Android。本应用还包含 OpenConnect、GnuTLS、GMP、Nettle、Libxml2、OATH Toolkit、stoken、LibTomCrypt 和 cURL 等组件。</string>
+  <string name="about_credits_body">OpenConnect Next 以 GPLv2 许可证发布。大量 Java 代码源自 Arne Schwabe 的 OpenVPN for Android。本应用还包含 OpenConnect、GnuTLS、GMP、Nettle、Libxml2、OATH Toolkit、stoken、LibTomCrypt 和 cURL 等组件。</string>
   <string name="securid_none_defined">您的 VPN 配置文件中没有任何一个具有 SecurID 令牌字符串的集合。若要添加一个，导入一个 \"sdtid\" 文件或通过您的电子邮件，点击 \"http://127.0.0.1/securid\" 网址。请参见常见问题解答以获取更多信息。</string>
   <string name="securid_parse_error">无法解析这个配置文件中的 SecurID 令牌字符串</string>
   <string name="securid_internal_error">无法访问 VPN 配置文件。请从“关于 OpenConnect”页面打开 GitHub Issues 反馈。</string>
@@ -108,13 +108,13 @@
   <string name="send_minidump">向开发人员发送小型转储</string>
   <string name="send_minidump_summary">向开发人员发送有关上次崩溃的调试信息</string>
   <string name="notification_input_needed">需要用户输入</string>
-  <string name="notification_touch_here">触摸此处跳转至 OpenConnect</string>
+  <string name="notification_touch_here">触摸此处跳转至 OpenConnect Next</string>
   <string name="state_connected_to">连接至 %1$s</string>
   <string name="connected_for">已连接 %1$s</string>
   <string name="connection_status_disconnected">已断开</string>
   <string name="connection_status_disconnected_message">到配置文件页选择一个配置来启动 VPN 连接。</string>
   <string name="connection_status_reconnect_message">上一次会话是 %1$s。可以重连重试，或选择其他配置。</string>
-  <string name="connection_status_progress_message">保持 OpenConnect 打开，并按 VPN 服务器要求完成登录、证书或令牌提示。</string>
+  <string name="connection_status_progress_message">保持 OpenConnect Next 打开，并按 VPN 服务器要求完成登录、证书或令牌提示。</string>
   <string name="log_state_disconnected">已断开 - 请选择一个配置连接</string>
   <string name="log_state_reconnect">已断开 - 可重连至 %1$s，或选择其他配置</string>
   <string name="log_state_connected">已连接%1$s</string>
@@ -129,7 +129,7 @@
   <string name="make_selection_inline">复制到配置文件</string>
   <string name="add">添加</string>
   <string name="prompt">%1$s 试图控制 %2$s</string>
-  <string name="remote_warning">如果继续操作，您将允许该应用程序完全控制 Android 版的 OpenConnect 并截获所有的网络流量。<b>除非您信任该应用程序，否则请不要接受。</b>否则，您就会处于资料被恶意软件破坏的风险中。</string>
+  <string name="remote_warning">如果继续操作，您将允许该应用程序完全控制 OpenConnect Next 并截获所有的网络流量。<b>除非您信任该应用程序，否则请不要接受。</b>否则，您就会处于资料被恶意软件破坏的风险中。</string>
   <string name="remote_trust">我信任这个应用程序。</string>
   <string name="no_external_app_allowed">没有应用程序被允许使用外部 API</string>
   <string name="allowed_apps">所允许的应用程序：%s</string>

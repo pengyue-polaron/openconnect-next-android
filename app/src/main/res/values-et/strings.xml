@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <string name="app">OpenConnect</string>
+  <string name="app">OpenConnect Next</string>
   <string name="location">Asukoht</string>
   <string name="cant_read_folder">Kataloog pole loetav</string>
   <string name="cancel">Tühista</string>

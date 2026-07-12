@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <string name="app">OpenConnect</string>
+  <string name="app">OpenConnect Next</string>
   <string name="location">Розташування</string>
   <string name="cant_read_folder">Не вдалося прочитати каталог</string>
   <string name="cancel">Скасувати</string>
