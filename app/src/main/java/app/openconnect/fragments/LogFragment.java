@@ -67,6 +67,7 @@ public class LogFragment extends ListFragment {
 	private Activity mActivity;
 
 	private TextView mSpeedView;
+	private View mSpeedDot;
 
     @Override
 	public boolean onOptionsItemSelected(MenuItem item) {
@@ -125,6 +126,7 @@ public class LogFragment extends ListFragment {
 				byteCountSummary = " - " + mConn.getByteCountSummary();
 			}
 			mSpeedView.setText(getLogStatusText(service, state, byteCountSummary));
+			mSpeedDot.setBackgroundResource(getLogStatusDot(service, state));
 
     		if (mLogAdapter == null) {
     			mLogAdapter = service.getArrayAdapter(mActivity);
@@ -150,6 +152,17 @@ public class LogFragment extends ListFragment {
 		}
 		String states[] = getResources().getStringArray(R.array.connection_states);
 		return getString(R.string.log_state_progress, states[state]);
+	}
+
+	private int getLogStatusDot(OpenVpnService service, int state) {
+		if (state == OpenConnectManagementThread.STATE_CONNECTED) {
+			return R.drawable.bg_status_connected;
+		}
+		if (state == OpenConnectManagementThread.STATE_DISCONNECTED) {
+			return service.getReconnectName() != null ?
+					R.drawable.bg_status_warning : R.drawable.bg_status_idle;
+		}
+		return R.drawable.bg_status_warning;
 	}
 
 	@Override
@@ -203,6 +216,7 @@ public class LogFragment extends ListFragment {
 		});
 
 		mSpeedView = (TextView)v.findViewById(R.id.speed);
+		mSpeedDot = v.findViewById(R.id.log_status_dot);
 		return v;
     }
 

@@ -10,17 +10,33 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/colorSurfaceContainer"
+        android:background="@drawable/bg_surface_panel"
         android:orientation="vertical"
         android:padding="16dp" >
 
-        <TextView
-            android:id="@+id/connection_state"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAppearance="?attr/textAppearanceTitleMedium"
-            android:textColor="?attr/colorOnSurface"
-            android:gravity="left" />
+            android:gravity="center_vertical"
+            android:orientation="horizontal" >
+
+            <View
+                android:id="@+id/connection_status_dot"
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:layout_marginEnd="12dp"
+                android:background="@drawable/bg_status_idle" />
+
+            <TextView
+                android:id="@+id/connection_state"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textAppearance="?attr/textAppearanceTitleMedium"
+                android:textColor="?attr/colorOnSurface"
+                android:gravity="left" />
+
+        </LinearLayout>
 
         <TextView
             android:id="@+id/connection_message"
@@ -46,6 +62,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
+        android:layout_marginTop="12dp"
         android:layout_marginBottom="12dp"
         android:background="@color/oc_outline_variant"/>
 
@@ -54,7 +71,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:visibility="invisible"
-        android:background="?attr/colorSurfaceContainer"
+        android:background="@drawable/bg_surface_panel"
         android:orientation="vertical"
         android:paddingStart="16dp"
         android:paddingEnd="16dp" >

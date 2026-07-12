@@ -39,11 +39,15 @@
   <string name="send_minidump">向開發人員傳送Minidump</string>
   <string name="no_vpn_profiles_defined">還沒有 VPN 設定檔</string>
   <string name="add_new_vpn_hint">新增一個設定檔並填寫 VPN 閘道位址。憑證、權杖和免密登入可以稍後再設定。</string>
+  <string name="empty_profiles_fast_path">最快路徑：新增閘道，儲存憑證，然後連線</string>
   <string name="faq_hint">新增設定檔後，點選它即可連線。如果失敗，Log 分頁會說明原因。</string>
   <string name="empty_profiles_cta">新增 VPN 設定檔</string>
   <string name="profile_server_summary">伺服器：%1$s</string>
   <string name="profile_server_not_set">尚未填寫伺服器位址</string>
+  <string name="profile_ready_summary">伺服器：%1$s - 點選連線</string>
+  <string name="profile_incomplete_summary">缺少伺服器位址 - 點選設定</string>
   <string name="reconnect_available_hint">可以不編輯設定檔，直接重試上一次工作階段。</string>
+  <string name="add_profile_input_hint">VPN 閘道位址</string>
   <string name="connected_for">已連線 %1$s</string>
   <string name="connection_status_disconnected">已中斷連線</string>
   <string name="connection_status_disconnected_message">到 Profiles 分頁選擇一個設定檔來啟動 VPN 連線。</string>

@@ -100,11 +100,15 @@
     <string name="getproxy_error">Error getting proxy settings: %s</string>
     <string name="no_vpn_profiles_defined">No VPN profiles yet</string>
     <string name="add_new_vpn_hint">Add a profile with your VPN gateway address. Certificates, tokens, and automatic login can be configured later.</string>
+    <string name="empty_profiles_fast_path">Fast path: add gateway, save credentials, connect</string>
     <string name="faq_hint">After adding a profile, tap it to connect. If something fails, the Log tab will explain why.</string>
     <string name="empty_profiles_cta">Add VPN profile</string>
     <string name="profile_server_summary">Server: %1$s</string>
     <string name="profile_server_not_set">Server address not set</string>
+    <string name="profile_ready_summary">Server: %1$s - tap to connect</string>
+    <string name="profile_incomplete_summary">Server address missing - tap settings</string>
     <string name="reconnect_available_hint">The previous session can be tried again without editing the profile.</string>
+    <string name="add_profile_input_hint">VPN gateway address</string>
     <string name="send_minidump">Send Minidump to developer</string>
     <string name="send_minidump_summary">Sends debugging information about last crash to developer</string>
     <string name="notification_input_needed">User input needed</string>

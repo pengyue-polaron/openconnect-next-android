@@ -2,6 +2,7 @@
 
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/parentPanel"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -11,15 +12,25 @@
     android:paddingStart="4dp"
     android:paddingEnd="4dp">
 
-    <EditText
-        android:id="@+id/entry"
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textUri"
-        android:textAppearance="?attr/textAppearanceBodyLarge"
-        android:ems="10" >
-        <requestFocus />
-    </EditText>
+        android:hint="@string/add_profile_input_hint"
+        app:boxBackgroundMode="outline">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/entry"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textUri"
+            android:minHeight="56dp"
+            android:singleLine="true"
+            android:textAppearance="?attr/textAppearanceBodyLarge" >
+            <requestFocus />
+        </com.google.android.material.textfield.TextInputEditText>
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
         android:layout_width="match_parent"

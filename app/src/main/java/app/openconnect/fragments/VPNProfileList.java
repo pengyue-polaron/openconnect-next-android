@@ -105,11 +105,18 @@ public class VPNProfileList extends ListFragment {
 			});
 
 			TextView summary = (TextView)v.findViewById(R.id.vpn_item_summary);
+			View statusDot = v.findViewById(R.id.vpn_item_status_dot);
 			String server = profile.mPrefs.getString("server_address", "");
+			if (server == null) {
+				server = "";
+			}
+			server = server.trim();
 			if (server.equals("")) {
-				summary.setText(R.string.profile_server_not_set);
+				summary.setText(R.string.profile_incomplete_summary);
+				statusDot.setBackgroundResource(R.drawable.bg_status_warning);
 			} else {
-				summary.setText(getString(R.string.profile_server_summary, server));
+				summary.setText(getString(R.string.profile_ready_summary, server));
+				statusDot.setBackgroundResource(R.drawable.bg_status_connected);
 			}
 
 			return v;

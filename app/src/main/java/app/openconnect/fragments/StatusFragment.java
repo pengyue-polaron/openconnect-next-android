@@ -118,12 +118,17 @@ public class StatusFragment extends Fragment {
         tv.setText(value);
     }
 
+    private void setStatusDot(int resId) {
+        mView.findViewById(R.id.connection_status_dot).setBackgroundResource(resId);
+    }
+
     private void updateUI(OpenVpnService service) {
 		int state = service.getConnectionState();
 		int detailVisibility = View.GONE;
 
 		if (state == OpenConnectManagementThread.STATE_CONNECTED) {
 			detailVisibility = View.VISIBLE;
+			setStatusDot(R.drawable.bg_status_connected);
 
 			String s = getString(R.string.state_connected_to, service.profile.getName());
 			writeText(R.id.connection_state, s);
@@ -160,12 +165,15 @@ public class StatusFragment extends Fragment {
 			if (state == OpenConnectManagementThread.STATE_DISCONNECTED) {
 				String profileName = service.getReconnectName();
 				if (profileName != null) {
+					setStatusDot(R.drawable.bg_status_warning);
 					writeText(R.id.connection_message,
 							getString(R.string.connection_status_reconnect_message, profileName));
 				} else {
+					setStatusDot(R.drawable.bg_status_idle);
 					writeText(R.id.connection_message, getString(R.string.connection_status_disconnected_message));
 				}
 			} else {
+				setStatusDot(R.drawable.bg_status_warning);
 				writeText(R.id.connection_message, getString(R.string.connection_status_progress_message));
 			}
 		}
