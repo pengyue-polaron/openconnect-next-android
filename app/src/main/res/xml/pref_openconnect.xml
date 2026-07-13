@@ -12,7 +12,7 @@
             android:key="server_address"
             android:title="@string/server_address"
             android:dialogMessage="@string/add_profile_hostname_prompt"
-            android:inputType="textUri"
+            android:inputType="textVisiblePassword|textNoSuggestions"
             android:defaultValue="" />
         <app.openconnect.ShowTextPreference
             android:key="ca_certificate"
@@ -59,7 +59,6 @@
             android:title="@string/batch_mode"
             android:summary="@string/batch_mode_disabled_summary"
             android:dialogTitle="@string/batch_mode"
-            android:dialogMessage="@string/batch_mode_dialog_message"
             android:entries="@array/batch_mode_entries"
             android:entryValues="@array/batch_mode_values"
             android:defaultValue="disabled" />
@@ -89,7 +88,7 @@
             android:key="split_tunnel_networks"
             android:title="@string/split_tunnel_networks"
             android:dialogMessage="@string/split_tunnel_networks_message"
-            android:inputType="textUri|textMultiLine"
+            android:inputType="textUri|textMultiLine|textNoSuggestions"
             android:defaultValue="" />
         <CheckBoxPreference
             android:key="disable_xml_post"

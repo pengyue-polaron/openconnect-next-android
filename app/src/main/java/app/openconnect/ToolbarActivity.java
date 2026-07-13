@@ -25,6 +25,7 @@ public class ToolbarActivity extends Activity {
 		mToolbar.setTitle(title);
 		if (showBack) {
 			mToolbar.setNavigationIcon(R.drawable.ic_arrow_back_24);
+			mToolbar.setNavigationContentDescription(R.string.navigate_up);
 			mToolbar.setNavigationOnClickListener(v -> finish());
 		}
 		mToolbar.setOnMenuItemClickListener(this::onToolbarMenuItemSelected);

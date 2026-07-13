@@ -8,6 +8,7 @@
     <string name="cant_read_folder">Unable to read directory</string>
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
+    <string name="navigate_up">Navigate up</string>
     <string name="next">Next</string>
     <string name="finish">Finish</string>
     <string name="no_data">No Data</string>

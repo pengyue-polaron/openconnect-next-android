@@ -2,9 +2,10 @@
 <resources>
   <string name="app">OpenConnect Next</string>
   <string name="location">位置</string>
-  <string name="cant_read_folder">目法讀取檔案目錄</string>
+  <string name="cant_read_folder">無法讀取檔案目錄</string>
   <string name="cancel">取消</string>
   <string name="ok">確定</string>
+  <string name="navigate_up">返回上一層</string>
   <string name="yes">是</string>
   <string name="no">否</string>
   <string name="next">下一步</string>
