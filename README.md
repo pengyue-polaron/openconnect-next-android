@@ -102,6 +102,8 @@ It reuses credentials saved from a normal login prompt.
 
 - JDK 17 or newer.
 - Android SDK with platform tools.
+- Android NDK r27c (`ndk;27.2.12479018`).
+- GNU build tools (`make`, Autoconf, Automake, Libtool, pkg-config).
 - Git submodules initialized.
 
 ### Build
@@ -110,7 +112,17 @@ It reuses credentials saved from a normal login prompt.
 git clone https://github.com/pengyue-polaron/openconnect-next-android.git
 cd openconnect-next-android
 git submodule update --init --recursive
+make -C external install
 ./gradlew assembleDebug
+```
+
+The native build pins OpenConnect v9.21, stoken v0.93, curl 8.21.0, and the
+cryptographic dependencies declared by OpenConnect's Android build. Native
+executables and shared libraries are linked for 16 KB Android page sizes.
+Override the NDK location when needed:
+
+```bash
+make -C external install ANDROID_NDK="$ANDROID_HOME/ndk/27.2.12479018"
 ```
 
 The debug APK is written to:

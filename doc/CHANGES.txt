@@ -1,3 +1,16 @@
+v1.15.0 - 2026/07/16
+
+ - Migrate the native VPN stack to official OpenConnect v9.21, stoken v0.93,
+   and curl 8.21.0
+
+ - Fix HTTPS authentication response handling that could terminate login with
+   SSL pull-function and cookie acquisition errors
+
+ - Rebuild all four Android ABIs with 16 KiB page-size support
+
+ - Run CSD and HIP helpers from Android's executable native library directory
+   instead of the writable app data directory
+
 v1.14.1 - 2026/07/16
 
  - Add automatic-login choices directly to the new VPN profile flow

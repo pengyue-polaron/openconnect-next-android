@@ -45,6 +45,8 @@ import android.net.VpnService;
 import android.os.Build;
 import android.os.ParcelFileDescriptor;
 import android.preference.PreferenceManager;
+import android.system.ErrnoException;
+import android.system.Os;
 import android.util.Base64;
 
 import org.infradead.libopenconnect.LibOpenConnect;
@@ -442,7 +444,17 @@ public class OpenConnectManagementThread implements Runnable, OpenVPNManagement 
 				PATH = mFilesDir + ":" + PATH;
 			}
 			s = prefToTempFile("custom_csd_wrapper", true);
-			mOC.setCSDWrapper(s != null ? s : (mFilesDir + File.separator + "android_csd.sh"), mCacheDir, PATH);
+			String csdSource = s != null ? s : (mFilesDir + File.separator + "android_csd.sh");
+			String csdContents = AssetExtractor.readStringFromFile(csdSource);
+			if (csdContents == null ||
+					writeCertOrScript(mCacheDir + File.separator + "csd-wrapper.sh",
+							csdContents, false) < 0) {
+				log("Error preparing CSD wrapper script");
+				return false;
+			}
+			String nativeDir = mContext.getApplicationInfo().nativeLibraryDir;
+			mOC.setCSDWrapper(nativeDir + File.separator + "libcsd-wrapper.so",
+					mCacheDir, PATH);
 
 			s = prefToTempFile("ca_certificate", false);
 			if (s != null) {
@@ -671,21 +683,18 @@ public class OpenConnectManagementThread implements Runnable, OpenVPNManagement 
 			log("Error extracting assets");
 		}
 
-		// curl wrapper script:
-		// <= ICS: always use run_pie
-		// >  ICS: never use run_pie
+		// Executing writable files from app data is blocked on modern Android.
+		// Keep curl in nativeLibraryDir and expose it through a PATH symlink.
 		try {
-			String curl_bin = mFilesDir + "/curl-bin";
-			String run_pie = mFilesDir + "/run_pie ";
-
-			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-				run_pie = "";
+			String curlLink = mFilesDir + File.separator + "curl";
+			File link = new File(curlLink);
+			if (!link.delete() && link.exists()) {
+				throw new IOException("Unable to replace curl helper");
 			}
-			writeCertOrScript(mFilesDir + "/curl",
-				"#!/system/bin/sh\nexec " + run_pie + curl_bin + " \"$@\"\n", true);
-		} catch (IOException e) {
-			// mkdir won't throw an exception
-			log("Error writing curl wrapper scripts");
+			Os.symlink(mContext.getApplicationInfo().nativeLibraryDir +
+					File.separator + "libcurl-bin.so", curlLink);
+		} catch (IOException | ErrnoException e) {
+			log("Error preparing curl helper: " + e.getMessage());
 		}
 	}
 

@@ -86,21 +86,8 @@ public class AssetExtractor {
     	out.close();
     }
 
-    private static String getArch() {
-        String prop = System.getProperty("os.arch");
-        if (prop.contains("aarch64")) {
-            return "arm64-v8a";
-        } else if (prop.contains("x86_64")) {
-            return "x86_64";
-        } else if (prop.contains("x86") || prop.contains("i686") || prop.contains("i386")) {
-            return "x86";
-        } else {
-            return "armeabi";
-        }
-    }
-
 	public static boolean extractAll(Context ctx, int flags, String path) {
-		String patterns[] = { "assets/raw/noarch", "assets/raw/" + getArch() };
+		String patterns[] = { "assets/raw/noarch" };
 
 		if (path == null) {
 			path = ctx.getFilesDir().getAbsolutePath();
@@ -126,6 +113,9 @@ public class AssetExtractor {
 
 					File file = new File(fname);
 					if ((flags & FL_FORCE) == 0 && file.exists() && crc32(file) == ze.getCrc()) {
+						if ((flags & FL_NOEXEC) == 0) {
+							file.setExecutable(true);
+						}
 						Log.d(TAG, "AssetExtractor: skipping " + fname);
 						continue;
 					}

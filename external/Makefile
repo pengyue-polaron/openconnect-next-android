@@ -1,156 +1,173 @@
-ANDROID_NDK ?= /opt/android-sdk-linux_x86/android-ndk-r16b
+ANDROID_NDK ?= $(HOME)/Android/Sdk/ndk/27.2.12479018
+ANDROID_API ?= 23
+ANDROID_LDFLAGS := -Wl,-z,max-page-size=16384
 
-JAR_DIR := ../app/libs
 JNI_DIR := ../app/src/main/jniLibs
-BIN_DIR := ../app/src/main/assets/raw
+LEGACY_BIN_DIR := ../app/src/main/assets/raw
 
 ARCH_LIST := arm arm64 x86 x86_64
 
-# The __ANDROID_API__ version needs to stay in sync with
-# openconnect/android/Makefile
-NDK_ARCH_arm := armeabi
-TRIPLET_arm := arm-linux-androideabi
-CFLAGS_arm := -mthumb -Os -D__ANDROID_API__=14
+NDK_ARCH_arm := armeabi-v7a
+TRIPLET_arm := armv7a-linux-androideabi
 
 NDK_ARCH_arm64 := arm64-v8a
 TRIPLET_arm64 := aarch64-linux-android
-CFLAGS_arm64 := -Os -D__ANDROID_API__=26
 
 NDK_ARCH_x86 := x86
 TRIPLET_x86 := i686-linux-android
-CFLAGS_x86 := -Os -D__ANDROID_API__=14
 
 NDK_ARCH_x86_64 := x86_64
 TRIPLET_x86_64 := x86_64-linux-android
-CFLAGS_x86_64 := -Os -D__ANDROID_API__=21
 
-JAR_LIST := openconnect-wrapper.jar stoken-wrapper.jar
-PKG_LIST := curl
-
-ARCH_TARGETS := $(addprefix arch-,$(ARCH_LIST))
-
-ARCH_CURL_TARGETS := $(addsuffix /curl,$(ARCH_LIST))
-ARCH_STOKEN_TARGETS := $(addsuffix /libstoken.so,$(ARCH_LIST))
-ARCH_OC_TARGETS := $(addsuffix /libopenconnect.so,$(ARCH_LIST))
-ARCH_TOOLCHAIN_TARGETS := $(addsuffix /toolchain/.installed,$(ARCH_LIST))
-
-INSTALL_ARCH_TARGETS := $(addprefix install-arch-,$(ARCH_LIST))
-INSTALL_JAR_TARGETS := $(addprefix install-jar-,$(JAR_LIST))
-
-CURL_VER := 7.58.0
+CURL_VER := 8.21.0
+CURL_SHA256 := aa1b66a70eace83dc624508745646c08ae561de512ab403adffb93ac87fc72e6
+CURL_TAR := curl-$(CURL_VER).tar.xz
+CURL_SRC := curl-$(CURL_VER)
 
 TOPDIR := $(shell pwd)
+TOOLCHAIN := $(ANDROID_NDK)/toolchains/llvm/prebuilt/linux-x86_64
+OPENCONNECT_REV := $(shell git -C openconnect rev-parse --short=12 HEAD)
+OPENCONNECT_GIT_DIR := $(shell git -C openconnect rev-parse --absolute-git-dir)
+STOKEN_REV := $(shell git -C stoken rev-parse --short=12 HEAD)
+OPENCONNECT_BOOTSTRAP_STAMP := .build-stamps/openconnect-bootstrap-$(OPENCONNECT_REV)
+STOKEN_BOOTSTRAP_STAMP := .build-stamps/stoken-bootstrap-$(STOKEN_REV)
+OPENCONNECT_STAMP := .build-stamps/openconnect-$(OPENCONNECT_REV)-api$(ANDROID_API)-ndk$(notdir $(ANDROID_NDK))-page16k
+STOKEN_STAMP := .build-stamps/stoken-$(STOKEN_REV)
 
-get_sysroot = $(TOPDIR)/$(1)/toolchain/sysroot/usr
-set_build_env = PATH=$(TOPDIR)/$(1)/toolchain/bin:$$PATH \
-	PKG_CONFIG_LIBDIR=$(call get_sysroot,$(1))/lib/pkgconfig
+ARCH_TARGETS := $(addprefix arch-,$(ARCH_LIST))
+INSTALL_ARCH_TARGETS := $(addprefix install-arch-,$(ARCH_LIST))
+ARCH_OC_TARGETS := $(addsuffix /libopenconnect.so,$(ARCH_LIST))
+ARCH_STOKEN_TARGETS := $(addsuffix /libstoken.so,$(ARCH_LIST))
+ARCH_CURL_TARGETS := $(addsuffix /curl,$(ARCH_LIST))
+ARCH_CSD_TARGETS := $(addsuffix /libcsd-wrapper.so,$(ARCH_LIST))
 
-.PHONY: install
-install: $(INSTALL_ARCH_TARGETS) $(INSTALL_JAR_TARGETS)
+get_oc_sysroot = $(TOPDIR)/openconnect/android/$(TRIPLET_$(1))/sysroot/usr
+get_cc = $(TOOLCHAIN)/bin/$(TRIPLET_$(1))$(ANDROID_API)-clang
+get_cxx = $(TOOLCHAIN)/bin/$(TRIPLET_$(1))$(ANDROID_API)-clang++
+get_gnutls_private_libs = $(filter-out -lgnutls,$(shell PKG_CONFIG_LIBDIR=$(call get_oc_sysroot,$(1))/lib/pkgconfig pkg-config --static --libs-only-l gnutls))
 
-.PHONY: clean
+set_build_env = PATH=$(TOOLCHAIN)/bin:$$PATH \
+	PKG_CONFIG_LIBDIR=$(call get_oc_sysroot,$(1))/lib/pkgconfig \
+	AR=$(TOOLCHAIN)/bin/llvm-ar \
+	AS=$(TOOLCHAIN)/bin/llvm-as \
+	CC="$(call get_cc,$(1)) --sysroot=$(call get_oc_sysroot,$(1))/.." \
+	CXX="$(call get_cxx,$(1)) --sysroot=$(call get_oc_sysroot,$(1))/.." \
+	RANLIB=$(TOOLCHAIN)/bin/llvm-ranlib \
+	STRIP=$(TOOLCHAIN)/bin/llvm-strip
+
+.PHONY: all install clean distclean versions
+all: $(ARCH_TARGETS)
+
+install: $(INSTALL_ARCH_TARGETS)
+
 clean:
-	rm -rf $(ARCH_LIST) $(JAR_LIST) $(PKG_LIST)
+	rm -rf $(ARCH_LIST)
+	rm -rf $(foreach arch,$(ARCH_LIST),openconnect/android/$(TRIPLET_$(arch)))
+	rm -rf .build-stamps
 
-.PHONY: $(INSTALL_JAR_TARGETS)
-$(INSTALL_JAR_TARGETS) : install-jar-% : %
-	mkdir -p $(JAR_DIR)
-	cp $* $(JAR_DIR)/
+distclean: clean
+	rm -rf $(CURL_SRC) $(CURL_TAR)
+
+versions:
+	@printf 'OpenConnect: %s\n' "$$(git -C openconnect describe --tags --always)"
+	@printf 'stoken: %s\n' "$$(git -C stoken describe --tags --always)"
+	@printf 'curl: %s\n' "$(CURL_VER)"
+	@printf 'NDK: %s\n' "$(ANDROID_NDK)"
+
+$(OPENCONNECT_STAMP):
+	mkdir -p $(@D)
+	touch $@
+
+$(STOKEN_STAMP):
+	mkdir -p $(@D)
+	touch $@
+
+$(OPENCONNECT_BOOTSTRAP_STAMP):
+	cd openconnect && ./autogen.sh
+	mkdir -p $(@D)
+	touch $@
+
+$(STOKEN_BOOTSTRAP_STAMP):
+	cd stoken && ./autogen.sh
+	mkdir -p $(@D)
+	touch $@
 
 .PHONY: $(INSTALL_ARCH_TARGETS)
-$(INSTALL_ARCH_TARGETS) : install-arch-% : arch-%
+$(INSTALL_ARCH_TARGETS): install-arch-%: arch-%
 	mkdir -p $(JNI_DIR)/$(NDK_ARCH_$*)
+	rm -rf $(LEGACY_BIN_DIR)/$(NDK_ARCH_$*)
 	cp $*/libopenconnect.so $(JNI_DIR)/$(NDK_ARCH_$*)/
 	cp $*/libstoken.so $(JNI_DIR)/$(NDK_ARCH_$*)/
-	mkdir -p $(BIN_DIR)/$(NDK_ARCH_$*)
-	cp $*/curl $(BIN_DIR)/$(NDK_ARCH_$*)/curl-bin
-	cp $*/run_pie $(BIN_DIR)/$(NDK_ARCH_$*)/
+	cp $*/curl $(JNI_DIR)/$(NDK_ARCH_$*)/libcurl-bin.so
+	cp $*/libcsd-wrapper.so $(JNI_DIR)/$(NDK_ARCH_$*)/
 
 .PHONY: $(ARCH_TARGETS)
-$(ARCH_TARGETS) : arch-% : %/curl %/libstoken.so %/libopenconnect.so
+$(ARCH_TARGETS): arch-%: %/libopenconnect.so %/libstoken.so %/curl %/libcsd-wrapper.so
 
-curl/configure:
-	mkdir -p curl
-	tar -C curl --strip 1 -Jxf dist/curl-$(CURL_VER).tar.xz
-	touch $@
+$(ARCH_OC_TARGETS): %/libopenconnect.so: $(OPENCONNECT_BOOTSTRAP_STAMP) $(OPENCONNECT_STAMP) Makefile
+	@test -x "$(call get_cc,$*)" || { \
+		echo "Android NDK compiler not found under $(ANDROID_NDK)"; \
+		exit 1; \
+	}
+	GIT_DIR=$(OPENCONNECT_GIT_DIR) \
+		$(MAKE) -C openconnect/android ARCH=$* NDK=$(ANDROID_NDK) \
+			API_LEVEL=$(ANDROID_API) EXTRA_LDFLAGS="$(ANDROID_LDFLAGS)"
+	mkdir -p $*
+	cp -Lf openconnect/android/$(TRIPLET_$*)/out/lib/libopenconnect.so $@
 
-$(ARCH_CURL_TARGETS) : %/curl : %/toolchain/.installed curl/configure
-	mkdir -p $*/build-curl $*/out
-	cd $*/build-curl && \
-		$(call set_build_env,$*) $(TOPDIR)/curl/configure \
-			--prefix=/ --host=$(TRIPLET_$*) --disable-shared \
-			--enable-static --with-ipv6 --with-gnutls \
-			CFLAGS="$(CFLAGS_$*) -fvisibility=default -fPIE" \
-			LDFLAGS="-rdynamic -fPIE -pie" \
-			ac_cv_lib_gnutls_gnutls_check_version=yes
-	$(call set_build_env,$*) $(MAKE) -C $*/build-curl
-	$(call set_build_env,$*) $(MAKE) -C $*/build-curl install-strip \
-		DESTDIR=$(TOPDIR)/$*/out
-	cp -L $*/out/bin/curl $*/
-
-stoken/configure:
-	cd stoken && bash autogen.sh
-	touch $@
-
-$(ARCH_STOKEN_TARGETS) : %/libstoken.so : %/toolchain/.installed stoken/configure
-	mkdir -p $*/build-stoken $*/out
+$(ARCH_STOKEN_TARGETS): %/libstoken.so: %/libopenconnect.so $(STOKEN_BOOTSTRAP_STAMP) $(STOKEN_STAMP) Makefile
+	rm -rf $*/build-stoken $*/out-stoken
+	mkdir -p $*/build-stoken $*/out-stoken
 	cd $*/build-stoken && \
 		$(call set_build_env,$*) $(TOPDIR)/stoken/configure \
-			--prefix=/ --host=$(TRIPLET_$*) --disable-static \
-			--enable-shared --without-gtk \
-			--with-java=$(call get_sysroot,$*)/include \
-			--enable-jni-standalone \
-			CFLAGS="$(CFLAGS_$*)" LDFLAGS="-Wl,--strip-debug"
+			--prefix=/ --host=$(TRIPLET_$*) \
+			--disable-static --enable-shared --without-gtk \
+			--with-java=$(call get_oc_sysroot,$*)/include \
+			--enable-jni-standalone --disable-symvers \
+			CFLAGS="-Os -fPIC" \
+			LDFLAGS="-Wl,--strip-debug $(ANDROID_LDFLAGS)"
 	$(call set_build_env,$*) $(MAKE) -C $*/build-stoken
 	$(call set_build_env,$*) $(MAKE) -C $*/build-stoken install-strip \
-		DESTDIR=$(TOPDIR)/$*/out
-	cp -L $*/out/lib/libstoken.so $*/
+		DESTDIR=$(TOPDIR)/$*/out-stoken
+	cp -Lf $*/out-stoken/lib/libstoken.so $@
 
-$(ARCH_OC_TARGETS) : %/libopenconnect.so : .openconnect-sources
-	$(MAKE) patch-openconnect-sources
-	rm -rf $*/openconnect
-	mkdir -p $*/openconnect
-	cp -a openconnect $*/
-	$(MAKE) -C $*/openconnect/android ARCH=$* NDK=$(ANDROID_NDK)
-	cp -Lf $*/openconnect/android/$(TRIPLET_$*)/out/lib/libopenconnect.so $@
-	cp -f $*/openconnect/android/$(TRIPLET_$*)/out/sbin/run_pie $*/
+$(CURL_TAR):
+	curl --fail --location --retry 3 \
+		https://curl.se/download/$(CURL_TAR) -o $@.tmp
+	printf '%s  %s\n' "$(CURL_SHA256)" "$@.tmp" | sha256sum --check -
+	mv $@.tmp $@
 
-.openconnect-sources:
-	$(MAKE) -C openconnect/android sources
-	$(MAKE) patch-openconnect-sources
+$(CURL_SRC)/configure: $(CURL_TAR)
+	rm -rf $(CURL_SRC)
+	tar -xJf $<
 	touch $@
 
-.PHONY: patch-openconnect-sources
-patch-openconnect-sources:
-	if [ ! -f openconnect/android/sources/gnutls-3.5.17/gl/vasnprintf.c ]; then \
-		$(MAKE) -C openconnect/android sources; \
-	fi
-	if ! grep -q "defined __ANDROID__" openconnect/android/sources/gnutls-3.5.17/gl/vasnprintf.c; then \
-		patch -d openconnect/android/sources/gnutls-3.5.17 -p1 < patches/gnutls-3.5.17-android-no-printf-n.patch; \
-	fi
+$(ARCH_CURL_TARGETS): %/curl: %/libopenconnect.so $(CURL_SRC)/configure Makefile
+	rm -rf $*/build-curl $*/out-curl
+	mkdir -p $*/build-curl $*/out-curl
+	cd $*/build-curl && \
+		$(call set_build_env,$*) $(TOPDIR)/$(CURL_SRC)/configure \
+			--prefix=/ --host=$(TRIPLET_$*) \
+			--disable-shared --enable-static \
+			--enable-ipv6 --disable-threaded-resolver \
+			--with-gnutls --with-zlib \
+			--without-libpsl --without-libidn2 \
+			--without-brotli --without-zstd \
+			--without-nghttp2 --without-ngtcp2 --without-nghttp3 \
+			--disable-ftp --disable-file --disable-ipfs --disable-smb \
+			--disable-ldap --disable-ldaps --disable-rtsp \
+			--disable-dict --disable-telnet --disable-tftp \
+			--disable-pop3 --disable-imap --disable-smtp \
+			--disable-gopher --disable-mqtt \
+			--disable-manual --disable-docs \
+			CFLAGS="-Os -fPIE" \
+			LDFLAGS="-fPIE -pie $(ANDROID_LDFLAGS)" \
+			LIBS="$(call get_gnutls_private_libs,$*)"
+	$(call set_build_env,$*) $(MAKE) -C $*/build-curl
+	$(call set_build_env,$*) $(MAKE) -C $*/build-curl install-strip \
+		DESTDIR=$(TOPDIR)/$*/out-curl
+	cp -Lf $*/out-curl/bin/curl $@
 
-# use openconnect to run make-standalone-toolchain.sh and install
-# GnuTLS/nettle into the sysroot for us
-$(ARCH_TOOLCHAIN_TARGETS) : %/toolchain/.installed : %/libopenconnect.so
-	ln -sf openconnect/android/$(TRIPLET_$*)/toolchain $*/
-	touch $@
-
-openconnect-wrapper.jar:
-	cd openconnect/java && ant
-	cp openconnect/java/dist/$@ .
-
-stoken-wrapper.jar:
-	cd stoken/java && ant
-	cp stoken/java/dist/$@ .
-
-# note: this skips curl and libstoken as they rarely change
-.PHONY: refresh
-refresh:
-	cd openconnect && \
-		git remote update -p && \
-		git checkout -f origin/master
-	rev=`cd openconnect && git rev-parse --short HEAD`; \
-		git commit openconnect -sm \
-			"external: Sync with openconnect rev $$rev"
-	$(MAKE) clean
-	$(MAKE) install
+$(ARCH_CSD_TARGETS): %/libcsd-wrapper.so: csd-wrapper.c %/libopenconnect.so Makefile
+	$(call get_cc,$*) -Os -fPIE -pie $(ANDROID_LDFLAGS) $< -o $@
+	$(TOOLCHAIN)/bin/llvm-strip --strip-unneeded $@

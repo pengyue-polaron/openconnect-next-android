@@ -10,8 +10,8 @@ android {
         applicationId = "io.pengyue.openconnectnext"
         minSdk = 23
         targetSdk = 36
-        versionCode = 1127
-        versionName = "1.14.1"
+        versionCode = 1128
+        versionName = "1.15.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
     buildFeatures {
@@ -25,6 +25,7 @@ android {
         ]
     }
     compileOptions {
+        coreLibraryDesugaringEnabled = true
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
@@ -51,9 +52,16 @@ android {
         disable 'MissingTranslation'
         disable 'ExtraTranslation'
     }
+    packaging {
+        jniLibs {
+            // The bundled CSD/HIP helpers must be executable from nativeLibraryDir.
+            useLegacyPackaging = true
+        }
+    }
 }
 
 dependencies {
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.1.5'
     implementation fileTree(
             dir: 'libs',
             include: ['*.jar'],
