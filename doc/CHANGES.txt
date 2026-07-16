@@ -1,3 +1,16 @@
+v1.14.0 - 2026/07/16
+
+ - Redesign VPN profile settings with a clearer Material 3 hierarchy while
+   preserving every existing option
+
+ - Move authentication, profile advanced settings, and general advanced
+   settings into titled pages with reliable Back navigation
+
+ - Add direct Retry, View log, and Close actions when a connection fails
+
+ - Show explicit unset certificate and key states, modern switches, a log empty
+   state, log sharing, collapsible FAQ answers, and richer update status details
+
 v1.12.0 - 2026/07/16
 
  - Add a selectable default VPN profile for the Android Quick Settings tile

@@ -30,7 +30,6 @@ import java.util.Map;
 import app.openconnect.ConnectionEditorActivity;
 import app.openconnect.R;
 import app.openconnect.ShowTextPreference;
-import app.openconnect.SystemBarInsets;
 import app.openconnect.TokenImportActivity;
 import app.openconnect.VpnProfile;
 import app.openconnect.core.ProfileManager;
@@ -39,15 +38,12 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
-import android.preference.PreferenceScreen;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -64,6 +60,7 @@ public class ConnectionEditorFragment extends PreferenceFragment
 	PreferenceManager mPrefs;
 	VpnProfile mProfile;
 	String mUUID;
+    String mScreen;
 
     HashMap<String,Integer> fileSelectMap = new HashMap<String,Integer>();
 
@@ -80,33 +77,53 @@ public class ConnectionEditorFragment extends PreferenceFragment
         mPrefs.setSharedPreferencesName(ProfileManager.getPrefsName(mUUID));
         mPrefs.setSharedPreferencesMode(Context.MODE_PRIVATE);
 
-        // Load the preferences from an XML resource
-        addPreferencesFromResource(R.xml.pref_openconnect);
+        mScreen = getArguments().getString(ConnectionEditorActivity.EXTRA_SCREEN,
+                ConnectionEditorActivity.SCREEN_MAIN);
+        if (ConnectionEditorActivity.SCREEN_AUTHENTICATION.equals(mScreen)) {
+            addPreferencesFromResource(R.xml.pref_openconnect_authentication);
+        } else if (ConnectionEditorActivity.SCREEN_ADVANCED.equals(mScreen)) {
+            addPreferencesFromResource(R.xml.pref_openconnect_advanced);
+        } else {
+            addPreferencesFromResource(R.xml.pref_openconnect);
+        }
+
         setClickListeners();
-        configureNestedScreenInsets("pref_key_authentication");
-        configureNestedScreenInsets("pref_key_advanced");
+        configureNavigation();
 
         SharedPreferences sp = mPrefs.getSharedPreferences();
         for (Map.Entry<String,?> entry : sp.getAll().entrySet()) {
             updatePref(sp, entry.getKey());
         }
-        updatePref(sp, "batch_mode");
+        for (String key : new String[] {
+                "profile_name", "server_address", "ca_certificate", "user_certificate",
+                "private_key", "software_token", "token_string", "batch_mode",
+                "reported_os", "custom_csd_wrapper", "split_tunnel_mode",
+                "split_tunnel_networks", "dpd_value"
+        }) {
+            updatePref(sp, key);
+        }
     }
 
-	private void configureNestedScreenInsets(String key) {
-		PreferenceScreen screen = (PreferenceScreen)findPreference(key);
-		if (screen == null) {
-			return;
-		}
-		screen.setOnPreferenceClickListener(preference -> {
-			new Handler(Looper.getMainLooper()).post(() -> {
-				if (getActivity() != null) {
-					SystemBarInsets.applyToDialog(getActivity(), screen.getDialog());
-				}
-			});
-			return false;
-		});
-	}
+    private void configureNavigation() {
+        configureNavigationPreference("pref_key_authentication",
+                ConnectionEditorActivity.SCREEN_AUTHENTICATION);
+        configureNavigationPreference("pref_key_advanced",
+                ConnectionEditorActivity.SCREEN_ADVANCED);
+    }
+
+    private void configureNavigationPreference(String key, String screen) {
+        Preference preference = findPreference(key);
+        if (preference == null) {
+            return;
+        }
+        preference.setOnPreferenceClickListener(clicked -> {
+            Intent intent = new Intent(getActivity(), ConnectionEditorActivity.class);
+            intent.putExtra(ConnectionEditorActivity.EXTRA_PROFILE_UUID, mUUID);
+            intent.putExtra(ConnectionEditorActivity.EXTRA_SCREEN, screen);
+            startActivity(intent);
+            return true;
+        });
+    }
 
     @Override
 	public void onResume() {
@@ -153,8 +170,12 @@ public class ConnectionEditorFragment extends PreferenceFragment
 				}
 			} else {
 				/* for ShowTextPreference entries, hide the filename */
-				if (fileSelectMap.containsKey(key) && !value.equals("")) {
-					pref.setSummary(getString(R.string.stored));
+				if (fileSelectMap.containsKey(key)) {
+                    pref.setSummary(value.isEmpty()
+                            ? getString(R.string.not_configured)
+                            : getString(R.string.stored));
+                } else if (pref instanceof ShowTextPreference && value.isEmpty()) {
+                    pref.setSummary(R.string.not_configured);
 				} else {
 					pref.setSummary(value);
 				}
@@ -218,6 +239,9 @@ public class ConnectionEditorFragment extends PreferenceFragment
 		for (int idx = 0; idx < ProfileManager.fileSelectKeys.length; idx++) {
 			String key = ProfileManager.fileSelectKeys[idx];
 			Preference p = findPreference(key);
+            if (p == null) {
+                continue;
+            }
 			fileSelectMap.put(key, idx);
 
 			p.setOnPreferenceClickListener(new OnPreferenceClickListener() {
@@ -254,6 +278,9 @@ public class ConnectionEditorFragment extends PreferenceFragment
 		}
 
 		Preference p = findPreference("token_string");
+        if (p == null) {
+            return;
+        }
 		/* The TokenImport activity will set the token_string preference for us */
 		p.setOnPreferenceClickListener(new OnPreferenceClickListener() {
 			@Override

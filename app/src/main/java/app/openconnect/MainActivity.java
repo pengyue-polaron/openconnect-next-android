@@ -184,6 +184,19 @@ public class MainActivity extends ToolbarActivity {
 			setToolbarMenuFragment(tc.mFragment);
 		}
 
+	public void showLogTab() {
+		if (mTabs != null && mTabList.size() > 1) {
+			mTabs.selectTab(mTabList.get(1).tab);
+		}
+	}
+
+	public void retryLastConnection() {
+		if (mConn != null && mConn.service != null &&
+				mConn.service.getReconnectUUID() != null) {
+			mConn.service.startReconnectActivity(this);
+		}
+	}
+
 	protected class TabContainer {
 		private Fragment mFragment;
 		private boolean mActive;

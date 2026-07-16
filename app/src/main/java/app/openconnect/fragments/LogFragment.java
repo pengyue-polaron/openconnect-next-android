@@ -31,6 +31,7 @@ import android.app.ListFragment;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -76,6 +77,9 @@ public class LogFragment extends ListFragment {
 		}
 		if(item.getItemId()==R.id.clearlog) {
 			mConn.service.clearLog();
+			return true;
+		} else if(item.getItemId()==R.id.sharelog) {
+			shareLog();
 			return true;
 		} else if(item.getItemId()==R.id.cancel) {
 			if (mDisconnected) {
@@ -226,4 +230,15 @@ public class LogFragment extends ListFragment {
     		mConn.service.stopVPN();
     	}
     }
+
+	private void shareLog() {
+		if (mConn == null || mConn.service == null) {
+			return;
+		}
+		Intent intent = new Intent(Intent.ACTION_SEND);
+		intent.setType("text/plain");
+		intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.log_share_subject));
+		intent.putExtra(Intent.EXTRA_TEXT, mConn.service.dumpLog());
+		startActivity(Intent.createChooser(intent, getString(R.string.share_log)));
+	}
 }

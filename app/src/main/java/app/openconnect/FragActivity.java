@@ -64,6 +64,8 @@ public class FragActivity extends ToolbarActivity {
 	private CharSequence getTitleForFragment(String fragName) {
 		if ("GeneralSettings".equals(fragName)) {
 			return getString(R.string.generalsettings);
+		} else if ("AdvancedGeneralSettings".equals(fragName)) {
+			return getString(R.string.advanced);
 		} else if ("TokenParentFragment".equals(fragName)) {
 			return getString(R.string.securid_info);
 		} else if ("AboutFragment".equals(fragName)) {

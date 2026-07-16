@@ -6,6 +6,9 @@
   <string name="cancel">取消</string>
   <string name="ok">確定</string>
   <string name="navigate_up">返回上一層</string>
+  <string name="navigate_forward">開啟設定</string>
+  <string name="save">儲存</string>
+  <string name="close">關閉</string>
   <string name="yes">是</string>
   <string name="no">否</string>
   <string name="next">下一步</string>
@@ -57,6 +60,9 @@
   <string name="check_for_updates_summary">立即檢查最新的 GitHub 正式版</string>
   <string name="update_checking">正在檢查 GitHub Releases…</string>
   <string name="update_last_seen">最近發現的版本：%1$s</string>
+  <string name="update_status_summary">已安裝：%1$s · 最新：%2$s\n上次檢查：%3$s</string>
+  <string name="update_never_checked">從未</string>
+  <string name="update_latest_unknown">尚未檢查</string>
   <string name="update_check_already_running">已經在檢查更新。</string>
   <string name="update_available_title">發現新版本 %1$s</string>
   <string name="update_available_message">目前版本：%1$s\n最新版本：%2$s</string>
@@ -68,6 +74,10 @@
   <string name="update_check_failed_title">無法檢查更新</string>
   <string name="update_check_failed_message">無法存取 GitHub Releases。\n\n%1$s</string>
   <string name="clear_log">清除記錄檔</string>
+  <string name="share_log">分享日誌</string>
+  <string name="log_share_subject">OpenConnect Next 連線日誌</string>
+  <string name="log_empty_title">暫無連線日誌</string>
+  <string name="log_empty_summary">連線 VPN 後，這裡會顯示連線進度和用於排查問題的詳細資訊。</string>
   <string name="remove_vpn">移除VPN</string>
   <string name="remove_vpn_query">要移除VPN設定檔 %s 嗎?</string>
   <string name="confirm_deletion">確認刪除</string>
@@ -77,6 +87,8 @@
   <string name="send">分享</string>
   <string name="copied_entry">已將記錄複製到剪貼簿</string>
   <string name="faq">常見問題</string>
+  <string name="expand_answer">展開答案</string>
+  <string name="collapse_answer">收起答案</string>
   <string name="file_explorer_tab">檔案瀏覽器</string>
   <string name="inline_file_tab">內嵌檔案</string>
   <string name="error_importing_file">匯入過程中發生錯誤</string>
@@ -111,6 +123,7 @@
   <string name="authentication_settings_summary">憑證、私鑰、軟體權杖和免輸入登入</string>
   <string name="advanced_profile_settings_summary">用戶端身分、分流和協定相容選項</string>
   <string name="advanced_general_settings_summary">日誌和舊裝置相容選項</string>
+  <string name="not_configured">未設定</string>
   <string name="setting_loadtun_summary">在連線前嘗試載入Tun模組，需要Root。</string>
   <string name="setting_loadtun">載入Tun模組</string>
   <string name="getproxy_error">取得代理伺服器資訊時發生錯誤: %s</string>
@@ -137,6 +150,8 @@
   <string name="log_state_reconnect">已中斷 - 可重新連線至 %1$s，或選擇其他設定檔</string>
   <string name="log_state_connected">已連線%1$s</string>
   <string name="log_state_progress">%1$s - 請依 VPN 伺服器提示繼續</string>
+  <string name="retry_connection">重試</string>
+  <string name="view_log">查看日誌</string>
   <string name="batch_mode">免輸入登入</string>
   <string name="batch_mode_dialog_message">免輸入登入需要先在登入視窗中儲存憑證。日常使用建議選擇中間選項。</string>
   <string name="batch_mode_disabled_summary">每次都顯示 VPN 伺服器的登入提示。</string>

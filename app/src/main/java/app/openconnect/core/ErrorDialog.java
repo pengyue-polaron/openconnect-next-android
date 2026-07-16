@@ -28,6 +28,8 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import app.openconnect.MainActivity;
+import app.openconnect.R;
 
 public class ErrorDialog extends UserDialog
 	implements DialogInterface.OnClickListener, DialogInterface.OnDismissListener {
@@ -36,6 +38,7 @@ public class ErrorDialog extends UserDialog
 	public String mMessage;
 
 	private AlertDialog mAlert;
+	private Context mContext;
 
 	public ErrorDialog(SharedPreferences prefs, String title, String message) {
 		super(prefs);
@@ -46,10 +49,13 @@ public class ErrorDialog extends UserDialog
 	@Override
 	public void onStart(Context context) {
 		super.onStart(context);
+		mContext = context;
 		mAlert = new AlertDialog.Builder(context)
 			.setTitle(mTitle)
 			.setMessage(mMessage)
-			.setPositiveButton(android.R.string.ok, this)
+			.setPositiveButton(R.string.retry_connection, this)
+			.setNeutralButton(R.string.view_log, this)
+			.setNegativeButton(R.string.close, this)
 			.create();
 		mAlert.setOnDismissListener(this);
 		mAlert.show();
@@ -64,6 +70,15 @@ public class ErrorDialog extends UserDialog
 
 	@Override
 	public void onClick(DialogInterface dialog, int which) {
+		if (!(mContext instanceof MainActivity)) {
+			return;
+		}
+		MainActivity activity = (MainActivity)mContext;
+		if (which == DialogInterface.BUTTON_POSITIVE) {
+			activity.retryLastConnection();
+		} else if (which == DialogInterface.BUTTON_NEUTRAL) {
+			activity.showLogTab();
+		}
 	}
 
 	@Override
@@ -73,5 +88,6 @@ public class ErrorDialog extends UserDialog
 		if (mAlert != null) {
 			mAlert.dismiss();
 		}
+		mContext = null;
 	}
 }

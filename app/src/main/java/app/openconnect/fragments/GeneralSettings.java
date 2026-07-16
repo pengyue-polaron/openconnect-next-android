@@ -24,9 +24,10 @@
  */
 
 package app.openconnect.fragments;
-import java.io.File;
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -45,18 +46,16 @@ import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
 import android.os.Build;
-import android.os.Handler;
-import android.os.Looper;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceManager;
-import android.preference.PreferenceScreen;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceFragment;
 import android.service.quicksettings.TileService;
+import app.openconnect.BuildConfig;
+import app.openconnect.FragActivity;
 import app.openconnect.R;
-import app.openconnect.SystemBarInsets;
 import app.openconnect.VpnProfile;
 import app.openconnect.api.ExternalAppDatabase;
 import app.openconnect.core.DeviceStateReceiver;
@@ -80,15 +79,11 @@ public class GeneralSettings extends PreferenceFragment
 		addPreferencesFromResource(R.xml.general_settings);
 		configureQuickSettingsPreference();
 		configureUpdatePreferences();
-		configureNestedScreenInsets("advanced_general_settings");
-
-		Preference loadtun = findPreference("loadTunModule");
-		if(!isTunModuleAvailable())
-			loadtun.setEnabled(false);
+        configureAdvancedSettings();
 
 		mExtapp = new ExternalAppDatabase(getActivity());
 
-		for (String s : new String[] { "netchangereconnect", "screenoff", "trace_log" }) {
+		for (String s : new String[] { "netchangereconnect", "screenoff" }) {
 			findPreference(s).setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
 				@Override
 				public boolean onPreferenceChange(Preference arg0, Object arg1) {
@@ -113,20 +108,18 @@ public class GeneralSettings extends PreferenceFragment
 		*/
 	}
 
-	private void configureNestedScreenInsets(String key) {
-		PreferenceScreen screen = (PreferenceScreen)findPreference(key);
-		if (screen == null) {
-			return;
-		}
-		screen.setOnPreferenceClickListener(preference -> {
-			new Handler(Looper.getMainLooper()).post(() -> {
-				if (getActivity() != null) {
-					SystemBarInsets.applyToDialog(getActivity(), screen.getDialog());
-				}
-			});
-			return false;
-		});
-	}
+    private void configureAdvancedSettings() {
+        Preference preference = findPreference("advanced_general_settings");
+        if (preference == null) {
+            return;
+        }
+        preference.setOnPreferenceClickListener(clicked -> {
+            Intent intent = new Intent(getActivity(), FragActivity.class);
+            intent.putExtra(FragActivity.EXTRA_FRAGMENT_NAME, "AdvancedGeneralSettings");
+            startActivity(intent);
+            return true;
+        });
+    }
 
 	private void configureUpdatePreferences() {
 		mCheckForUpdates = findPreference("check_for_updates");
@@ -157,11 +150,19 @@ public class GeneralSettings extends PreferenceFragment
 		}
 		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
 		String latest = preferences.getString(GitHubUpdateChecker.PREF_LAST_VERSION, "");
-		if (latest.isEmpty()) {
-			mCheckForUpdates.setSummary(R.string.check_for_updates_summary);
-		} else {
-			mCheckForUpdates.setSummary(getString(R.string.update_last_seen, latest));
-		}
+		long lastCheck = preferences.getLong(GitHubUpdateChecker.PREF_LAST_CHECK, 0);
+		String checked = lastCheck == 0
+				? getString(R.string.update_never_checked)
+				: DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT)
+						.format(new Date(lastCheck));
+		String latestStatus = latest.isEmpty()
+				? getString(R.string.update_latest_unknown)
+				: latest;
+		mCheckForUpdates.setSummary(getString(
+				R.string.update_status_summary,
+				BuildConfig.VERSION_NAME,
+				latestStatus,
+				checked));
 	}
 
     @Override
@@ -262,11 +263,6 @@ public class GeneralSettings extends PreferenceFragment
 
 		return applist;
 	}
-
-	private boolean isTunModuleAvailable() {
-		// Check if the tun module exists on the file system
-        return new File("/system/lib/modules/tun.ko").length() > 10;
-    }
 
 	@Override
 	public boolean onPreferenceClick(Preference preference) { 

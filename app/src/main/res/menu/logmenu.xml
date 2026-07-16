@@ -13,5 +13,10 @@
         app:showAsAction="never"
         android:title="@string/clear_log"
         android:titleCondensed="@string/clear"/>
+    <item
+        android:id="@+id/sharelog"
+        android:icon="@drawable/ic_share_24"
+        app:showAsAction="never"
+        android:title="@string/share_log"/>
 
 </menu>

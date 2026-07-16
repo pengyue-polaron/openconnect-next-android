@@ -9,8 +9,11 @@
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
     <string name="navigate_up">Navigate up</string>
+    <string name="navigate_forward">Open settings</string>
     <string name="next">Next</string>
     <string name="finish">Finish</string>
+    <string name="save">Save</string>
+    <string name="close">Close</string>
     <string name="no_data">No Data</string>
     <string name="client_certificate_title">Client Certificate</string>
     <string name="securid_info">SecurID info</string>
@@ -58,6 +61,10 @@
     <string name="reconnect">Reconnect</string>
     <string name="reconnect_to">Reconnect to %1$s</string>
     <string name="clear_log">Clear log</string>
+    <string name="share_log">Share log</string>
+    <string name="log_share_subject">OpenConnect Next connection log</string>
+    <string name="log_empty_title">No connection log yet</string>
+    <string name="log_empty_summary">Connect to a VPN to see connection progress and diagnostic details here.</string>
     <string name="remove_vpn">Remove VPN</string>
     <string name="remove_vpn_query">Remove the VPN Profile \'%s\'?</string>
     <string name="confirm_deletion">Confirm deletion</string>
@@ -79,6 +86,8 @@
 
     <string name="copied_entry">Copied to clipboard.</string>
     <string name="faq">FAQ</string>
+    <string name="expand_answer">Show answer</string>
+    <string name="collapse_answer">Hide answer</string>
     <string name="question_abbrev">Q:</string>
     <string name="answer_abbrev">A:</string>
     <string name="file_explorer_tab">File Explorer</string>
@@ -93,7 +102,7 @@
     <string name="generalsettings">Settings</string>
     <string name="owner_fix_summary">Tries to set the owner of /dev/tun to the \'system\' UID (1000). Some CM9 images need this to make the VPNService API work. Requires root.</string>
     <string name="owner_fix">Fix ownership of /dev/tun</string>
-    <string name="edit_profile_title">Editing \"%s\"</string>
+    <string name="edit_profile_title">Edit %s</string>
     <string name="netchange_summary">Turning this option on will force a reconnect if the network state is changed (e.g. WiFi to/from mobile)</string>
     <string name="netchange">Reconnect on network change</string>
     <string name="netstatus">Network Status:</string>
@@ -118,6 +127,7 @@
     <string name="authentication_settings_summary">Certificates, private keys, software tokens, and saved login behavior</string>
     <string name="advanced_profile_settings_summary">Client identity, split tunneling, and protocol compatibility</string>
     <string name="advanced_general_settings_summary">Logging and legacy device compatibility options</string>
+    <string name="not_configured">Not set</string>
     <string name="setting_loadtun_summary">Try to load the tun.ko kernel module before trying to connect. Needs rooted devices.</string>
     <string name="setting_loadtun">Load tun module</string>
     <string name="trace_log_summary">Increase logging verbosity for debugging purposes. This will affect performance.</string>
@@ -159,6 +169,9 @@
     <string name="check_for_updates_summary">Check the latest stable GitHub Release now</string>
     <string name="update_checking">Checking GitHub Releases…</string>
     <string name="update_last_seen">Latest version found: %1$s</string>
+    <string name="update_status_summary">Installed: %1$s · Latest: %2$s\nLast checked: %3$s</string>
+    <string name="update_never_checked">Never</string>
+    <string name="update_latest_unknown">Not checked</string>
     <string name="update_check_already_running">An update check is already running.</string>
     <string name="update_available_title">%1$s is available</string>
     <string name="update_available_message">Installed: %1$s\nLatest: %2$s</string>
@@ -182,6 +195,8 @@
     <string name="error_connection_failed">Connection failed</string>
     <string name="error_invalid_hostname">Invalid hostname \'%1$s\'</string>
     <string name="error_cant_connect">Error connecting to host \'%1$s\'. See log for details.</string>
+    <string name="retry_connection">Retry</string>
+    <string name="view_log">View log</string>
     <string name="oneway_bytecount">%1$s/s %2$s</string>
     <string name="statusline_bytecount">↓%2$s/s %1$s - ↑%4$s/s %3$s</string>
     <string name="toggle_timestamps">Toggle timestamps</string>

@@ -51,6 +51,9 @@ project documentation.
 
 <p>
   <img src="screenshots/verification/quick-settings-tile-zh-cn.png" width="220" alt="Android Quick Settings VPN tile">
+  <img src="screenshots/verification/settings-redesign/13-profile-main-final.png" width="220" alt="Redesigned VPN profile settings">
+  <img src="screenshots/verification/settings-redesign/07-log-empty.png" width="220" alt="Connection log empty state">
+  <img src="screenshots/verification/settings-redesign/08-faq-collapsed.png" width="220" alt="Collapsible FAQ">
 </p>
 
 ## Install

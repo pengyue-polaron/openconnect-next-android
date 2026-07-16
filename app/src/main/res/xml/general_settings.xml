@@ -8,13 +8,13 @@
                 android:summary="@string/quick_settings_default_profile_summary"
                 android:title="@string/quick_settings_default_profile" />
 
-        <CheckBoxPreference
+        <SwitchPreference
                 android:defaultValue="true"
                 android:key="netchangereconnect"
                 android:summary="@string/netchange_summary"
                 android:title="@string/netchange"/>
 
-        <CheckBoxPreference
+        <SwitchPreference
                 android:defaultValue="false"
                 android:key="screenoff"
                 android:summary="@string/screenoff_summary"
@@ -22,7 +22,7 @@
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/update_settings">
-        <CheckBoxPreference
+        <SwitchPreference
                 android:defaultValue="true"
                 android:key="auto_check_updates"
                 android:summary="@string/auto_check_updates_summary"
@@ -35,36 +35,9 @@
                 android:title="@string/check_for_updates"/>
     </PreferenceCategory>
 
-    <PreferenceScreen
+    <Preference
             android:key="advanced_general_settings"
+            android:layout="@layout/preference_navigation_compact"
             android:summary="@string/advanced_general_settings_summary"
-            android:title="@string/advanced">
-        <PreferenceCategory android:title="@string/logging_settings">
-            <ListPreference
-                    android:defaultValue="short"
-                    android:dialogTitle="@string/timestamp_format"
-                    android:entries="@array/log_timestamp_entries"
-                    android:entryValues="@array/log_timestamp_values"
-                    android:key="timestamp_format"
-                    android:title="@string/timestamp_format" />
-            <CheckBoxPreference
-                    android:defaultValue="false"
-                    android:key="trace_log"
-                    android:summary="@string/trace_log_summary"
-                    android:title="@string/trace_log"/>
-        </PreferenceCategory>
-
-        <PreferenceCategory android:title="@string/device_specific">
-            <CheckBoxPreference
-                    android:defaultValue="false"
-                    android:key="useCM9Fix"
-                    android:summary="@string/owner_fix_summary"
-                    android:title="@string/owner_fix"/>
-            <CheckBoxPreference
-                    android:defaultValue="false"
-                    android:key="loadTunModule"
-                    android:summary="@string/setting_loadtun_summary"
-                    android:title="@string/setting_loadtun"/>
-        </PreferenceCategory>
-    </PreferenceScreen>
+            android:title="@string/advanced" />
 </PreferenceScreen>

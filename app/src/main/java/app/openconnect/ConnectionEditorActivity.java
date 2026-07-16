@@ -31,34 +31,63 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 public class ConnectionEditorActivity extends ToolbarActivity {
 
+    public static final String EXTRA_PROFILE_UUID = "io.pengyue.openconnectnext.profile_uuid";
+    public static final String EXTRA_SCREEN = "io.pengyue.openconnectnext.profile_settings_screen";
+    public static final String SCREEN_MAIN = "main";
+    public static final String SCREEN_AUTHENTICATION = "authentication";
+    public static final String SCREEN_ADVANCED = "advanced";
+
     private String mName = "";
     private String mUUID;
+    private String mScreen;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_fragment);
-		setupToolbar(R.id.toolbar, getString(R.string.app), true);
+		setContentView(R.layout.activity_profile_settings);
 
         ConnectionEditorFragment frag = new ConnectionEditorFragment();
-        mUUID = getIntent().getStringExtra(getPackageName() + ".profileUUID");
+        mUUID = getIntent().getStringExtra(EXTRA_PROFILE_UUID);
+        if (mUUID == null) {
+            mUUID = getIntent().getStringExtra(getPackageName() + ".profileUUID");
+        }
+        mScreen = getIntent().getStringExtra(EXTRA_SCREEN);
+        if (mScreen == null) {
+            mScreen = SCREEN_MAIN;
+        }
+
+        VpnProfile profile = ProfileManager.get(mUUID);
+        mName = profile == null ? "" : profile.getName();
+        setupToolbar(R.id.toolbar, getScreenTitle(), true);
+
         Bundle args = new Bundle();
         args.putString("profileUUID", mUUID);
+        args.putString(EXTRA_SCREEN, mScreen);
         frag.setArguments(args);
 
         // Display the fragment as the main content.
         getFragmentManager().beginTransaction()
                 .replace(R.id.content_frame, frag)
                 .commit();
+
+        View saveButton = findViewById(R.id.save_button);
+        if (SCREEN_MAIN.equals(mScreen)) {
+            saveButton.setOnClickListener(v -> finish());
+        } else {
+            saveButton.setVisibility(View.GONE);
+        }
 		invalidateToolbarMenu();
     }
 
 	@Override
 	protected void onCreateToolbarMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.vpnpreferences_menu, menu);
+        if (SCREEN_MAIN.equals(mScreen)) {
+		    getMenuInflater().inflate(R.menu.vpnpreferences_menu, menu);
+        }
 	}
 
 	@Override
@@ -71,9 +100,21 @@ public class ConnectionEditorActivity extends ToolbarActivity {
 	}
 
 	public void setProfileName(String name) {
-		mName = name;
-    	setTitle(getString(R.string.edit_profile_title, mName));
+        mName = name;
+        if (SCREEN_MAIN.equals(mScreen)) {
+            setTitle(getString(R.string.edit_profile_title, mName));
+        }
 	}
+
+    private CharSequence getScreenTitle() {
+        if (SCREEN_AUTHENTICATION.equals(mScreen)) {
+            return getString(R.string.authentication);
+        }
+        if (SCREEN_ADVANCED.equals(mScreen)) {
+            return getString(R.string.advanced);
+        }
+        return getString(R.string.edit_profile_title, mName);
+    }
 
 	private void askProfileRemoval() {
 		AlertDialog.Builder dialog = new AlertDialog.Builder(this);

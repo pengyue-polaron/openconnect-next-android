@@ -38,6 +38,7 @@ import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import app.openconnect.R;
@@ -115,10 +116,30 @@ public class FaqFragment extends Fragment  {
 			cardParams.setMargins(0, 0, 0, dp(act, 12));
 			card.setLayoutParams(cardParams);
 
+			LinearLayout header = new LinearLayout(act);
+			header.setOrientation(LinearLayout.HORIZONTAL);
+			header.setGravity(android.view.Gravity.CENTER_VERTICAL);
+
 			TextView question = newText(act, items[i], 16,
 					com.google.android.material.R.attr.colorOnSurface);
 			question.setTypeface(null, android.graphics.Typeface.BOLD);
-			card.addView(question);
+			question.setMovementMethod(null);
+			LinearLayout.LayoutParams questionParams = new LinearLayout.LayoutParams(
+					0, LinearLayout.LayoutParams.WRAP_CONTENT, 1);
+			question.setLayoutParams(questionParams);
+			header.addView(question);
+
+			ImageView expand = new ImageView(act);
+			expand.setImageResource(R.drawable.ic_expand_more_24);
+			expand.setColorFilter(resolveColor(act,
+					com.google.android.material.R.attr.colorOnSurfaceVariant));
+			expand.setContentDescription(getString(R.string.expand_answer));
+			LinearLayout.LayoutParams expandParams = new LinearLayout.LayoutParams(
+					dp(act, 28), dp(act, 28));
+			expandParams.setMargins(dp(act, 12), 0, 0, 0);
+			expand.setLayoutParams(expandParams);
+			header.addView(expand);
+			card.addView(header);
 
 			TextView answer = newText(act, Html.fromHtml(htmlEncode(items[i + 1])), 14,
 					com.google.android.material.R.attr.colorOnSurfaceVariant);
@@ -126,7 +147,18 @@ public class FaqFragment extends Fragment  {
 					LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 			answerParams.setMargins(0, dp(act, 8), 0, 0);
 			answer.setLayoutParams(answerParams);
+			answer.setVisibility(View.GONE);
 			card.addView(answer);
+
+			card.setClickable(true);
+			card.setFocusable(true);
+			card.setOnClickListener(clicked -> {
+				boolean expanding = answer.getVisibility() != View.VISIBLE;
+				answer.setVisibility(expanding ? View.VISIBLE : View.GONE);
+				expand.animate().rotation(expanding ? 180f : 0f).setDuration(160).start();
+				expand.setContentDescription(getString(
+						expanding ? R.string.collapse_answer : R.string.expand_answer));
+			});
 
 			contents.addView(card);
 		}
