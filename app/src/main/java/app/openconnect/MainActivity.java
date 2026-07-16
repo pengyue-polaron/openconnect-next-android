@@ -31,6 +31,8 @@ import java.util.ArrayList;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import app.openconnect.core.OpenConnectManagementThread;
 import app.openconnect.core.OpenVpnService;
 import app.openconnect.core.VPNConnector;
@@ -42,6 +44,7 @@ import com.google.android.material.tabs.TabLayout;
 public class MainActivity extends ToolbarActivity {
 
 	public static final String TAG = "OpenConnect";
+	private static final int MENU_CHECK_UPDATES = 40;
 
 	private TabLayout mTabs;
 
@@ -142,6 +145,21 @@ public class MainActivity extends ToolbarActivity {
 		mConn.stopActiveDialog();
 		mConn.unbind();
 		super.onPause();
+	}
+
+	@Override
+	protected void onCreateToolbarMenu(Menu menu) {
+		menu.add(Menu.NONE, MENU_CHECK_UPDATES, Menu.NONE, R.string.check_for_updates)
+				.setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
+	}
+
+	@Override
+	protected boolean onToolbarMenuItemSelected(MenuItem item) {
+		if (item.getItemId() == MENU_CHECK_UPDATES) {
+			GitHubUpdateChecker.checkManually(this);
+			return true;
+		}
+		return super.onToolbarMenuItemSelected(item);
 	}
 
 	private void showTab(TabContainer tc) {

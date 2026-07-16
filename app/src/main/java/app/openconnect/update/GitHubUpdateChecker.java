@@ -19,6 +19,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.widget.Toast;
 
 import app.openconnect.BuildConfig;
 import app.openconnect.R;
@@ -99,8 +100,17 @@ public final class GitHubUpdateChecker {
 		check(activity, false, null);
 	}
 
+	public static void checkManually(Activity activity) {
+		Toast.makeText(activity, R.string.update_checking, Toast.LENGTH_SHORT).show();
+		check(activity, true, null);
+	}
+
 	public static void check(Activity activity, boolean manual, Listener listener) {
 		if (!CHECK_IN_PROGRESS.compareAndSet(false, true)) {
+			if (manual && isUsable(activity)) {
+				Toast.makeText(activity, R.string.update_check_already_running,
+						Toast.LENGTH_SHORT).show();
+			}
 			if (listener != null) {
 				listener.onFinished(null, new IOException(
 						activity.getString(R.string.update_check_already_running)));
