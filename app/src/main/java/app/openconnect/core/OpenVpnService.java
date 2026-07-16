@@ -521,6 +521,10 @@ public class OpenVpnService extends VpnService {
 		return p == null ? null : p.getName();
 	}
 
+	public String getReconnectUUID() {
+		return getReconnectName() == null ? null : mUUID;
+	}
+
 	public void startReconnectActivity(Context context) {
 		Intent intent = new Intent(context, GrantPermissionsActivity.class);
 		intent.putExtra(getPackageName() + GrantPermissionsActivity.EXTRA_UUID, mUUID);

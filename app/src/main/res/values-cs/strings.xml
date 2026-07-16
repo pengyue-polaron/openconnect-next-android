@@ -39,7 +39,7 @@
   <string name="setting_loadtun">Nahrát tun modul</string>
   <string name="getproxy_error">Chyba při zjišťování nastavení proxy: %s</string>
   <string name="no_vpn_profiles_defined">není definován VPN profil.</string>
-  <string name="add_new_vpn_hint">Použij ikonu &lt;img src=\"ic_menu_add\"/&gt; k přidání nové VPN</string>
+  <string name="add_new_vpn_hint">Začněte přidáním profilu VPN.</string>
   <string name="send_minidump">Poslat Minidump vývojáři</string>
   <string name="send_minidump_summary">Poslat ladící informace o poslední havárii vývojáři</string>
   <string name="statusline_bytecount">↓%2$s/s %1$s - ↑%4$s/s %3$s</string>

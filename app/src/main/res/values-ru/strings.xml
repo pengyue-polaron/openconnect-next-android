@@ -39,7 +39,7 @@
   <string name="setting_loadtun">Загрузить tun-модуль</string>
   <string name="getproxy_error">Ошибка при получении параметров прокси-сервера: %s</string>
   <string name="no_vpn_profiles_defined">Профили VPN не указаны.</string>
-  <string name="add_new_vpn_hint">Используйте &lt;img src=\"ic_menu_add\"/&gt; иконку для добавления нового VPN</string>
+  <string name="add_new_vpn_hint">Добавьте профиль VPN, чтобы начать.</string>
   <string name="send_minidump">Отправить Minidump разработчику</string>
   <string name="send_minidump_summary">Отправка отладочной информации разработчику о последнем аварийном завершении</string>
   <string name="statusline_bytecount">↓%2$s/s %1$s - ↑%4$s/s %3$s</string>

@@ -124,6 +124,10 @@
     <string name="send_minidump_summary">Sends debugging information about last crash to developer</string>
     <string name="notification_input_needed">User input needed</string>
     <string name="notification_touch_here">Touch here to jump to OpenConnect Next</string>
+    <string name="quick_settings_choose_profile">Choose a VPN profile</string>
+    <string name="quick_settings_connect_to">Connect to %1$s</string>
+    <string name="quick_settings_connected_to">Connected to %1$s</string>
+    <string name="quick_settings_label">OpenConnect</string>
     <string name="state_connected_to">Connected to %1$s</string>
     <string name="connected_for">Connected for %1$s</string>
     <string name="connection_status_disconnected">Disconnected</string>

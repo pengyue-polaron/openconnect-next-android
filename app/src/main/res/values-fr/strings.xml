@@ -39,7 +39,7 @@
   <string name="setting_loadtun">Charger le module TUN</string>
   <string name="getproxy_error">Erreur d\'obtention des paramètres de proxy: %s</string>
   <string name="no_vpn_profiles_defined">Pas de profils VPN définis.</string>
-  <string name="add_new_vpn_hint">Utilisez l\'icône &lt;img src=\\"ic_menu_add\\"/ pour ajouter un nouveau VPN</string>
+  <string name="add_new_vpn_hint">Ajoutez un profil VPN pour commencer.</string>
   <string name="send_minidump">Envoyer le Minidump au développeur</string>
   <string name="send_minidump_summary">Envoyer les informations de débogage à propos du dernier accident au développeur</string>
   <string name="statusline_bytecount">↓%2$s/s %1$s - ↑%4$s/s %3$s</string>

@@ -29,6 +29,8 @@ project documentation.
 - RSA SecurID and TOTP software token support.
 - Connection log, status view, byte counters, local IP details, and reconnect
   handling.
+- Android Quick Settings tile for reconnecting the last profile or disconnecting
+  the active VPN.
 - Material 3 UI with light and dark mode.
 - English, Simplified Chinese, and Traditional Chinese copy for the refreshed
   onboarding, settings, FAQ, and connection flows.
@@ -36,7 +38,7 @@ project documentation.
 ## Screenshots
 
 <p>
-  <img src="screenshots/verification/profiles-empty-blue-polish.png" width="220" alt="First VPN setup screen">
+  <img src="screenshots/verification/profiles-empty-new-icon.png" width="220" alt="First VPN setup screen">
   <img src="screenshots/verification/add-profile-blue-polish.png" width="220" alt="Add profile dialog">
   <img src="screenshots/verification/profile-list-blue-polish.png" width="220" alt="Profile list">
 </p>
@@ -45,6 +47,10 @@ project documentation.
   <img src="screenshots/verification/login-dialog-password-toggle.png" width="220" alt="Login dialog with password visibility controls">
   <img src="screenshots/verification/profile-list-dark.png" width="220" alt="Dark mode profile list">
   <img src="screenshots/verification/profile-list-blue-polish-zh-cn.png" width="220" alt="Simplified Chinese profile list">
+</p>
+
+<p>
+  <img src="screenshots/verification/quick-settings-tile-zh-cn.png" width="220" alt="Android Quick Settings VPN tile">
 </p>
 
 ## Install

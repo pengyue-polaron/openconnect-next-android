@@ -39,7 +39,7 @@
   <string name="setting_loadtun">Pakai modul TUN</string>
   <string name="getproxy_error">Gagal mendapatkan pengaturan proxy: %s</string>
   <string name="no_vpn_profiles_defined">Tak ada profil VPN yang didefinisikan.</string>
-  <string name="add_new_vpn_hint">Gunakan ikon &lt; img src = \"ic_menu_add\" / &gt; untuk menambah VPN baru</string>
+  <string name="add_new_vpn_hint">Tambahkan profil VPN untuk memulai.</string>
   <string name="send_minidump">Mengirim MiniDump untuk pengembang</string>
   <string name="send_minidump_summary">Mengirim informasi debug tentang kegagalan aplikasi yang terakhir ke pengembang</string>
   <string name="statusline_bytecount">↓%2$s/s %1$s - ↑%4$s/s %3$s</string>

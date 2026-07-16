@@ -110,6 +110,10 @@
   <string name="send_minidump_summary">向开发人员发送有关上次崩溃的调试信息</string>
   <string name="notification_input_needed">需要用户输入</string>
   <string name="notification_touch_here">触摸此处跳转至 OpenConnect Next</string>
+  <string name="quick_settings_choose_profile">选择 VPN 配置</string>
+  <string name="quick_settings_connect_to">连接到 %1$s</string>
+  <string name="quick_settings_connected_to">已连接到 %1$s</string>
+  <string name="quick_settings_label">OpenConnect</string>
   <string name="state_connected_to">连接至 %1$s</string>
   <string name="connected_for">已连接 %1$s</string>
   <string name="connection_status_disconnected">已断开</string>

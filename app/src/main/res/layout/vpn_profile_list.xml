@@ -73,16 +73,16 @@
             <FrameLayout
                 android:layout_width="80dp"
                 android:layout_height="80dp"
-                android:layout_marginBottom="20dp"
-                android:background="@drawable/bg_empty_vpn_badge" >
+                android:layout_marginBottom="20dp" >
 
                 <ImageView
-                    android:layout_width="34dp"
-                    android:layout_height="34dp"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
                     android:layout_gravity="center"
-                    android:contentDescription="@string/empty_profiles_cta"
-                    android:src="@drawable/ic_add_24"
-                    android:tint="?attr/colorPrimary" />
+                    android:background="@drawable/ic_brand_in_app_background"
+                    android:contentDescription="@string/app"
+                    android:src="@drawable/ic_launcher_mark"
+                    app:tint="@color/brand_icon_mark" />
 
             </FrameLayout>
 

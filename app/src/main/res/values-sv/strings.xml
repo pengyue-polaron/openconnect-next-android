@@ -39,7 +39,7 @@
   <string name="setting_loadtun">Ladda tun modul</string>
   <string name="getproxy_error">Fel vid hämtning av proxyinställningar: %s</string>
   <string name="no_vpn_profiles_defined">Inga VPN-profiler har definierats.</string>
-  <string name="add_new_vpn_hint">Använd &lt;img src=\"ic_menu_add\"/&gt; ikonen för att lägga till en ny VPN</string>
+  <string name="add_new_vpn_hint">Lägg till en VPN-profil för att komma igång.</string>
   <string name="send_minidump">Skicka Minidump till utvecklare</string>
   <string name="send_minidump_summary">Skickar felsökningsinformation om senaste krasch till utvecklare</string>
   <string name="statusline_bytecount">↓%2$s/s %1$s - ↑%4$s/s %3$s</string>

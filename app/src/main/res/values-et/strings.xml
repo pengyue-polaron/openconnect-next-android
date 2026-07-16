@@ -39,7 +39,7 @@
   <string name="setting_loadtun">Laadi tun moodul</string>
   <string name="getproxy_error">Viga proxy seadistuste vastuvõtul: %s</string>
   <string name="no_vpn_profiles_defined">VPN profiile pole defineeritud.</string>
-  <string name="add_new_vpn_hint">Kasuta uue VPN lisamiseks &lt;img src=\"ic_menu_add\"/&gt; ikooni</string>
+  <string name="add_new_vpn_hint">Alustamiseks lisa VPN-profiil.</string>
   <string name="send_minidump">Saada arendajale minitõmmis</string>
   <string name="send_minidump_summary">Saada eelmise kokkujooksmise kohta käiv silumisinfo arendajale</string>
   <string name="statusline_bytecount">↓%2$s/s %1$s - ↑%4$s/s %3$s</string>

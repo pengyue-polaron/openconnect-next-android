@@ -83,7 +83,7 @@
   <string name="trace_log">TRACE Logmeldungen aktivieren</string>
   <string name="getproxy_error">Fehler beim Ermitteln der Proxy Einstellungen: %s</string>
   <string name="no_vpn_profiles_defined">Keine VPN Profile definiert.</string>
-  <string name="add_new_vpn_hint">Benutzen Sie &lt;img src=\"ic_menu_add\"/&gt; um ein neues VPN anzulegen</string>
+  <string name="add_new_vpn_hint">Fügen Sie ein VPN-Profil hinzu, um zu beginnen.</string>
   <string name="faq_hint">Vergewissere dich die FAQ gelesen zu haben wenn du OpenConnect zum ersten mal verwenden solltest.</string>
   <string name="send_minidump">Minidump an Entwickler senden</string>
   <string name="send_minidump_summary">Sendet Debugging Informationen des letzten Absturzes an den Entwickler</string>

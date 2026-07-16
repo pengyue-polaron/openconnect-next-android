@@ -39,7 +39,7 @@
   <string name="setting_loadtun">TUNモジュールをロード</string>
   <string name="getproxy_error">プロキシ設定でエラー： %s</string>
   <string name="no_vpn_profiles_defined">VPNのプロファイルが定義されていません</string>
-  <string name="add_new_vpn_hint">新しいVPNを追加するには &lt;img src=\"ic_menu_add\"/&gt; のアイコンを使用します</string>
+  <string name="add_new_vpn_hint">VPNプロファイルを追加して開始します。</string>
   <string name="send_minidump">ミニダンプを開発者に送信</string>
   <string name="send_minidump_summary">最後にクラッシュした時のデバッグ情報を作者に送信します。</string>
   <string name="statusline_bytecount">↓%2$s/s %1$s - ↑%4$s/s %3$s</string>

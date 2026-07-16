@@ -34,6 +34,10 @@
   <string name="disconnect">中斷連線</string>
   <string name="reconnect">重新連線</string>
   <string name="reconnect_to">重新連線至 %1$s</string>
+  <string name="quick_settings_choose_profile">選擇 VPN 設定檔</string>
+  <string name="quick_settings_connect_to">連線至 %1$s</string>
+  <string name="quick_settings_connected_to">已連線至 %1$s</string>
+  <string name="quick_settings_label">OpenConnect</string>
   <string name="clear_log">清除記錄檔</string>
   <string name="remove_vpn">移除VPN</string>
   <string name="remove_vpn_query">要移除VPN設定檔 %s 嗎?</string>

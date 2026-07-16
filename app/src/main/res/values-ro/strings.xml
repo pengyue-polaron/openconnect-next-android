@@ -39,7 +39,7 @@
   <string name="setting_loadtun">Încarcă modulul tun</string>
   <string name="getproxy_error">Eroare la obţinerea setărilor proxy: %s</string>
   <string name="no_vpn_profiles_defined">nici un profil VPN definit.</string>
-  <string name="add_new_vpn_hint">Folosiţi icoana  &lt;img src=\"ic_menu_add\"/&gt; pentru a adăuga un nou VPN</string>
+  <string name="add_new_vpn_hint">Adăugați un profil VPN pentru a începe.</string>
   <string name="send_minidump">Trimite Minidump la dezvoltator</string>
   <string name="send_minidump_summary">Trimite informații de depanare despre ultimul crash la dezvoltator</string>
   <string name="statusline_bytecount">↓%2$s/s %1$s - ↑%4$s/s %3$s</string>

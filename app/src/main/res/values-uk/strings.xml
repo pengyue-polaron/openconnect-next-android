@@ -39,7 +39,7 @@
   <string name="setting_loadtun">Завантажити tun-модуль</string>
   <string name="getproxy_error">Помилка отримання параметрів проксі: %s</string>
   <string name="no_vpn_profiles_defined">VPN профіль не визначено.</string>
-  <string name="add_new_vpn_hint">Використовуйте &lt;img src=\"ic_menu_add\"/&gt; піктограму для додання нової VPN</string>
+  <string name="add_new_vpn_hint">Додайте профіль VPN, щоб почати.</string>
   <string name="send_minidump">Надіслати мінідамп розробнику</string>
   <string name="send_minidump_summary">Відправляє налагоджувальну інформацію розробнику про останнє аварійне завершення</string>
   <string name="statusline_bytecount">↓%2$s/s %1$s - ↑%4$s/s %3$s</string>
