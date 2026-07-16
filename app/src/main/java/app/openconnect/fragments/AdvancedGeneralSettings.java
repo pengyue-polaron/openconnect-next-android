@@ -15,7 +15,9 @@ import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
+import android.view.View;
 
+import app.openconnect.PreferenceScreenStyler;
 import app.openconnect.R;
 import app.openconnect.core.DeviceStateReceiver;
 
@@ -47,6 +49,12 @@ public class AdvancedGeneralSettings extends PreferenceFragment
             onSharedPreferenceChanged(preferences, entry.getKey());
         }
         onSharedPreferenceChanged(preferences, "timestamp_format");
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        PreferenceScreenStyler.apply(this);
     }
 
     @Override

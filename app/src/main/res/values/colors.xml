@@ -24,4 +24,11 @@
     <color name="oc_on_surface_variant">#444A54</color>
     <color name="oc_outline">#6F7785</color>
     <color name="oc_outline_variant">#CBD3DF</color>
+    <color name="dashboard_background">#0B0D10</color>
+    <color name="dashboard_surface">#171A1F</color>
+    <color name="dashboard_surface_outline">#343941</color>
+    <color name="dashboard_icon_well">#23272D</color>
+    <color name="dashboard_primary_text">#F5F7FA</color>
+    <color name="dashboard_secondary_text">#A8AFB8</color>
+    <color name="dashboard_accent">#2F80ED</color>
 </resources>

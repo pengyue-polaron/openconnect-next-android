@@ -33,6 +33,8 @@ public class FragActivity extends ToolbarActivity {
 	public static final String TAG = "OpenConnect";
 
 	public static final String EXTRA_FRAGMENT_NAME = "io.pengyue.openconnectnext.fragment_name";
+	public static final String EXTRA_OPEN_ADD_PROFILE =
+			"io.pengyue.openconnectnext.open_add_profile";
 
 	public static final String FRAGMENT_PREFIX = "app.openconnect.fragments.";
 
@@ -46,6 +48,12 @@ public class FragActivity extends ToolbarActivity {
 		if(savedInstanceState == null) {
 			try {
 					Fragment frag = (Fragment)Class.forName(FRAGMENT_PREFIX + fragName).newInstance();
+					if ("VPNProfileList".equals(fragName) &&
+							getIntent().getBooleanExtra(EXTRA_OPEN_ADD_PROFILE, false)) {
+						Bundle args = new Bundle();
+						args.putBoolean(EXTRA_OPEN_ADD_PROFILE, true);
+						frag.setArguments(args);
+					}
 					getFragmentManager().beginTransaction().add(R.id.content_frame, frag).commit();
 					getFragmentManager().executePendingTransactions();
 					setToolbarMenuFragment(frag);
@@ -69,7 +77,15 @@ public class FragActivity extends ToolbarActivity {
 		} else if ("TokenParentFragment".equals(fragName)) {
 			return getString(R.string.securid_info);
 		} else if ("AboutFragment".equals(fragName)) {
-			return getString(R.string.about_openconnect);
+			return getString(R.string.about_title);
+		} else if ("ConnectionDetailsFragment".equals(fragName)) {
+			return getString(R.string.connection_details_title);
+		} else if ("LogFragment".equals(fragName)) {
+			return getString(R.string.log);
+		} else if ("FaqFragment".equals(fragName)) {
+			return getString(R.string.faq);
+		} else if ("VPNProfileList".equals(fragName)) {
+			return getString(R.string.vpn_list_title);
 		} else if ("FeedbackFragment".equals(fragName)) {
 			return getString(R.string.report_problem);
 		} else if ("SendDumpFragment".equals(fragName)) {

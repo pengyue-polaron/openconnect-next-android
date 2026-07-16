@@ -108,19 +108,19 @@ public class FaqFragment extends Fragment  {
 		for (int i = 0; i < items.length; i += 2) {
 			LinearLayout card = new LinearLayout(act);
 			card.setOrientation(LinearLayout.VERTICAL);
-			card.setBackgroundResource(R.drawable.bg_surface_panel);
 			card.setPadding(dp(act, 16), dp(act, 14), dp(act, 16), dp(act, 14));
-
-			LinearLayout.LayoutParams cardParams = new LinearLayout.LayoutParams(
-					LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-			cardParams.setMargins(0, 0, 0, dp(act, 12));
-			card.setLayoutParams(cardParams);
+			android.util.TypedValue selectable = new android.util.TypedValue();
+			act.getTheme().resolveAttribute(
+					android.R.attr.selectableItemBackground, selectable, true);
+			if (selectable.resourceId != 0) {
+				card.setBackgroundResource(selectable.resourceId);
+			}
 
 			LinearLayout header = new LinearLayout(act);
 			header.setOrientation(LinearLayout.HORIZONTAL);
 			header.setGravity(android.view.Gravity.CENTER_VERTICAL);
 
-			TextView question = newText(act, items[i], 16,
+			TextView question = newText(act, items[i], 15,
 					com.google.android.material.R.attr.colorOnSurface);
 			question.setTypeface(null, android.graphics.Typeface.BOLD);
 			question.setMovementMethod(null);
@@ -161,6 +161,16 @@ public class FaqFragment extends Fragment  {
 			});
 
 			contents.addView(card);
+			if (i + 2 < items.length) {
+				View divider = new View(act);
+				divider.setBackgroundColor(resolveColor(act,
+						com.google.android.material.R.attr.colorOutlineVariant));
+				LinearLayout.LayoutParams dividerParams = new LinearLayout.LayoutParams(
+						LinearLayout.LayoutParams.MATCH_PARENT, dp(act, 1));
+				dividerParams.setMargins(dp(act, 16), 0, dp(act, 16), 0);
+				divider.setLayoutParams(dividerParams);
+				contents.addView(divider);
+			}
 		}
 
 		return v;

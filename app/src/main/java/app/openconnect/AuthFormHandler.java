@@ -26,7 +26,10 @@ package app.openconnect;
 
 import java.security.MessageDigest;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 import org.infradead.libopenconnect.LibOpenConnect;
 
@@ -215,10 +218,11 @@ public class AuthFormHandler extends UserDialog
 		return ll;
 	}
 
-	private LinearLayout newTextBlank(LibOpenConnect.FormOpt opt, String defval) {
+	private LinearLayout newTextBlank(
+			LibOpenConnect.FormOpt opt, String defval, String displayLabel) {
 		TextInputLayout ll = new TextInputLayout(mContext);
 		ll.setLayoutParams(blockParams());
-		ll.setHint(cleanLabel(opt.label));
+		ll.setHint(displayLabel);
 		ll.setBoxBackgroundMode(TextInputLayout.BOX_BACKGROUND_OUTLINE);
 
 		TextInputEditText tv = new TextInputEditText(mContext);
@@ -267,6 +271,38 @@ public class AuthFormHandler extends UserDialog
 		opt.userData = tv;
 		ll.addView(tv);
 		return ll;
+	}
+
+	private String labelKey(String label) {
+		return cleanLabel(label).trim().toLowerCase(Locale.ROOT);
+	}
+
+	private String localizedFieldLabel(String label) {
+		String cleaned = cleanLabel(label);
+		String normalized = cleaned.trim().toLowerCase(Locale.ROOT);
+		if ("username".equals(normalized) || "user name".equals(normalized) ||
+				"user".equals(normalized)) {
+			return mContext.getString(R.string.login_username);
+		}
+		if ("password".equals(normalized) || "passcode".equals(normalized) ||
+				"passwd".equals(normalized)) {
+			return mContext.getString(R.string.login_password);
+		}
+		return cleaned;
+	}
+
+	private String getFieldLabel(
+			LibOpenConnect.FormOpt opt,
+			Map<String, Integer> labelCounts,
+			Map<String, Integer> labelIndexes) {
+		String key = labelKey(opt.label);
+		int index = labelIndexes.containsKey(key) ? labelIndexes.get(key) + 1 : 1;
+		labelIndexes.put(key, index);
+		String label = localizedFieldLabel(opt.label);
+		if (labelCounts.get(key) != null && labelCounts.get(key) > 1) {
+			return mContext.getString(R.string.login_field_numbered, label, index);
+		}
+		return label;
 	}
 
 	private void spinnerSelect(LibOpenConnect.FormOpt opt, int index) {
@@ -337,27 +373,30 @@ public class AuthFormHandler extends UserDialog
 	}
 
 	private View newAutomaticLoginHintView() {
-		LinearLayout panel = new LinearLayout(mContext);
-		panel.setLayoutParams(blockParams());
-		panel.setOrientation(LinearLayout.VERTICAL);
-		panel.setBackgroundResource(R.drawable.bg_surface_panel);
-		panel.setPadding(dp(14), dp(12), dp(14), dp(12));
-
-		TextView title = new TextView(mContext);
-		title.setText(R.string.automatic_login_hint_title);
-		title.setTextSize(14);
-		title.setTypeface(null, android.graphics.Typeface.BOLD);
-		panel.addView(title);
-
 		TextView summary = new TextView(mContext);
 		summary.setText(noSave
 				? R.string.automatic_login_cache_disabled_hint
-				: R.string.automatic_login_password_hint);
-		summary.setTextSize(13);
+				: R.string.automatic_login_password_hint_short);
+		summary.setTextSize(12);
 		summary.setAlpha(0.72f);
-		summary.setPadding(0, dp(4), 0, 0);
-		panel.addView(summary);
-		return panel;
+		summary.setPadding(dp(4), 0, dp(4), dp(8));
+		summary.setLayoutParams(blockParams());
+		return summary;
+	}
+
+	private String getDisplayMessage() {
+		if (mForm.message == null) {
+			return "";
+		}
+		String message = mForm.message.trim();
+		if ("please enter your username and password.".equalsIgnoreCase(message) ||
+				"please enter your username and password".equalsIgnoreCase(message)) {
+			return "";
+		}
+		if (message.length() > 128) {
+			message = message.substring(0, 128);
+		}
+		return message;
 	}
 
 	private void saveAndStore() {
@@ -475,10 +514,22 @@ public class AuthFormHandler extends UserDialog
 		float scale = mContext.getResources().getDisplayMetrics().density;
 		LinearLayout v = new LinearLayout(mContext);
 		v.setOrientation(LinearLayout.VERTICAL);
-		v.setPadding((int)(14*scale), (int)(2*scale), (int)(10*scale), (int)(2*scale));
+		v.setPadding((int)(16*scale), (int)(2*scale), (int)(16*scale), (int)(2*scale));
 
 		boolean hasPassword = false, hasUserOptions = false;
 		String defval;
+		Map<String, Integer> labelCounts = new HashMap<String, Integer>();
+		Map<String, Integer> labelIndexes = new HashMap<String, Integer>();
+		for (LibOpenConnect.FormOpt opt : mForm.opts) {
+			if ((opt.flags & LibOpenConnect.OC_FORM_OPT_IGNORE) != 0 ||
+					(opt.type != LibOpenConnect.OC_FORM_OPT_TEXT &&
+							opt.type != LibOpenConnect.OC_FORM_OPT_PASSWORD)) {
+				continue;
+			}
+			String key = labelKey(opt.label);
+			Integer count = labelCounts.get(key);
+			labelCounts.put(key, count == null ? 1 : count + 1);
+		}
 
 		mFirstText = mFirstEmptyText = null;
 		for (LibOpenConnect.FormOpt opt : mForm.opts) {
@@ -499,7 +550,8 @@ public class AuthFormHandler extends UserDialog
 						mAllFilled = false;
 					}
 				}
-				v.addView(newTextBlank(opt, defval));
+				v.addView(newTextBlank(
+						opt, defval, getFieldLabel(opt, labelCounts, labelIndexes)));
 				hasUserOptions = true;
 				break;
 			case LibOpenConnect.OC_FORM_OPT_SELECT:
@@ -563,18 +615,22 @@ public class AuthFormHandler extends UserDialog
 				.create();
 		mAlert.setOnDismissListener(h);
 
-		if (mForm.message != null) {
-			// Truncate long messages so they don't ruin the dialog
-			String s = mForm.message.trim();
-			if (s.length() > 128) {
-				s = s.substring(0, 128);
-			}
-			if (s.length() > 0) {
-				mAlert.setMessage(s);
-			}
+		String displayMessage = getDisplayMessage();
+		if (!displayMessage.isEmpty()) {
+			mAlert.setMessage(displayMessage);
 		}
 
 		mAlert.show();
+		if (mAlert.getWindow() != null) {
+			int screenWidth = mContext.getResources().getDisplayMetrics().widthPixels;
+			int availableWidth = screenWidth - dp(48);
+			int dialogWidth = Math.min(availableWidth, dp(560));
+			mAlert.getWindow().getDecorView().setBackgroundResource(
+					R.drawable.bg_dialog_surface);
+			mAlert.getWindow().setLayout(
+					Math.max(dialogWidth, dp(280)),
+					LayoutParams.WRAP_CONTENT);
+		}
 
 		TextView focus = mFirstEmptyText != null ? mFirstEmptyText : mFirstText;
 		if (focus != null) {

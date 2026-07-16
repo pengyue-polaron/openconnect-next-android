@@ -5,24 +5,28 @@
                 android:defaultValue="__last_used__"
                 android:dialogTitle="@string/quick_settings_default_profile"
                 android:key="quick_settings_profile"
+                android:layout="@layout/preference_standard_compact"
                 android:summary="@string/quick_settings_default_profile_summary"
                 android:title="@string/quick_settings_default_profile" />
 
         <SwitchPreference
                 android:defaultValue="true"
                 android:key="netchangereconnect"
+                android:layout="@layout/preference_standard_compact"
                 android:summary="@string/netchange_summary"
                 android:title="@string/netchange"/>
 
         <SwitchPreference
                 android:defaultValue="false"
                 android:key="screenoff"
+                android:layout="@layout/preference_standard_compact"
                 android:summary="@string/screenoff_summary"
                 android:title="@string/screenoff_title"/>
 
         <SwitchPreference
                 android:defaultValue="true"
                 android:key="notify_user_input"
+                android:layout="@layout/preference_standard_compact"
                 android:summary="@string/notify_user_input_summary"
                 android:title="@string/notify_user_input"/>
     </PreferenceCategory>
@@ -31,11 +35,13 @@
         <SwitchPreference
                 android:defaultValue="true"
                 android:key="auto_check_updates"
+                android:layout="@layout/preference_standard_compact"
                 android:summary="@string/auto_check_updates_summary"
                 android:title="@string/auto_check_updates"/>
 
         <Preference
                 android:key="check_for_updates"
+                android:layout="@layout/preference_standard_compact"
                 android:persistent="false"
                 android:summary="@string/check_for_updates_summary"
                 android:title="@string/check_for_updates"/>

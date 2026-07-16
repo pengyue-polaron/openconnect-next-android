@@ -51,17 +51,14 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 import app.openconnect.ConnectionEditorActivity;
+import app.openconnect.FragActivity;
 import app.openconnect.R;
 import app.openconnect.VpnProfile;
 import app.openconnect.api.GrantPermissionsActivity;
 import app.openconnect.core.FragCache;
-import app.openconnect.core.OpenConnectManagementThread;
-import app.openconnect.core.OpenVpnService;
 import app.openconnect.core.ProfileManager;
-import app.openconnect.core.VPNConnector;
 
 public class VPNProfileList extends ListFragment {
 
@@ -72,10 +69,7 @@ public class VPNProfileList extends ListFragment {
 
 	private AlertDialog mDialog;
 	private EditText mDialogEntry;
-	private RadioGroup mDialogBatchMode;
-	private Button mReconnectButton;
-
-	private VPNConnector mConn;
+	private boolean mOpenAddProfileHandled;
 
 	private class VPNArrayAdapter extends ArrayAdapter<VpnProfile> {
 
@@ -161,36 +155,8 @@ public class VPNProfileList extends ListFragment {
 		mArrayadapter = new VPNArrayAdapter(getActivity(), R.layout.vpn_list_item, R.id.vpn_item_title);
 		setListAdapter(mArrayadapter);
 
-		mReconnectButton = (Button)v.findViewById(R.id.reconnect_button);
-    	mReconnectButton.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View arg0) {
-				if (mConn.service.getConnectionState() ==
-						OpenConnectManagementThread.STATE_DISCONNECTED) {
-					mConn.service.startReconnectActivity(getActivity());
-				}
-			}
-    	});
-
-    	mConn = new VPNConnector(getActivity(), false) {
-			@Override
-			public void onUpdate(OpenVpnService service) {
-				String profileName = service.getReconnectName();
-				if (profileName != null) {
-					mReconnectButton.setText(getString(R.string.reconnect_to, profileName));
-					v.findViewById(R.id.reconnect_box).setVisibility(View.VISIBLE);
-				}
-			}
-    	};
-
 		return v;
 	}
-
-    @Override
-    public void onDestroyView() {
-    	mConn.unbind();
-    	super.onDestroyView();
-    }
 
 	class VpnProfileNameComperator implements Comparator<VpnProfile> {
 
@@ -215,6 +181,10 @@ public class VPNProfileList extends ListFragment {
 		String s = FragCache.get("VPNProfileList", "mDialogEntry");
 		if (s != null) {
 			onAddProfileClicked(s);
+		} else if (!mOpenAddProfileHandled && getArguments() != null &&
+				getArguments().getBoolean(FragActivity.EXTRA_OPEN_ADD_PROFILE, false)) {
+			mOpenAddProfileHandled = true;
+			onAddProfileClicked("");
 		}
 	}
 
@@ -243,7 +213,6 @@ public class VPNProfileList extends ListFragment {
 
 	private void handleNewVPNEntry() {
 		String name = mDialogEntry.getText().toString();
-		String batchMode = getNewProfileBatchMode();
 
 		mDialog.dismiss();
 		mDialog = null;
@@ -252,23 +221,9 @@ public class VPNProfileList extends ListFragment {
 		if (!name.equals("")) {
 			FeedbackFragment.recordProfileAdd(getActivity());
 			VpnProfile profile = ProfileManager.create(name);
-			profile.mPrefs.edit().putString("batch_mode", batchMode).apply();
+			profile.mPrefs.edit().putString("batch_mode", "empty_only").apply();
 			editVPN(profile);
 		}
-	}
-
-	private String getNewProfileBatchMode() {
-		if (mDialogBatchMode == null) {
-			return "empty_only";
-		}
-		int checkedId = mDialogBatchMode.getCheckedRadioButtonId();
-		if (checkedId == R.id.new_profile_batch_enabled) {
-			return "enabled";
-		}
-		if (checkedId == R.id.new_profile_batch_disabled) {
-			return "disabled";
-		}
-		return "empty_only";
 	}
 
 	private void onAddProfileClicked(String savedEntry) {
@@ -278,7 +233,6 @@ public class VPNProfileList extends ListFragment {
 
 			mDialogEntry = (EditText)v.findViewById(R.id.entry);
 			mDialogEntry.setText(savedEntry);
-			mDialogBatchMode = (RadioGroup)v.findViewById(R.id.new_profile_batch_mode);
 
 			AlertDialog.Builder builder = new AlertDialog.Builder(context)
 				.setView(v);
@@ -292,8 +246,7 @@ public class VPNProfileList extends ListFragment {
 			});
 			builder.setNegativeButton(android.R.string.cancel, null);
 
-			EditText et = (EditText)v.findViewById(R.id.entry);
-			et.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+			mDialogEntry.setOnEditorActionListener(new TextView.OnEditorActionListener() {
 				@Override
 				public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
 					if (actionId == EditorInfo.IME_ACTION_DONE ||
@@ -314,7 +267,6 @@ public class VPNProfileList extends ListFragment {
 				@Override
 				public void onDismiss(DialogInterface dialog) {
 					mDialog = null;
-					mDialogBatchMode = null;
 				}
 			});
 

@@ -35,9 +35,13 @@ public class ToolbarActivity extends Activity {
 		WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
 		getWindow().setStatusBarColor(Color.TRANSPARENT);
 		getWindow().setNavigationBarColor(Color.TRANSPARENT);
+		boolean lightBars = getResources().getBoolean(R.bool.oc_light_status_bar);
+		setLightSystemBars(lightBars);
+	}
+
+	protected void setLightSystemBars(boolean lightBars) {
 		WindowInsetsControllerCompat controller =
 				WindowCompat.getInsetsController(getWindow(), getWindow().getDecorView());
-		boolean lightBars = getResources().getBoolean(R.bool.oc_light_status_bar);
 		controller.setAppearanceLightStatusBars(lightBars);
 		controller.setAppearanceLightNavigationBars(lightBars);
 	}
@@ -54,7 +58,7 @@ public class ToolbarActivity extends Activity {
 		applySystemBarInsets();
 	}
 
-	private void applySystemBarInsets() {
+	protected void applySystemBarInsets() {
 		ViewGroup content = (ViewGroup)findViewById(android.R.id.content);
 		if (content == null || content.getChildCount() == 0) {
 			return;

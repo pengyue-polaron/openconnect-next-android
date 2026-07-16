@@ -69,6 +69,7 @@ public class LogFragment extends ListFragment {
 
 	private TextView mSpeedView;
 	private View mSpeedDot;
+	private View mStatusPanel;
 
     @Override
 	public boolean onOptionsItemSelected(MenuItem item) {
@@ -137,6 +138,9 @@ public class LogFragment extends ListFragment {
     			mLogView.setAdapter(mLogAdapter);
     			mLogView.setSelection(mLogAdapter.getCount());
     		}
+			boolean showStatus = state != OpenConnectManagementThread.STATE_DISCONNECTED ||
+					mLogAdapter.getCount() > 0;
+			mStatusPanel.setVisibility(showStatus ? View.VISIBLE : View.GONE);
 
     		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
     		mLogAdapter.setTimeFormat(prefs.getString("timestamp_format", VPNLog.DEFAULT_TIME_FORMAT));
@@ -221,6 +225,7 @@ public class LogFragment extends ListFragment {
 
 		mSpeedView = (TextView)v.findViewById(R.id.speed);
 		mSpeedDot = v.findViewById(R.id.log_status_dot);
+		mStatusPanel = v.findViewById(R.id.log_status_panel);
 		return v;
     }
 

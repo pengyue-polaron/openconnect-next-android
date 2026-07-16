@@ -53,8 +53,10 @@ import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceFragment;
 import android.service.quicksettings.TileService;
+import android.view.View;
 import app.openconnect.BuildConfig;
 import app.openconnect.FragActivity;
+import app.openconnect.PreferenceScreenStyler;
 import app.openconnect.R;
 import app.openconnect.VpnProfile;
 import app.openconnect.api.ExternalAppDatabase;
@@ -62,6 +64,7 @@ import app.openconnect.core.DeviceStateReceiver;
 import app.openconnect.core.ProfileManager;
 import app.openconnect.core.QuickSettingsTileService;
 import app.openconnect.update.GitHubUpdateChecker;
+import app.openconnect.update.VersionComparator;
 
 public class GeneralSettings extends PreferenceFragment
 		implements OnPreferenceClickListener, OnClickListener, OnSharedPreferenceChangeListener {
@@ -106,6 +109,12 @@ public class GeneralSettings extends PreferenceFragment
 		clearapi.setOnPreferenceClickListener(this);
 		setClearApiSummary();
 		*/
+	}
+
+	@Override
+	public void onViewCreated(View view, Bundle savedInstanceState) {
+		super.onViewCreated(view, savedInstanceState);
+		PreferenceScreenStyler.apply(this);
 	}
 
     private void configureAdvancedSettings() {
@@ -155,14 +164,22 @@ public class GeneralSettings extends PreferenceFragment
 				? getString(R.string.update_never_checked)
 				: DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT)
 						.format(new Date(lastCheck));
-		String latestStatus = latest.isEmpty()
-				? getString(R.string.update_latest_unknown)
-				: latest;
-		mCheckForUpdates.setSummary(getString(
-				R.string.update_status_summary,
-				BuildConfig.VERSION_NAME,
-				latestStatus,
-				checked));
+		if (!latest.isEmpty() &&
+				VersionComparator.compare(BuildConfig.VERSION_NAME, latest) >= 0) {
+			mCheckForUpdates.setSummary(getString(
+					R.string.update_status_current_summary,
+					BuildConfig.VERSION_NAME,
+					checked));
+		} else {
+			String latestStatus = latest.isEmpty()
+					? getString(R.string.update_latest_unknown)
+					: latest;
+			mCheckForUpdates.setSummary(getString(
+					R.string.update_status_summary,
+					BuildConfig.VERSION_NAME,
+					latestStatus,
+					checked));
+		}
 	}
 
     @Override

@@ -28,6 +28,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import app.openconnect.ConnectionEditorActivity;
+import app.openconnect.PreferenceScreenStyler;
 import app.openconnect.R;
 import app.openconnect.ShowTextPreference;
 import app.openconnect.TokenImportActivity;
@@ -50,6 +51,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.view.KeyEvent;
+import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -102,6 +104,12 @@ public class ConnectionEditorFragment extends PreferenceFragment
         }) {
             updatePref(sp, key);
         }
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        PreferenceScreenStyler.apply(this);
     }
 
     private void configureNavigation() {

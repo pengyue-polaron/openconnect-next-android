@@ -129,7 +129,11 @@ public class TokenParentFragment extends Fragment {
 		}
 
 		if (choiceList.size() == 0) {
-			choiceList.add("-----------");
+			getActivity().findViewById(R.id.token_profile_selector).setVisibility(View.GONE);
+			getActivity().findViewById(R.id.token_profile_divider).setVisibility(View.GONE);
+		} else {
+			getActivity().findViewById(R.id.token_profile_selector).setVisibility(View.VISIBLE);
+			getActivity().findViewById(R.id.token_profile_divider).setVisibility(View.VISIBLE);
 		}
 
     	ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),

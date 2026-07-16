@@ -46,11 +46,28 @@
         <item name="android:statusBarColor">@color/oc_surface</item>
         <item name="android:windowLightStatusBar">@bool/oc_light_status_bar</item>
         <item name="android:fontFamily">sans</item>
+        <item name="android:alertDialogTheme">@style/Theme.OpenConnect.Dialog</item>
         <item name="materialButtonStyle">@style/Widget.OpenConnect.Button</item>
         <item name="textInputStyle">@style/Widget.OpenConnect.TextInputLayout</item>
     </style>
 
-    <style name="Theme.OpenConnect.Dialog" parent="Theme.Material3.DayNight.Dialog.Alert" />
+    <style name="Theme.OpenConnect.Dialog" parent="Theme.Material3.DayNight.Dialog.Alert">
+        <item name="colorPrimary">@color/oc_primary</item>
+        <item name="colorOnPrimary">@color/oc_on_primary</item>
+        <item name="colorPrimaryContainer">@color/oc_primary_container</item>
+        <item name="colorOnPrimaryContainer">@color/oc_on_primary_container</item>
+        <item name="colorSecondaryContainer">@color/oc_secondary_container</item>
+        <item name="colorOnSecondaryContainer">@color/oc_on_secondary_container</item>
+        <item name="colorSurface">@color/oc_surface_container</item>
+        <item name="colorSurfaceContainer">@color/oc_surface_container</item>
+        <item name="colorOnSurface">@color/oc_on_surface</item>
+        <item name="colorOnSurfaceVariant">@color/oc_on_surface_variant</item>
+        <item name="colorOutline">@color/oc_outline</item>
+        <item name="colorOutlineVariant">@color/oc_outline_variant</item>
+        <item name="android:windowBackground">@drawable/bg_dialog_surface</item>
+        <item name="android:colorAccent">@color/oc_primary</item>
+        <item name="android:navigationBarColor">@color/oc_surface</item>
+    </style>
 
     <style name="TextAppearance.OpenConnect.Toolbar" parent="TextAppearance.Material3.TitleLarge">
         <item name="android:textStyle">normal</item>
@@ -61,7 +78,7 @@
     </style>
 
     <style name="Widget.OpenConnect.Button" parent="Widget.Material3.Button">
-        <item name="cornerRadius">20dp</item>
+        <item name="cornerRadius">14dp</item>
     </style>
 
     <style name="Widget.OpenConnect.TextInputLayout" parent="Widget.Material3.TextInputLayout.OutlinedBox" />

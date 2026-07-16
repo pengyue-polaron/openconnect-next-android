@@ -7,6 +7,7 @@
     android:padding="@dimen/stdpadding" >
 
     <LinearLayout
+        android:id="@+id/token_profile_selector"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" >
 
@@ -29,6 +30,7 @@
     </LinearLayout>
 
     <View
+    android:id="@+id/token_profile_divider"
 	android:layout_width="match_parent"
 	android:layout_height="1dp"
 	android:paddingTop="10dp"

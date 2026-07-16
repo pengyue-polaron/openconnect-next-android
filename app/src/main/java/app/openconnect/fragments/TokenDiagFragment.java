@@ -206,6 +206,12 @@ public class TokenDiagFragment extends Fragment {
 
     		TextView tv = (TextView)v.findViewById(R.id.msg);
     		tv.setText(error);
+			View profilesButton = v.findViewById(R.id.securid_open_profiles_button);
+			if (error == R.string.securid_none_defined) {
+				profilesButton.setOnClickListener(clicked -> getActivity().finish());
+			} else {
+				profilesButton.setVisibility(View.GONE);
+			}
     	} else {
         	mPin = FragCache.get(mUUID, EXTRA_PIN);
     		if ("true".equals(FragCache.get(mUUID, EXTRA_PIN_PROMPTED))) {

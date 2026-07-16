@@ -24,30 +24,6 @@
         android:paddingBottom="8dp"
         android:layout_weight="1" />
 
-    <LinearLayout
-        android:id="@+id/reconnect_box"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:visibility="gone" >
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:background="@color/oc_outline_variant"/>
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/reconnect_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:icon="@drawable/ic_refresh_24"
-            app:iconGravity="textStart"
-            app:iconPadding="10dp" />
-
-    </LinearLayout>
-
     <FrameLayout
         android:id="@android:id/empty"
         android:layout_width="match_parent"
