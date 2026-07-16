@@ -51,6 +51,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import app.openconnect.ConnectionEditorActivity;
 import app.openconnect.R;
@@ -71,6 +72,7 @@ public class VPNProfileList extends ListFragment {
 
 	private AlertDialog mDialog;
 	private EditText mDialogEntry;
+	private RadioGroup mDialogBatchMode;
 	private Button mReconnectButton;
 
 	private VPNConnector mConn;
@@ -241,6 +243,7 @@ public class VPNProfileList extends ListFragment {
 
 	private void handleNewVPNEntry() {
 		String name = mDialogEntry.getText().toString();
+		String batchMode = getNewProfileBatchMode();
 
 		mDialog.dismiss();
 		mDialog = null;
@@ -248,8 +251,24 @@ public class VPNProfileList extends ListFragment {
 		name = name.replaceAll("\\s", "");
 		if (!name.equals("")) {
 			FeedbackFragment.recordProfileAdd(getActivity());
-			editVPN(ProfileManager.create(name));
+			VpnProfile profile = ProfileManager.create(name);
+			profile.mPrefs.edit().putString("batch_mode", batchMode).apply();
+			editVPN(profile);
 		}
+	}
+
+	private String getNewProfileBatchMode() {
+		if (mDialogBatchMode == null) {
+			return "empty_only";
+		}
+		int checkedId = mDialogBatchMode.getCheckedRadioButtonId();
+		if (checkedId == R.id.new_profile_batch_enabled) {
+			return "enabled";
+		}
+		if (checkedId == R.id.new_profile_batch_disabled) {
+			return "disabled";
+		}
+		return "empty_only";
 	}
 
 	private void onAddProfileClicked(String savedEntry) {
@@ -259,6 +278,7 @@ public class VPNProfileList extends ListFragment {
 
 			mDialogEntry = (EditText)v.findViewById(R.id.entry);
 			mDialogEntry.setText(savedEntry);
+			mDialogBatchMode = (RadioGroup)v.findViewById(R.id.new_profile_batch_mode);
 
 			AlertDialog.Builder builder = new AlertDialog.Builder(context)
 				.setView(v);
@@ -294,6 +314,7 @@ public class VPNProfileList extends ListFragment {
 				@Override
 				public void onDismiss(DialogInterface dialog) {
 					mDialog = null;
+					mDialogBatchMode = null;
 				}
 			});
 

@@ -153,6 +153,16 @@
   <string name="view_log">查看日志</string>
   <string name="batch_mode">免输入登录</string>
   <string name="batch_mode_dialog_message">免输入登录需要先在登录弹窗中保存凭据。日常使用建议选择中间选项。</string>
+  <string name="notify_user_input">后台等待输入时提醒</string>
+  <string name="notify_user_input_summary">登录、证书、令牌或错误提示在后台等待处理时显示醒目的通知</string>
+  <string name="new_profile_automatic_login_summary">首次连接仍会询问登录信息。请选择后续连接是否自动复用已保存字段。</string>
+  <string name="new_profile_automatic_login_recommended">有已保存凭据时直接使用（推荐）</string>
+  <string name="new_profile_automatic_login_ask">每次都询问</string>
+  <string name="new_profile_automatic_login_saved_only">仅使用已保存凭据（高级）</string>
+  <string name="automatic_login_after_save">下次自动使用已保存凭据</string>
+  <string name="automatic_login_hint_title">免输入登录</string>
+  <string name="automatic_login_password_hint">保持“保存密码”开启并勾选自动使用，成功登录后下次会直接复用。字段缺失或发生变化时仍会提示。</string>
+  <string name="automatic_login_cache_disabled_hint">此配置已禁用凭据缓存，密码不会保存，因此无法使用免输入登录。</string>
   <string name="batch_mode_disabled_summary">每次都显示 VPN 服务器的登录提示。</string>
   <string name="batch_mode_empty_only_summary">复用已保存字段，只询问缺失或变化的提示。</string>
   <string name="batch_mode_enabled_summary">完全不显示登录提示。若缺少必需信息，连接会停止，方便你回到配置中补齐。</string>

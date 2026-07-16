@@ -10,8 +10,8 @@ android {
         applicationId = "io.pengyue.openconnectnext"
         minSdk = 23
         targetSdk = 36
-        versionCode = 1126
-        versionName = "1.14.0"
+        versionCode = 1127
+        versionName = "1.14.1"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
     buildFeatures {

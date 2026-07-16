@@ -154,6 +154,16 @@
   <string name="view_log">查看日誌</string>
   <string name="batch_mode">免輸入登入</string>
   <string name="batch_mode_dialog_message">免輸入登入需要先在登入視窗中儲存憑證。日常使用建議選擇中間選項。</string>
+  <string name="notify_user_input">背景等待輸入時提醒</string>
+  <string name="notify_user_input_summary">登入、憑證、權杖或錯誤提示在背景等待處理時顯示醒目的通知</string>
+  <string name="new_profile_automatic_login_summary">首次連線仍會詢問登入資訊。請選擇後續連線是否自動重複使用已儲存欄位。</string>
+  <string name="new_profile_automatic_login_recommended">有已儲存憑證時直接使用（建議）</string>
+  <string name="new_profile_automatic_login_ask">每次都詢問</string>
+  <string name="new_profile_automatic_login_saved_only">僅使用已儲存憑證（進階）</string>
+  <string name="automatic_login_after_save">下次自動使用已儲存憑證</string>
+  <string name="automatic_login_hint_title">免輸入登入</string>
+  <string name="automatic_login_password_hint">保持「儲存密碼」開啟並勾選自動使用，成功登入後下次會直接重複使用。欄位缺少或發生變化時仍會提示。</string>
+  <string name="automatic_login_cache_disabled_hint">此設定檔已停用憑證快取，密碼不會儲存，因此無法使用免輸入登入。</string>
   <string name="batch_mode_disabled_summary">每次都顯示 VPN 伺服器的登入提示。</string>
   <string name="batch_mode_empty_only_summary">重複使用已儲存欄位，只詢問缺少或變更的提示。</string>
   <string name="batch_mode_enabled_summary">完全不顯示登入提示。若缺少必要資訊，連線會停止，方便你回到設定檔中補齊。</string>

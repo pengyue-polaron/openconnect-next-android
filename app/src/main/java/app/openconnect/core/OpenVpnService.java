@@ -68,6 +68,7 @@ public class OpenVpnService extends VpnService {
 	public static final String ACTION_VPN_STATUS = "io.pengyue.openconnectnext.VPN_STATUS";
 	public static final String EXTRA_CONNECTION_STATE = "io.pengyue.openconnectnext.connectionState";
 	public static final String EXTRA_UUID = "io.pengyue.openconnectnext.UUID";
+	public static final String PREF_NOTIFY_USER_INPUT = "notify_user_input";
 
 	// These are valid in the CONNECTED state
 	public VpnProfile profile;
@@ -77,6 +78,12 @@ public class OpenVpnService extends VpnService {
 
 	private DeviceStateReceiver mDeviceStateReceiver;
 	private SharedPreferences mPrefs;
+	private final SharedPreferences.OnSharedPreferenceChangeListener mPreferenceListener =
+			(preferences, key) -> {
+				if (PREF_NOTIFY_USER_INPUT.equals(key)) {
+					updateNotification();
+				}
+			};
 
 	private KeepAlive mKeepAlive;
 
@@ -131,6 +138,7 @@ public class OpenVpnService extends VpnService {
 		// Restore service state from disk if available
 		// This gets overwritten if somebody calls startService()
 		mPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+		mPrefs.registerOnSharedPreferenceChangeListener(mPreferenceListener);
 		mUUID = mPrefs.getString(ProfileManager.LAST_USED_PROFILE, "");
 
 		mVPNLog.restoreFromFile(getCacheDir().getAbsolutePath() + "/logdata.ser");
@@ -164,6 +172,7 @@ public class OpenVpnService extends VpnService {
 
 	@Override
 	public void onDestroy() {
+		mPrefs.unregisterOnSharedPreferenceChangeListener(mPreferenceListener);
 		killVPNThread(true);
 		unregisterReceivers();
 		stopForegroundNotification();
@@ -389,7 +398,8 @@ public class OpenVpnService extends VpnService {
 
 	@SuppressWarnings("deprecation")
 	private Notification buildNotification() {
-		boolean inputNeeded = mDialog != null && mActivityConnections == 0;
+		boolean inputNeeded = mDialog != null && mActivityConnections == 0 &&
+				mPrefs.getBoolean(PREF_NOTIFY_USER_INPUT, true);
 		String channelId = inputNeeded
 				? NOTIFICATION_CHANNEL_INPUT : NOTIFICATION_CHANNEL_CONNECTION;
 		Notification.Builder builder = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O

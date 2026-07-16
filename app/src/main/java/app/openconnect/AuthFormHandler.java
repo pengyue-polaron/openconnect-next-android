@@ -63,6 +63,7 @@ public class AuthFormHandler extends UserDialog
 	private AlertDialog mAlert;
 
 	private CheckBox savePassword = null;
+	private CheckBox automaticLogin = null;
 	private boolean noSave = false;
 	private String formPfx;
 
@@ -327,14 +328,36 @@ public class AuthFormHandler extends UserDialog
 		return cb;
 	}
 
-	private TextView newSavePasswordHintView() {
-		TextView tv = new TextView(mContext);
-		tv.setLayoutParams(blockParams());
-		tv.setText(R.string.save_password_hint);
-		tv.setTextSize(13);
-		tv.setAlpha(0.72f);
-		tv.setPadding(dp(38), 0, 0, dp(2));
-		return tv;
+	private CheckBox newAutomaticLoginView(boolean isChecked) {
+		CheckBox cb = new CheckBox(mContext);
+		cb.setText(R.string.automatic_login_after_save);
+		cb.setChecked(isChecked);
+		fixPadding(cb);
+		return cb;
+	}
+
+	private View newAutomaticLoginHintView() {
+		LinearLayout panel = new LinearLayout(mContext);
+		panel.setLayoutParams(blockParams());
+		panel.setOrientation(LinearLayout.VERTICAL);
+		panel.setBackgroundResource(R.drawable.bg_surface_panel);
+		panel.setPadding(dp(14), dp(12), dp(14), dp(12));
+
+		TextView title = new TextView(mContext);
+		title.setText(R.string.automatic_login_hint_title);
+		title.setTextSize(14);
+		title.setTypeface(null, android.graphics.Typeface.BOLD);
+		panel.addView(title);
+
+		TextView summary = new TextView(mContext);
+		summary.setText(noSave
+				? R.string.automatic_login_cache_disabled_hint
+				: R.string.automatic_login_password_hint);
+		summary.setTextSize(13);
+		summary.setAlpha(0.72f);
+		summary.setPadding(0, dp(4), 0, 0);
+		panel.addView(summary);
+		return panel;
 	}
 
 	private void saveAndStore() {
@@ -374,6 +397,10 @@ public class AuthFormHandler extends UserDialog
 				opt.value = s;
 				break;
 			}
+		}
+		if (automaticLogin != null) {
+			setStringPref("batch_mode",
+					automaticLogin.isChecked() ? "empty_only" : "disabled");
 		}
 	}
 
@@ -497,11 +524,23 @@ public class AuthFormHandler extends UserDialog
 				break;
 			}
 		}
-		if (hasPassword && !noSave) {
-			boolean savePass = !getStringPref(formPfx + "savePass").equals("false");
-			savePassword = newSavePasswordView(savePass);
-			v.addView(savePassword);
-			v.addView(newSavePasswordHintView());
+		if (hasPassword) {
+			if (!noSave) {
+				boolean savePass = !getStringPref(formPfx + "savePass").equals("false");
+				savePassword = newSavePasswordView(savePass);
+				automaticLogin = newAutomaticLoginView(
+						batchMode == BATCH_MODE_EMPTY_ONLY || batchMode == BATCH_MODE_ENABLED);
+				automaticLogin.setEnabled(savePass);
+				savePassword.setOnCheckedChangeListener((button, checked) -> {
+					automaticLogin.setEnabled(checked);
+					if (!checked) {
+						automaticLogin.setChecked(false);
+					}
+				});
+				v.addView(savePassword);
+				v.addView(automaticLogin);
+			}
+			v.addView(newAutomaticLoginHintView());
 		}
 
 		if (batchMode == BATCH_MODE_ABORTED) {

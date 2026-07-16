@@ -146,6 +146,8 @@
     <string name="send_minidump_summary">Sends debugging information about last crash to developer</string>
     <string name="notification_input_needed">User input needed</string>
     <string name="notification_touch_here">Touch here to jump to OpenConnect Next</string>
+    <string name="notify_user_input">Notify when input is needed</string>
+    <string name="notify_user_input_summary">Show a prominent notification when login, certificate, token, or error input is waiting in the background</string>
     <string name="notification_channel_vpn">VPN connection</string>
     <string name="notification_channel_input">VPN action required</string>
     <string name="notification_connecting_to">Connecting to %1$s</string>
@@ -255,6 +257,14 @@
     <string name="unknown">Unknown</string>
     <string name="batch_mode">Automatic login</string>
     <string name="batch_mode_dialog_message">Automatic login works after credentials have been saved from a login prompt. The middle option is safest for normal use.</string>
+    <string name="new_profile_automatic_login_summary">The first connection still asks for credentials. Choose whether saved fields should be reused on later connections.</string>
+    <string name="new_profile_automatic_login_recommended">Use saved credentials when available (recommended)</string>
+    <string name="new_profile_automatic_login_ask">Ask every time</string>
+    <string name="new_profile_automatic_login_saved_only">Use saved credentials only (advanced)</string>
+    <string name="automatic_login_after_save">Automatically use saved credentials next time</string>
+    <string name="automatic_login_hint_title">Automatic login</string>
+    <string name="automatic_login_password_hint">Keep Save password enabled and turn on automatic use to reuse this password after a successful login. Missing or changed fields will still be requested.</string>
+    <string name="automatic_login_cache_disabled_hint">Credential caching is disabled for this profile, so the password will not be saved and automatic login is unavailable.</string>
     <string name="batch_mode_disabled_summary">Always show the VPN server login prompt.</string>
     <string name="batch_mode_empty_only_summary">Reuse saved fields and only ask for missing or changed prompts.</string>
     <string name="batch_mode_enabled_summary">Never show login prompts. If required data is missing, the connection stops so the profile can be updated.</string>

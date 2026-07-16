@@ -19,6 +19,12 @@
                 android:key="screenoff"
                 android:summary="@string/screenoff_summary"
                 android:title="@string/screenoff_title"/>
+
+        <SwitchPreference
+                android:defaultValue="true"
+                android:key="notify_user_input"
+                android:summary="@string/notify_user_input_summary"
+                android:title="@string/notify_user_input"/>
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/update_settings">

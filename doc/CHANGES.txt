@@ -1,3 +1,12 @@
+v1.14.1 - 2026/07/16
+
+ - Add automatic-login choices directly to the new VPN profile flow
+
+ - Show password-saving and automatic-login guidance on password prompts
+
+ - Add a default-on setting for prominent background notifications when VPN
+   login, certificate, token, or error handling needs attention
+
 v1.14.0 - 2026/07/16
 
  - Redesign VPN profile settings with a clearer Material 3 hierarchy while
