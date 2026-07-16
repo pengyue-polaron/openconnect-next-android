@@ -174,6 +174,7 @@ public class ConnectionEditorFragment extends PreferenceFragment
         }
 
         if (key.equals("profile_name")) {
+			mProfile.mName = value;
         	((ConnectionEditorActivity)getActivity()).setProfileName(value);
         }
     }

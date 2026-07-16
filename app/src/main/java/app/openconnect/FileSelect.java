@@ -27,6 +27,7 @@ package app.openconnect;
 
 
 import java.io.File;
+import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -42,8 +43,10 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Base64;
+import android.widget.Toast;
 import app.openconnect.fragments.FileSelectionFragment;
 import app.openconnect.fragments.InlineFileTab;
+import app.openconnect.core.StreamUtils;
 
 import com.google.android.material.tabs.TabLayout;
 
@@ -113,6 +116,11 @@ public class FileSelect extends ToolbarActivity {
 	public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
 		super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 		if (requestCode == REQUEST_READ_STORAGE) {
+			if (grantResults.length == 0 ||
+					grantResults[0] != PackageManager.PERMISSION_GRANTED) {
+				Toast.makeText(this, R.string.file_access_unavailable,
+						Toast.LENGTH_LONG).show();
+			}
 			setupTabs();
 		}
 	}
@@ -145,6 +153,11 @@ public class FileSelect extends ToolbarActivity {
 		});
 
 		mFSFragment = new FileSelectionFragment();
+		if (mNoInline) {
+			mFSFragment.setNoInLine();
+		} else if (mForceInline) {
+			mFSFragment.setForceInLine();
+		}
 		fileExplorerTab.setTag(mFSFragment);
 		mTabs.addTab(fileExplorerTab);
 		
@@ -152,11 +165,6 @@ public class FileSelect extends ToolbarActivity {
 			mInlineFragment = new InlineFileTab();
 			inlineFileTab.setTag(mInlineFragment);
 			mTabs.addTab(inlineFileTab, false);
-			if (mForceInline) {
-				mFSFragment.setForceInLine();
-			}
-		} else {
-			mFSFragment.setNoInLine();
 		}
 	}
 	
@@ -219,24 +227,11 @@ public class FileSelect extends ToolbarActivity {
 	}
 
 	private byte[] readBytesFromFile(File file) throws IOException {
-		InputStream input = new FileInputStream(file);
-
-		long len= file.length();
-
-
-		// Create the byte array to hold the data
-		byte[] bytes = new byte[(int) len];
-
-		// Read in the bytes
-		int offset = 0;
-		int bytesRead = 0;
-		while (offset < bytes.length
-				&& (bytesRead=input.read(bytes, offset, bytes.length-offset)) >= 0) {
-			offset += bytesRead;
+		try (InputStream input = new FileInputStream(file);
+				ByteArrayOutputStream output = new ByteArrayOutputStream((int)file.length())) {
+			StreamUtils.copy(input, output);
+			return output.toByteArray();
 		}
-
-		input.close();
-		return bytes;
 	}
 	
 	

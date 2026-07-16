@@ -260,7 +260,7 @@ public class OpenConnectManagementThread implements Runnable, OpenVPNManagement 
 		}
 
 		public void onStatsUpdate(LibOpenConnect.VPNStats stats) {
-			mOpenVPNService.setStats(stats);
+			mOpenVPNService.setStats(OpenConnectManagementThread.this, stats);
 		}
 	}
 
@@ -290,11 +290,11 @@ public class OpenConnectManagementThread implements Runnable, OpenVPNManagement 
 		}
 		UserDialog.clearDeferredPrefs();
 
-		mOpenVPNService.threadDone();
+		mOpenVPNService.threadDone(this);
 	}
 
 	private synchronized void setState(int state) {
-		mOpenVPNService.setConnectionState(state);
+		mOpenVPNService.setConnectionState(this, state);
 	}
 
 	/* if the wrapper script starts with "#!/path/to/nonexistent/file", use /system/bin/sh instead */
@@ -648,7 +648,7 @@ public class OpenConnectManagementThread implements Runnable, OpenVPNManagement 
 			log("DOMAIN: " + domain);
 		}
 
-		mOpenVPNService.setIPInfo(ip, mOC.getHostname());
+		mOpenVPNService.setIPInfo(this, ip, mOC.getHostname());
 	}
 
 	private void errorAlert(String message) {
@@ -839,7 +839,7 @@ public class OpenConnectManagementThread implements Runnable, OpenVPNManagement 
 		if (noStats) {
 			// Generate fake callback to the activity that requested stats, so it
 			// isn't waiting forever for a nonexistent event
-			mOpenVPNService.setStats(null);
+			mOpenVPNService.setStats(this, null);
 		}
 	}
 

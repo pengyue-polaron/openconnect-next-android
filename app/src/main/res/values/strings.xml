@@ -60,6 +60,7 @@
     <string name="clear_log">Clear log</string>
     <string name="remove_vpn">Remove VPN</string>
     <string name="remove_vpn_query">Remove the VPN Profile \'%s\'?</string>
+    <string name="confirm_deletion">Confirm deletion</string>
     <string name="clear">Clear</string>
     <string name="send_logfile">Send log file</string>
 
@@ -88,6 +89,7 @@
     <string name="inline_file_data">[[Inline file data]]</string>
     <string name="speed_waiting">Waiting for state message…</string>
     <string name="file_icon">file icon</string>
+    <string name="file_access_unavailable">This folder cannot be read. Check storage permission or choose another location.</string>
     <string name="generalsettings">Settings</string>
     <string name="owner_fix_summary">Tries to set the owner of /dev/tun to the \'system\' UID (1000). Some CM9 images need this to make the VPNService API work. Requires root.</string>
     <string name="owner_fix">Fix ownership of /dev/tun</string>
@@ -106,6 +108,16 @@
     <string name="server_name">Server name:</string>
     <string name="select_file">Select</string>
     <string name="advanced">Advanced</string>
+    <string name="common_settings">Common settings</string>
+    <string name="basic_settings">Basic settings</string>
+    <string name="logging_settings">Logging</string>
+    <string name="certificates_and_tokens">Certificates and tokens</string>
+    <string name="saved_credentials">Saved credentials</string>
+    <string name="client_identity">Client identity</string>
+    <string name="network_and_protocol">Network and protocol</string>
+    <string name="authentication_settings_summary">Certificates, private keys, software tokens, and saved login behavior</string>
+    <string name="advanced_profile_settings_summary">Client identity, split tunneling, and protocol compatibility</string>
+    <string name="advanced_general_settings_summary">Logging and legacy device compatibility options</string>
     <string name="setting_loadtun_summary">Try to load the tun.ko kernel module before trying to connect. Needs rooted devices.</string>
     <string name="setting_loadtun">Load tun module</string>
     <string name="trace_log_summary">Increase logging verbosity for debugging purposes. This will affect performance.</string>
@@ -128,6 +140,10 @@
     <string name="quick_settings_connect_to">Connect to %1$s</string>
     <string name="quick_settings_connected_to">Connected to %1$s</string>
     <string name="quick_settings_label">OpenConnect</string>
+    <string name="quick_settings_default_profile">Quick Settings default VPN</string>
+    <string name="quick_settings_default_profile_summary">Choose what the status bar tile connects to</string>
+    <string name="quick_settings_last_used">Last used VPN</string>
+    <string name="quick_settings_choose_each_time">Open the app to choose</string>
     <string name="state_connected_to">Connected to %1$s</string>
     <string name="connected_for">Connected for %1$s</string>
     <string name="connection_status_disconnected">Disconnected</string>

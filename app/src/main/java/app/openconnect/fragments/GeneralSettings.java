@@ -25,8 +25,12 @@
 
 package app.openconnect.fragments;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
+import android.content.ComponentName;
 import android.Manifest.permission;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
@@ -40,15 +44,20 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
+import android.os.Build;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceManager;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceFragment;
+import android.service.quicksettings.TileService;
 import app.openconnect.R;
+import app.openconnect.VpnProfile;
 import app.openconnect.api.ExternalAppDatabase;
 import app.openconnect.core.DeviceStateReceiver;
+import app.openconnect.core.ProfileManager;
+import app.openconnect.core.QuickSettingsTileService;
 
 public class GeneralSettings extends PreferenceFragment
 		implements OnPreferenceClickListener, OnClickListener, OnSharedPreferenceChangeListener {
@@ -63,6 +72,7 @@ public class GeneralSettings extends PreferenceFragment
 
 		// Load the preferences from an XML resource
 		addPreferencesFromResource(R.xml.general_settings);
+		configureQuickSettingsPreference();
 
 		Preference loadtun = findPreference("loadTunModule");
 		if(!isTunModuleAvailable())
@@ -75,6 +85,7 @@ public class GeneralSettings extends PreferenceFragment
 				@Override
 				public boolean onPreferenceChange(Preference arg0, Object arg1) {
 					Intent intent = new Intent(DeviceStateReceiver.PREF_CHANGED);
+					intent.setPackage(getActivity().getPackageName());
 					getActivity().sendBroadcast(intent, permission.ACCESS_NETWORK_STATE);
 					return true;
 				}
@@ -97,6 +108,7 @@ public class GeneralSettings extends PreferenceFragment
     @Override
 	public void onResume() {
         super.onResume();
+        configureQuickSettingsPreference();
         getPreferenceScreen().getSharedPreferences()
                 .registerOnSharedPreferenceChangeListener(this);
     }
@@ -116,7 +128,45 @@ public class GeneralSettings extends PreferenceFragment
 			lpref.setValue(sp.getString(key, ""));
 			pref.setSummary(lpref.getEntry());
 		}
+		if (ProfileManager.QUICK_SETTINGS_PROFILE.equals(key)) {
+			requestQuickSettingsRefresh();
+		}
     }
+
+	private void configureQuickSettingsPreference() {
+		ListPreference preference = (ListPreference)findPreference(
+				ProfileManager.QUICK_SETTINGS_PROFILE);
+		if (preference == null) {
+			return;
+		}
+
+		List<CharSequence> entries = new ArrayList<CharSequence>();
+		List<CharSequence> values = new ArrayList<CharSequence>();
+		entries.add(getString(R.string.quick_settings_last_used));
+		values.add(ProfileManager.QUICK_SETTINGS_LAST_USED);
+		entries.add(getString(R.string.quick_settings_choose_each_time));
+		values.add(ProfileManager.QUICK_SETTINGS_CHOOSE);
+
+		List<VpnProfile> profiles = new ArrayList<VpnProfile>(ProfileManager.getProfiles());
+		Collections.sort(profiles);
+		for (VpnProfile profile : profiles) {
+			entries.add(profile.getName());
+			values.add(profile.getUUIDString());
+		}
+
+		preference.setEntries(entries.toArray(new CharSequence[0]));
+		preference.setEntryValues(values.toArray(new CharSequence[0]));
+		ProfileManager.getQuickSettingsProfileUUID();
+		preference.setValue(ProfileManager.getQuickSettingsProfileMode());
+		preference.setSummary(preference.getEntry());
+	}
+
+	private void requestQuickSettingsRefresh() {
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && getActivity() != null) {
+			TileService.requestListeningState(getActivity(),
+					new ComponentName(getActivity(), QuickSettingsTileService.class));
+		}
+	}
 
 	private void setClearApiSummary() {
 		Preference clearapi = findPreference("clearapi");

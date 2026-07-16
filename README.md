@@ -29,8 +29,8 @@ project documentation.
 - RSA SecurID and TOTP software token support.
 - Connection log, status view, byte counters, local IP details, and reconnect
   handling.
-- Android Quick Settings tile for reconnecting the last profile or disconnecting
-  the active VPN.
+- Android Quick Settings tile with a selectable default profile, last-used
+  behavior, or an app-selection fallback.
 - Material 3 UI with light and dark mode.
 - English, Simplified Chinese, and Traditional Chinese copy for the refreshed
   onboarding, settings, FAQ, and connection flows.
@@ -73,9 +73,14 @@ not receive updates from an app store automatically.
    server.
 6. Open the **Log** tab if a connection fails.
 
-Advanced profile settings include CA certificates, user certificates, private
-keys, software tokens, split tunneling, reported OS, DPD timeout, and automatic
-login behavior.
+The profile editor keeps the common profile name and server address on the
+first screen. Certificates, private keys, software tokens, and saved login
+behavior are grouped under Authentication. Split tunneling, reported OS, CSD,
+PFS, XML POST, and DPD options remain available under Advanced.
+
+General Settings keeps everyday VPN behavior and the Quick Settings default on
+the first screen. Logging and legacy device compatibility options are grouped
+under Advanced.
 
 ## Automatic Login
 
@@ -120,7 +125,7 @@ adb install -r app/build/outputs/apk/debug/app-debug.apk
 Run the current verification command:
 
 ```bash
-./gradlew assembleDebug testDebugUnitTest
+./gradlew testDebugUnitTest lintDebug assembleDebug
 ```
 
 ## F-Droid

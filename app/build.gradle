@@ -10,8 +10,8 @@ android {
         applicationId = "io.pengyue.openconnectnext"
         minSdk = 23
         targetSdk = 28
-        versionCode = 1122
-        versionName = "1.11.9"
+        versionCode = 1123
+        versionName = "1.12.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
     buildFeatures {
@@ -47,11 +47,14 @@ android {
     lint {
         disable 'MissingTranslation'
         disable 'ExtraTranslation'
+        // targetSdk migration is intentionally isolated from this compatibility release.
+        disable 'ExpiredTargetSdkVersion'
     }
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'androidx.core:core:1.17.0'
     implementation 'com.google.android.material:material:1.14.0'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test:runner:1.7.0'

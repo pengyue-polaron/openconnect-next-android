@@ -12,17 +12,24 @@ package app.openconnect.core;
 import android.annotation.TargetApi;
 import android.annotation.SuppressLint;
 import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.ServiceConnection;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.IBinder;
+import android.preference.PreferenceManager;
 import android.service.quicksettings.Tile;
 import android.service.quicksettings.TileService;
 
+import androidx.core.content.ContextCompat;
+
 import app.openconnect.MainActivity;
 import app.openconnect.R;
+import app.openconnect.VpnProfile;
 import app.openconnect.api.GrantPermissionsActivity;
 
 @TargetApi(Build.VERSION_CODES.N)
@@ -34,6 +41,26 @@ public class QuickSettingsTileService extends TileService {
 	private boolean mBinding;
 	private boolean mListening;
 	private boolean mPendingClick;
+	private boolean mStatusReceiverRegistered;
+	private SharedPreferences mPreferences;
+
+	private final BroadcastReceiver mStatusReceiver = new BroadcastReceiver() {
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			updateTile();
+		}
+	};
+
+	private final SharedPreferences.OnSharedPreferenceChangeListener mPreferenceListener =
+			new SharedPreferences.OnSharedPreferenceChangeListener() {
+		@Override
+		public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+			if (ProfileManager.QUICK_SETTINGS_PROFILE.equals(key) ||
+					ProfileManager.LAST_USED_PROFILE.equals(key)) {
+				updateTile();
+			}
+		}
+	};
 
 	private final ServiceConnection mConnection = new ServiceConnection() {
 		@Override
@@ -65,12 +92,15 @@ public class QuickSettingsTileService extends TileService {
 	public void onStartListening() {
 		super.onStartListening();
 		mListening = true;
+		registerStateListeners();
 		bindVpnService();
+		updateTile();
 	}
 
 	@Override
 	public void onStopListening() {
 		mListening = false;
+		unregisterStateListeners();
 		if (!mPendingClick) {
 			unbindVpnService();
 		}
@@ -91,6 +121,7 @@ public class QuickSettingsTileService extends TileService {
 	@Override
 	public void onDestroy() {
 		mPendingClick = false;
+		unregisterStateListeners();
 		unbindVpnService();
 		super.onDestroy();
 	}
@@ -126,13 +157,12 @@ public class QuickSettingsTileService extends TileService {
 
 	private void toggleConnection() {
 		if (mService.getConnectionState() != OpenConnectManagementThread.STATE_DISCONNECTED) {
-			String profileName = mService.getReconnectName();
 			mService.stopVPN();
-			showDisconnectedTile(profileName);
+			showDisconnectedTile(getTargetProfileName());
 			return;
 		}
 
-		String uuid = mService.getReconnectUUID();
+		String uuid = ProfileManager.getQuickSettingsProfileUUID();
 		Intent intent;
 		if (uuid == null) {
 			intent = new Intent(this, MainActivity.class);
@@ -163,18 +193,20 @@ public class QuickSettingsTileService extends TileService {
 		}
 
 		tile.setLabel(getString(R.string.quick_settings_label));
-		if (mService == null) {
+		if (mService == null ||
+				mService.getConnectionState() == OpenConnectManagementThread.STATE_DISCONNECTED) {
 			tile.setState(Tile.STATE_INACTIVE);
-			setSubtitle(tile, getString(R.string.quick_settings_choose_profile));
-		} else {
-			boolean disconnected = mService.getConnectionState() ==
-					OpenConnectManagementThread.STATE_DISCONNECTED;
-			String profileName = mService.getReconnectName();
-			tile.setState(disconnected ? Tile.STATE_INACTIVE : Tile.STATE_ACTIVE);
+			String profileName = getTargetProfileName();
 			if (profileName == null) {
 				setSubtitle(tile, getString(R.string.quick_settings_choose_profile));
-			} else if (disconnected) {
+			} else {
 				setSubtitle(tile, getString(R.string.quick_settings_connect_to, profileName));
+			}
+		} else {
+			String profileName = mService.getReconnectName();
+			tile.setState(Tile.STATE_ACTIVE);
+			if (profileName == null) {
+				setSubtitle(tile, getString(R.string.quick_settings_choose_profile));
 			} else {
 				setSubtitle(tile, getString(R.string.quick_settings_connected_to, profileName));
 			}
@@ -201,6 +233,34 @@ public class QuickSettingsTileService extends TileService {
 	private void setSubtitle(Tile tile, String subtitle) {
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
 			tile.setSubtitle(subtitle);
+		}
+	}
+
+	private String getTargetProfileName() {
+		VpnProfile profile = ProfileManager.getQuickSettingsProfile();
+		return profile == null ? null : profile.getName();
+	}
+
+	private void registerStateListeners() {
+		if (mPreferences == null) {
+			mPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+		}
+		mPreferences.registerOnSharedPreferenceChangeListener(mPreferenceListener);
+		if (!mStatusReceiverRegistered) {
+			ContextCompat.registerReceiver(this, mStatusReceiver,
+					new IntentFilter(OpenVpnService.ACTION_VPN_STATUS),
+					ContextCompat.RECEIVER_NOT_EXPORTED);
+			mStatusReceiverRegistered = true;
+		}
+	}
+
+	private void unregisterStateListeners() {
+		if (mPreferences != null) {
+			mPreferences.unregisterOnSharedPreferenceChangeListener(mPreferenceListener);
+		}
+		if (mStatusReceiverRegistered) {
+			unregisterReceiver(mStatusReceiver);
+			mStatusReceiverRegistered = false;
 		}
 	}
 }
