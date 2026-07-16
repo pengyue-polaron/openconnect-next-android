@@ -11,14 +11,36 @@ package app.openconnect;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.graphics.Color;
+import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowCompat;
+import androidx.core.view.WindowInsetsCompat;
+import androidx.core.view.WindowInsetsControllerCompat;
 import com.google.android.material.appbar.MaterialToolbar;
 
 public class ToolbarActivity extends Activity {
 	protected MaterialToolbar mToolbar;
 	private Fragment mToolbarMenuFragment;
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
+		getWindow().setStatusBarColor(Color.TRANSPARENT);
+		getWindow().setNavigationBarColor(Color.TRANSPARENT);
+		WindowInsetsControllerCompat controller =
+				WindowCompat.getInsetsController(getWindow(), getWindow().getDecorView());
+		boolean lightBars = getResources().getBoolean(R.bool.oc_light_status_bar);
+		controller.setAppearanceLightStatusBars(lightBars);
+		controller.setAppearanceLightNavigationBars(lightBars);
+	}
 
 	protected void setupToolbar(int toolbarId, CharSequence title, boolean showBack) {
 		mToolbar = (MaterialToolbar)findViewById(toolbarId);
@@ -29,6 +51,31 @@ public class ToolbarActivity extends Activity {
 			mToolbar.setNavigationOnClickListener(v -> finish());
 		}
 		mToolbar.setOnMenuItemClickListener(this::onToolbarMenuItemSelected);
+		applySystemBarInsets();
+	}
+
+	private void applySystemBarInsets() {
+		ViewGroup content = (ViewGroup)findViewById(android.R.id.content);
+		if (content == null || content.getChildCount() == 0) {
+			return;
+		}
+		View root = content.getChildAt(0);
+		int initialLeft = root.getPaddingLeft();
+		int initialTop = root.getPaddingTop();
+		int initialRight = root.getPaddingRight();
+		int initialBottom = root.getPaddingBottom();
+		ViewCompat.setOnApplyWindowInsetsListener(root, (view, windowInsets) -> {
+			Insets insets = windowInsets.getInsets(
+					WindowInsetsCompat.Type.systemBars() |
+							WindowInsetsCompat.Type.displayCutout());
+			view.setPadding(
+					initialLeft + insets.left,
+					initialTop + insets.top,
+					initialRight + insets.right,
+					initialBottom + insets.bottom);
+			return windowInsets;
+		});
+		ViewCompat.requestApplyInsets(root);
 	}
 
 	@Override

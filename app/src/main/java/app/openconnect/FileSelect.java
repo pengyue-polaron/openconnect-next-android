@@ -103,7 +103,8 @@ public class FileSelect extends ToolbarActivity {
 		mShowClear = getIntent().getBooleanExtra(SHOW_CLEAR_BUTTON, false);
 		mBase64Encode = getIntent().getBooleanExtra(DO_BASE64_ENCODE, false);
 
-		if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) !=
+		if (android.os.Build.VERSION.SDK_INT <= android.os.Build.VERSION_CODES.S_V2 &&
+				checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) !=
 				PackageManager.PERMISSION_GRANTED) {
 			requestPermissions(new String[] { Manifest.permission.READ_EXTERNAL_STORAGE },
 					REQUEST_READ_STORAGE);

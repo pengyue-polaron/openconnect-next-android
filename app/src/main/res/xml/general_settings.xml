@@ -21,6 +21,20 @@
                 android:title="@string/screenoff_title"/>
     </PreferenceCategory>
 
+    <PreferenceCategory android:title="@string/update_settings">
+        <CheckBoxPreference
+                android:defaultValue="true"
+                android:key="auto_check_updates"
+                android:summary="@string/auto_check_updates_summary"
+                android:title="@string/auto_check_updates"/>
+
+        <Preference
+                android:key="check_for_updates"
+                android:persistent="false"
+                android:summary="@string/check_for_updates_summary"
+                android:title="@string/check_for_updates"/>
+    </PreferenceCategory>
+
     <PreferenceScreen
             android:key="advanced_general_settings"
             android:summary="@string/advanced_general_settings_summary"

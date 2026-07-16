@@ -32,10 +32,14 @@ import org.acra.ErrorReporter;
 
 import app.openconnect.R;
 import app.openconnect.core.OpenVpnService;
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.VpnService;
+import android.os.Build;
 import android.os.Bundle;
+import androidx.core.content.ContextCompat;
 
 public class GrantPermissionsActivity extends Activity {
 	public static final String EXTRA_START_ACTIVITY = ".start_activity";
@@ -43,6 +47,7 @@ public class GrantPermissionsActivity extends Activity {
 
 	private String mUUID;
 	private String mStartActivity;
+	private static final int REQUEST_POST_NOTIFICATIONS = 1;
 
 	private void reportBadRom(Exception e) {
 		ACRAConfiguration cfg = ACRA.getConfig();
@@ -67,6 +72,17 @@ public class GrantPermissionsActivity extends Activity {
 		}
 		mStartActivity = myIntent.getStringExtra(getPackageName() + EXTRA_START_ACTIVITY);
 
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
+				checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) !=
+						PackageManager.PERMISSION_GRANTED) {
+			requestPermissions(new String[] { Manifest.permission.POST_NOTIFICATIONS },
+					REQUEST_POST_NOTIFICATIONS);
+			return;
+		}
+		prepareVpn();
+	}
+
+	private void prepareVpn() {
 		Intent prepIntent;
 		try {
 			prepIntent = VpnService.prepare(this);
@@ -89,6 +105,15 @@ public class GrantPermissionsActivity extends Activity {
 		}
 	}
 
+	@Override
+	public void onRequestPermissionsResult(int requestCode, String[] permissions,
+			int[] grantResults) {
+		super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+		if (requestCode == REQUEST_POST_NOTIFICATIONS) {
+			prepareVpn();
+		}
+	}
+
 	/* Called by Android OS after user clicks "OK" on VpnService.prepare() dialog */ 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -98,7 +123,7 @@ public class GrantPermissionsActivity extends Activity {
 		if (resultCode == RESULT_OK) {
 	    	Intent intent = new Intent(getBaseContext(), OpenVpnService.class);
 	    	intent.putExtra(OpenVpnService.EXTRA_UUID, mUUID);
-	    	startService(intent);
+			ContextCompat.startForegroundService(this, intent);
 
 	    	if (mStartActivity != null) {
 	    		intent = new Intent();

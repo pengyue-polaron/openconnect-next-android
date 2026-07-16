@@ -24,6 +24,10 @@
 
 package app.openconnect;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -33,7 +37,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -48,6 +51,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import app.openconnect.core.AssetExtractor;
 import app.openconnect.core.ProfileManager;
+import app.openconnect.core.StreamUtils;
 import org.stoken.LibStoken;
 
 public class TokenImportActivity extends ToolbarActivity {
@@ -112,26 +116,26 @@ public class TokenImportActivity extends ToolbarActivity {
         if (mScreen == SCREEN_UNKNOWN) {
         	// initial entry into TokenImportActivity - figure out how we were called
 
-            Uri URI = intent.getData();
-        	if (URI != null) {
-        		if (URI.getScheme().equals("file")) {
-        			// User clicked on an sdtid file
-        			readFromFile(URI.getPath());
-        			return;
-        		} else {
-                    // We will have a URI string iff the user clicked on a recognized link from another
-                    // application, e.g. http://127.0.0.1/securid/ctf?ctfData=279158828...
-	        		mTokenString = URI.toString();
-	        		validateToken();
-	        		return;
-        		}
-        	} else {
-        		if (mProfile != null) {
-        			mTokenString = mProfile.mPrefs.getString("token_string", "");
-        			updateScreen(SCREEN_ENTER_TOKEN);
-        			return;
-        		}
-        	}
+			Uri URI = intent.getData();
+			if (URI != null) {
+				if ("file".equals(URI.getScheme()) || "content".equals(URI.getScheme())) {
+					// User clicked on an sdtid file
+				if (!readFromUri(URI)) {
+					updateScreen(SCREEN_ENTER_TOKEN);
+				}
+					return;
+				} else {
+					// We will have a URI string iff the user clicked on a recognized link from another
+					// application, e.g. http://127.0.0.1/securid/ctf?ctfData=279158828...
+					mTokenString = URI.toString();
+					validateToken();
+					return;
+				}
+			} else if (mProfile != null) {
+				mTokenString = mProfile.mPrefs.getString("token_string", "");
+				updateScreen(SCREEN_ENTER_TOKEN);
+				return;
+			}
             Log.e(TAG, "TokenImportActivity: not enough info to start up");
             cancel();
         } else {
@@ -179,10 +183,10 @@ public class TokenImportActivity extends ToolbarActivity {
 		((Button)findViewById(R.id.token_string_import)).setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent startFC = new Intent(TokenImportActivity.this, FileSelect.class);
-				startFC.putExtra(FileSelect.START_DATA, Environment.getExternalStorageDirectory().getPath());
-				startFC.putExtra(FileSelect.NO_INLINE_SELECTION, true);
-				startActivityForResult(startFC, 0);
+				Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+				intent.addCategory(Intent.CATEGORY_OPENABLE);
+				intent.setType("*/*");
+				startActivityForResult(intent, 0);
 			}
 		});
 
@@ -369,15 +373,42 @@ public class TokenImportActivity extends ToolbarActivity {
     	}
     }
 
-	    private boolean readFromFile(String filename) {
-			StringBuilder out = new StringBuilder();
-			if (filename == null) {
-				updateScreen(SCREEN_ENTER_TOKEN);
+	private boolean readFromUri(Uri uri) {
+		if (uri == null) {
+			return readTokenData(null);
+		}
+		if ("file".equals(uri.getScheme())) {
+			return readFromFile(uri.getPath());
+		}
+		try (InputStream input = getContentResolver().openInputStream(uri);
+				ByteArrayOutputStream output = new ByteArrayOutputStream()) {
+			if (input == null) {
 				return false;
 			}
+			StreamUtils.copy(input, output);
+			return readTokenData(output.toString(StandardCharsets.UTF_8.name()));
+		} catch (IOException | SecurityException error) {
+			Log.e(TAG, "Unable to read token from " + uri, error);
+			return false;
+		}
+	}
 
-			String s = AssetExtractor.readStringFromFile(filename);
-		if (s == null || s.length() == 0) {
+	private boolean readFromFile(String filename) {
+		if (filename == null) {
+			return readTokenData(null);
+		}
+		return readTokenData(AssetExtractor.readStringFromFile(filename));
+	}
+
+	private boolean readTokenData(String s) {
+		StringBuilder out = new StringBuilder();
+		if (s == null) {
+			updateScreen(SCREEN_ENTER_TOKEN);
+			return false;
+		}
+
+		if (s.length() == 0) {
+			updateScreen(SCREEN_ENTER_TOKEN);
 			return false;
 		}
 
@@ -413,7 +444,7 @@ public class TokenImportActivity extends ToolbarActivity {
 		super.onActivityResult(idx, resultCode, data);
 		if (resultCode == RESULT_OK) {
 			if (data != null) {
-				readFromFile(data.getStringExtra(FileSelect.RESULT_DATA));
+				readFromUri(data.getData());
 			} else {
 				updateScreen(SCREEN_ENTER_TOKEN);
 			}

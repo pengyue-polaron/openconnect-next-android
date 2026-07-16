@@ -45,25 +45,31 @@ import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
 import android.os.Build;
+import android.os.Handler;
+import android.os.Looper;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceManager;
+import android.preference.PreferenceScreen;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceFragment;
 import android.service.quicksettings.TileService;
 import app.openconnect.R;
+import app.openconnect.SystemBarInsets;
 import app.openconnect.VpnProfile;
 import app.openconnect.api.ExternalAppDatabase;
 import app.openconnect.core.DeviceStateReceiver;
 import app.openconnect.core.ProfileManager;
 import app.openconnect.core.QuickSettingsTileService;
+import app.openconnect.update.GitHubUpdateChecker;
 
 public class GeneralSettings extends PreferenceFragment
 		implements OnPreferenceClickListener, OnClickListener, OnSharedPreferenceChangeListener {
 
 	private ExternalAppDatabase mExtapp;
 	private PreferenceManager mPrefs;
+	private Preference mCheckForUpdates;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -73,6 +79,8 @@ public class GeneralSettings extends PreferenceFragment
 		// Load the preferences from an XML resource
 		addPreferencesFromResource(R.xml.general_settings);
 		configureQuickSettingsPreference();
+		configureUpdatePreferences();
+		configureNestedScreenInsets("advanced_general_settings");
 
 		Preference loadtun = findPreference("loadTunModule");
 		if(!isTunModuleAvailable())
@@ -105,10 +113,62 @@ public class GeneralSettings extends PreferenceFragment
 		*/
 	}
 
+	private void configureNestedScreenInsets(String key) {
+		PreferenceScreen screen = (PreferenceScreen)findPreference(key);
+		if (screen == null) {
+			return;
+		}
+		screen.setOnPreferenceClickListener(preference -> {
+			new Handler(Looper.getMainLooper()).post(() -> {
+				if (getActivity() != null) {
+					SystemBarInsets.applyToDialog(getActivity(), screen.getDialog());
+				}
+			});
+			return false;
+		});
+	}
+
+	private void configureUpdatePreferences() {
+		mCheckForUpdates = findPreference("check_for_updates");
+		if (mCheckForUpdates == null) {
+			return;
+		}
+		updateCheckSummary();
+		mCheckForUpdates.setOnPreferenceClickListener(preference -> {
+			if (getActivity() == null) {
+				return true;
+			}
+			preference.setEnabled(false);
+			preference.setSummary(R.string.update_checking);
+			GitHubUpdateChecker.check(getActivity(), true, (result, error) -> {
+				if (!isAdded()) {
+					return;
+				}
+				preference.setEnabled(true);
+				updateCheckSummary();
+			});
+			return true;
+		});
+	}
+
+	private void updateCheckSummary() {
+		if (mCheckForUpdates == null || getActivity() == null) {
+			return;
+		}
+		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+		String latest = preferences.getString(GitHubUpdateChecker.PREF_LAST_VERSION, "");
+		if (latest.isEmpty()) {
+			mCheckForUpdates.setSummary(R.string.check_for_updates_summary);
+		} else {
+			mCheckForUpdates.setSummary(getString(R.string.update_last_seen, latest));
+		}
+	}
+
     @Override
 	public void onResume() {
         super.onResume();
         configureQuickSettingsPreference();
+        updateCheckSummary();
         getPreferenceScreen().getSharedPreferences()
                 .registerOnSharedPreferenceChangeListener(this);
     }

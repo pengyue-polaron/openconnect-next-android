@@ -27,23 +27,27 @@ package app.openconnect.fragments;
 import java.util.HashMap;
 import java.util.Map;
 
-import app.openconnect.FileSelect;
 import app.openconnect.ConnectionEditorActivity;
 import app.openconnect.R;
 import app.openconnect.ShowTextPreference;
+import app.openconnect.SystemBarInsets;
 import app.openconnect.TokenImportActivity;
 import app.openconnect.VpnProfile;
 import app.openconnect.core.ProfileManager;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
+import android.os.Handler;
+import android.os.Looper;
 import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
+import android.preference.PreferenceScreen;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -52,6 +56,7 @@ import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.view.KeyEvent;
 import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class ConnectionEditorFragment extends PreferenceFragment
 		implements OnSharedPreferenceChangeListener {
@@ -78,6 +83,8 @@ public class ConnectionEditorFragment extends PreferenceFragment
         // Load the preferences from an XML resource
         addPreferencesFromResource(R.xml.pref_openconnect);
         setClickListeners();
+        configureNestedScreenInsets("pref_key_authentication");
+        configureNestedScreenInsets("pref_key_advanced");
 
         SharedPreferences sp = mPrefs.getSharedPreferences();
         for (Map.Entry<String,?> entry : sp.getAll().entrySet()) {
@@ -85,6 +92,21 @@ public class ConnectionEditorFragment extends PreferenceFragment
         }
         updatePref(sp, "batch_mode");
     }
+
+	private void configureNestedScreenInsets(String key) {
+		PreferenceScreen screen = (PreferenceScreen)findPreference(key);
+		if (screen == null) {
+			return;
+		}
+		screen.setOnPreferenceClickListener(preference -> {
+			new Handler(Looper.getMainLooper()).post(() -> {
+				if (getActivity() != null) {
+					SystemBarInsets.applyToDialog(getActivity(), screen.getDialog());
+				}
+			});
+			return false;
+		});
+	}
 
     @Override
 	public void onResume() {
@@ -198,7 +220,6 @@ public class ConnectionEditorFragment extends PreferenceFragment
 			Preference p = findPreference(key);
 			fileSelectMap.put(key, idx);
 
-			/* Start up a FileSelect activity to import data from the filesystem */
 			p.setOnPreferenceClickListener(new OnPreferenceClickListener() {
 				@Override
 				public boolean onPreferenceClick(Preference preference) {
@@ -207,13 +228,27 @@ public class ConnectionEditorFragment extends PreferenceFragment
 						return false;
 					}
 
-					Intent startFC = new Intent(getActivity(), FileSelect.class);
-					startFC.putExtra(FileSelect.START_DATA, Environment.getExternalStorageDirectory().getPath());
-					startFC.putExtra(FileSelect.SHOW_CLEAR_BUTTON, true);
-					startFC.putExtra(FileSelect.NO_INLINE_SELECTION, true);
-
-					startActivityForResult(startFC, idx);
-					return false;
+					String value = mPrefs.getSharedPreferences().getString(
+							preference.getKey(), "");
+					if (value.isEmpty()) {
+						launchFilePicker(idx);
+					} else {
+						new AlertDialog.Builder(getActivity())
+								.setTitle(preference.getTitle())
+								.setItems(new CharSequence[] {
+										getString(R.string.select_file),
+										getString(R.string.clear)
+								}, (dialog, which) -> {
+									if (which == 0) {
+										launchFilePicker(idx);
+									} else {
+										clearFilePreference(preference.getKey());
+									}
+								})
+								.setNegativeButton(android.R.string.cancel, null)
+								.show();
+					}
+					return true;
 				}
 			});
 		}
@@ -231,6 +266,20 @@ public class ConnectionEditorFragment extends PreferenceFragment
 		});
 	}
 
+	private void launchFilePicker(int requestCode) {
+		Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+		intent.addCategory(Intent.CATEGORY_OPENABLE);
+		intent.setType("*/*");
+		startActivityForResult(intent, requestCode);
+	}
+
+	private void clearFilePreference(String key) {
+		ProfileManager.deleteFilePref(mProfile, key);
+		ShowTextPreference preference = (ShowTextPreference)findPreference(key);
+		preference.setText(null);
+		updatePref(mPrefs.getSharedPreferences(), key);
+	}
+
 	@Override
 	public void onActivityResult(int idx, int resultCode, Intent data) {
 		super.onActivityResult(idx, resultCode, data);
@@ -244,17 +293,21 @@ public class ConnectionEditorFragment extends PreferenceFragment
 			updatePref(prefs, "token_string");
 			updatePref(prefs, "software_token");
 		} else {
-			String path = data.getStringExtra(FileSelect.RESULT_DATA);
 			String key = ProfileManager.fileSelectKeys[idx];
 			ShowTextPreference p = (ShowTextPreference)findPreference(key);
-
-			if (path == null) {
-				ProfileManager.deleteFilePref(mProfile, key);
-			} else {
-				path = ProfileManager.storeFilePref(mProfile, key, path);
+			Uri uri = data == null ? null : data.getData();
+			if (uri == null) {
+				return;
 			}
 
-			p.setText(path);
+			String storedPath = ProfileManager.storeFilePref(
+					mProfile, key, getActivity().getContentResolver(), uri);
+			if (storedPath == null) {
+				Toast.makeText(getActivity(), R.string.import_error_message,
+						Toast.LENGTH_LONG).show();
+				return;
+			}
+			p.setText(storedPath);
 			updatePref(prefs, key);
 		}
 	}

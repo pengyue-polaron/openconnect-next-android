@@ -7,8 +7,13 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <!-- <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /> -->
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SYSTEM_EXEMPTED" />
 
     <!-- Copy the <permission> block to your app when using the REMOTE API. Otherwise OpenConnect
         needs to be installed first -->
@@ -16,11 +21,11 @@
         android:name="io.pengyue.openconnectnext.REMOTE_API"
         android:description="@string/permission_description"
         android:label="Control OpenConnect Next"
-        android:permissionGroup="android.permission-group.NETWORK"
         android:protectionLevel="dangerous" />
 
     <application
         android:allowBackup="true"
+        android:enableOnBackInvokedCallback="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app"
         android:roundIcon="@mipmap/ic_launcher_round"
@@ -80,6 +85,17 @@
                     android:pathPattern=".*\\.sdtid" />
             </intent-filter>
 
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data
+                    android:scheme="content"
+                    android:host="*"
+                    android:mimeType="*/*"
+                    android:pathPattern=".*\\.sdtid" />
+            </intent-filter>
+
             </activity>
         <activity android:name="app.openconnect.FileSelect" />
         <activity
@@ -104,7 +120,9 @@
         <service
             android:name="app.openconnect.core.OpenVpnService"
             android:exported="true"
-            android:permission="android.permission.BIND_VPN_SERVICE" >
+            android:foregroundServiceType="systemExempted"
+            android:permission="android.permission.BIND_VPN_SERVICE"
+            tools:ignore="ForegroundServicePermission" >
             <intent-filter>
                 <action android:name="android.net.VpnService" />
             </intent-filter>
@@ -161,7 +179,7 @@
         <provider
             android:name="app.openconnect.FileProvider"
             android:authorities="io.pengyue.openconnectnext.FileProvider"
-            android:exported="true"
+            android:exported="false"
             android:grantUriPermissions="true"
             tools:ignore="ExportedContentProvider" />
 

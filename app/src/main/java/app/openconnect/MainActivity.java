@@ -35,6 +35,7 @@ import app.openconnect.core.OpenConnectManagementThread;
 import app.openconnect.core.OpenVpnService;
 import app.openconnect.core.VPNConnector;
 import app.openconnect.fragments.*;
+import app.openconnect.update.GitHubUpdateChecker;
 
 import com.google.android.material.tabs.TabLayout;
 
@@ -126,6 +127,7 @@ public class MainActivity extends ToolbarActivity {
 	@Override
 	protected void onResume() {
 		super.onResume();
+		GitHubUpdateChecker.checkAutomatically(this);
 
 		mConn = new VPNConnector(this, true) {
 			@Override

@@ -35,11 +35,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.pm.ServiceInfo;
 import android.net.ConnectivityManager;
 import android.net.VpnService;
 import android.os.*;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import androidx.core.app.ServiceCompat;
 import androidx.core.content.ContextCompat;
 import app.openconnect.MainActivity;
 import app.openconnect.R;
@@ -90,9 +92,10 @@ public class OpenVpnService extends VpnService {
 	private Context mDialogContext;
 
 	private final int NOTIFICATION_ID = 1;
-	private static final String NOTIFICATION_CHANNEL_ID = "vpn_input";
+	private static final String NOTIFICATION_CHANNEL_CONNECTION = "vpn_connection";
+	private static final String NOTIFICATION_CHANNEL_INPUT = "vpn_input";
 	private int mActivityConnections;
-	private boolean mNotificationActive;
+	private boolean mForegroundActive;
 
 	private int mConnectionState = OpenConnectManagementThread.STATE_DISCONNECTED;
 	private String mConnectionStateNames[];
@@ -140,15 +143,22 @@ public class OpenVpnService extends VpnService {
 			return;
 		}
 
-		NotificationChannel channel = new NotificationChannel(
-				NOTIFICATION_CHANNEL_ID,
-				getString(R.string.app),
+		NotificationChannel connectionChannel = new NotificationChannel(
+				NOTIFICATION_CHANNEL_CONNECTION,
+				getString(R.string.notification_channel_vpn),
+				NotificationManager.IMPORTANCE_LOW);
+		connectionChannel.setDescription(getString(R.string.notification_touch_here));
+
+		NotificationChannel inputChannel = new NotificationChannel(
+				NOTIFICATION_CHANNEL_INPUT,
+				getString(R.string.notification_channel_input),
 				NotificationManager.IMPORTANCE_DEFAULT);
-		channel.setDescription(getString(R.string.notification_touch_here));
+		inputChannel.setDescription(getString(R.string.notification_touch_here));
 
 		NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 		if (manager != null) {
-			manager.createNotificationChannel(channel);
+			manager.createNotificationChannel(connectionChannel);
+			manager.createNotificationChannel(inputChannel);
 		}
 	}
 
@@ -156,6 +166,7 @@ public class OpenVpnService extends VpnService {
 	public void onDestroy() {
 		killVPNThread(true);
 		unregisterReceivers();
+		stopForegroundNotification();
 		mVPNLog.saveToFile(getCacheDir().getAbsolutePath() + "/logdata.ser");
 		super.onDestroy();
 	}
@@ -281,15 +292,18 @@ public class OpenVpnService extends VpnService {
 		// Extract information from the intent.
 		mUUID = intent.getStringExtra(EXTRA_UUID);
 		if (mUUID == null) {
+			stopSelf(startId);
 			return START_NOT_STICKY;
 		}
 		mPrefs.edit().putString(ProfileManager.LAST_USED_PROFILE, mUUID).apply();
 
 		profile = ProfileManager.get(mUUID);
 		if (profile == null) {
+			stopSelf(startId);
 			return START_NOT_STICKY;
 		}
 
+		startForegroundNotification();
 		killVPNThread(true);
 
 		// stopSelfResult(most_recent_startId) will kill the service
@@ -374,25 +388,62 @@ public class OpenVpnService extends VpnService {
 	}
 
 	@SuppressWarnings("deprecation")
+	private Notification buildNotification() {
+		boolean inputNeeded = mDialog != null && mActivityConnections == 0;
+		String channelId = inputNeeded
+				? NOTIFICATION_CHANNEL_INPUT : NOTIFICATION_CHANNEL_CONNECTION;
+		Notification.Builder builder = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O
+				? new Notification.Builder(this, channelId)
+				: new Notification.Builder(this);
+
+		String title = getString(R.string.app);
+		String text;
+		if (inputNeeded) {
+			title = getString(R.string.notification_input_needed);
+			text = getString(R.string.notification_touch_here);
+		} else if (mConnectionState == OpenConnectManagementThread.STATE_CONNECTED &&
+				profile != null) {
+			text = getString(R.string.notification_connected_to, profile.getName());
+		} else if (profile != null) {
+			text = getString(R.string.notification_connecting_to, profile.getName());
+		} else {
+			text = getString(R.string.notification_vpn_active);
+		}
+
+		return builder.setSmallIcon(R.drawable.ic_stat_vpn)
+				.setContentTitle(title)
+				.setContentText(text)
+				.setContentIntent(getMainActivityIntent())
+				.setCategory(Notification.CATEGORY_SERVICE)
+				.setOngoing(true)
+				.setOnlyAlertOnce(true)
+				.build();
+	}
+
+	private void startForegroundNotification() {
+		int foregroundType = Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE
+				? ServiceInfo.FOREGROUND_SERVICE_TYPE_SYSTEM_EXEMPTED : 0;
+		ServiceCompat.startForeground(
+				this, NOTIFICATION_ID, buildNotification(), foregroundType);
+		mForegroundActive = true;
+	}
+
+	private void stopForegroundNotification() {
+		if (!mForegroundActive) {
+			return;
+		}
+		ServiceCompat.stopForeground(this, ServiceCompat.STOP_FOREGROUND_REMOVE);
+		mForegroundActive = false;
+	}
+
 	private void updateNotification() {
-		if (mDialog != null && mActivityConnections == 0 && !mNotificationActive) {
-			mNotificationActive = true;
-
-			Notification.Builder builder = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O
-					? new Notification.Builder(this, NOTIFICATION_CHANNEL_ID)
-					: new Notification.Builder(this);
-			builder.setSmallIcon(R.drawable.ic_stat_vpn)
-		            .setContentTitle(getString(R.string.notification_input_needed))
-		            .setContentText(getString(R.string.notification_touch_here))
-		            .setContentIntent(getMainActivityIntent());
-
-            NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-            manager.notify(NOTIFICATION_ID, builder.getNotification());
-            mNotificationActive = true;
-		} else if ((mDialog == null || mActivityConnections > 0) && mNotificationActive) {
-            NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-            manager.cancel(NOTIFICATION_ID);
-            mNotificationActive = false;
+		if (!mForegroundActive) {
+			return;
+		}
+		NotificationManager manager =
+				(NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+		if (manager != null) {
+			manager.notify(NOTIFICATION_ID, buildNotification());
 		}
 	}
 
@@ -436,6 +487,7 @@ public class OpenVpnService extends VpnService {
 		ret = mDialog.waitForResponse();
 
 		setDialog(null, null);
+		wakeUpActivity();
 		return ret;
 	}
 
@@ -456,6 +508,7 @@ public class OpenVpnService extends VpnService {
 				if (stopSelfResult(startId) == false) {
 					Log.w(TAG, "not stopping service due to startId mismatch");
 				} else {
+					stopForegroundNotification();
 					unregisterReceivers();
 				}
 			}

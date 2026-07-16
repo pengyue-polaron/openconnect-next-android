@@ -28,6 +28,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -39,6 +40,7 @@ import java.util.UUID;
 import app.openconnect.VpnProfile;
 
 import android.app.Activity;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -222,19 +224,53 @@ public class ProfileManager {
 	}
 
 	public synchronized static String storeFilePref(VpnProfile profile, String key, String fromPath) {
+		try (FileInputStream in = new FileInputStream(fromPath)) {
+			return storeFilePref(profile, key, in, fromPath);
+		} catch (IOException e) {
+			Log.e(TAG, "error opening " + fromPath, e);
+			return null;
+		}
+	}
+
+	public synchronized static String storeFilePref(VpnProfile profile, String key,
+			ContentResolver resolver, Uri uri) {
+		try (InputStream in = resolver.openInputStream(uri)) {
+			if (in == null) {
+				return null;
+			}
+			return storeFilePref(profile, key, in, uri.toString());
+		} catch (IOException | SecurityException e) {
+			Log.e(TAG, "error opening " + uri, e);
+			return null;
+		}
+	}
+
+	private static String storeFilePref(VpnProfile profile, String key, InputStream in,
+			String sourceName) {
 		String filename = getCertFilename(profile, key);
 		String toPath = getCertPath() + filename;
+		String tempPath = toPath + ".tmp";
 
-		try (FileInputStream in = new FileInputStream(fromPath);
-				FileOutputStream out = new FileOutputStream(toPath)) {
-			File outFile = new File(toPath);
+		try (FileOutputStream out = new FileOutputStream(tempPath)) {
+			File outFile = new File(tempPath);
 			StreamUtils.copy(in, out);
 			outFile.setExecutable(true);
 
+			File destination = new File(toPath);
+			File backup = new File(toPath + ".bak");
+			backup.delete();
+			if (destination.exists() && !destination.renameTo(backup)) {
+				throw new IOException("Unable to preserve " + destination);
+			}
+			if (!outFile.renameTo(destination)) {
+				backup.renameTo(destination);
+				throw new IOException("Unable to move imported file into place");
+			}
+			backup.delete();
 			return filename;
 		} catch (IOException e) {
-			Log.e(TAG, "error copying " + fromPath + " -> " + toPath, e);
-			new File(toPath).delete();
+			Log.e(TAG, "error copying " + sourceName + " -> " + toPath, e);
+			new File(tempPath).delete();
 			return null;
 		}
 	}

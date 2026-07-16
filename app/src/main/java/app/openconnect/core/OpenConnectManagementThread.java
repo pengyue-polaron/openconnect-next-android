@@ -201,8 +201,11 @@ public class OpenConnectManagementThread implements Runnable, OpenVPNManagement 
 				return -1;
 			}
 
+			int previousState = mOpenVPNService.getConnectionState();
+			setState(STATE_USER_PROMPT);
 			Integer response = (Integer)mOpenVPNService.promptUser(
 					new CertWarningDialog(mPrefs, getHostname(), hash, reason));
+			setState(previousState);
 
 			if (response != CertWarningDialog.RESULT_NO) {
 				acceptCert(hash, response == CertWarningDialog.RESULT_ALWAYS);
@@ -652,6 +655,7 @@ public class OpenConnectManagementThread implements Runnable, OpenVPNManagement 
 	}
 
 	private void errorAlert(String message) {
+		setState(STATE_USER_PROMPT);
 		mOpenVPNService.promptUser(new ErrorDialog(mPrefs,
 				mContext.getString(R.string.error_connection_failed),
 				message));
