@@ -27,9 +27,13 @@ package app.openconnect.core;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Locale;
+import java.util.Set;
 import java.util.UUID;
 
 import app.openconnect.VpnProfile;
@@ -38,6 +42,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.Build;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
@@ -48,6 +53,10 @@ public class ProfileManager {
 		{ "ca_certificate", "user_certificate", "private_key", "custom_csd_wrapper" };
 
 	private static final String PROFILE_PFX = "profile-";
+	public static final String QUICK_SETTINGS_PROFILE = "quick_settings_profile";
+	public static final String QUICK_SETTINGS_LAST_USED = "__last_used__";
+	public static final String QUICK_SETTINGS_CHOOSE = "__choose__";
+	public static final String LAST_USED_PROFILE = "service_mUUID";
 	private static HashMap<String,VpnProfile> mProfiles;
 
 	private static Context mContext;
@@ -64,27 +73,30 @@ public class ProfileManager {
 		mProfiles = new HashMap<String, VpnProfile>();
 
 		File prefsdir = new File(context.getApplicationInfo().dataDir, "shared_prefs");
-	    if (prefsdir.exists() && prefsdir.isDirectory()) {
-	    	for (String s : prefsdir.list()) {
-	    		if (s.startsWith(PROFILE_PFX)) {
-	    			SharedPreferences p = context.getSharedPreferences(s.replaceFirst(".xml", ""),
-	    					Activity.MODE_PRIVATE);
-	    			VpnProfile entry = new VpnProfile(p);
-	    			if (!entry.isValid()) {
-	    				Log.w(TAG, "removing bogus profile '" + s + "'");
-	    				File f = new File(s);
-	    				f.delete();
-	    			} else {
-	    				mProfiles.put(entry.getUUIDString(), entry);
-	    			}
-	    		}
-	    	}
-	    }
+		if (prefsdir.exists() && prefsdir.isDirectory()) {
+			String[] preferenceFiles = prefsdir.list();
+			if (preferenceFiles == null) {
+				return;
+			}
+			for (String s : preferenceFiles) {
+				if (s.startsWith(PROFILE_PFX)) {
+					String preferenceName = s.replaceFirst("\\.xml$", "");
+					SharedPreferences p = context.getSharedPreferences(preferenceName,
+							Activity.MODE_PRIVATE);
+					VpnProfile entry = new VpnProfile(p);
+					if (!entry.isValid()) {
+						Log.w(TAG, "removing bogus profile '" + s + "'");
+						deleteSharedPreferences(preferenceName);
+					} else {
+						mProfiles.put(entry.getUUIDString(), entry);
+					}
+				}
+			}
+		}
 	}
 
 	public synchronized static Collection<VpnProfile> getProfiles() {
-		init(mContext);
-		return mProfiles.values();
+		return new ArrayList<VpnProfile>(mProfiles.values());
 	}
 
 	public synchronized static VpnProfile get(String key) {
@@ -213,30 +225,31 @@ public class ProfileManager {
 		String filename = getCertFilename(profile, key);
 		String toPath = getCertPath() + filename;
 
-		try {
-			FileInputStream in = new FileInputStream(fromPath);
+		try (FileInputStream in = new FileInputStream(fromPath);
+				FileOutputStream out = new FileOutputStream(toPath)) {
 			File outFile = new File(toPath);
-			FileOutputStream out = new FileOutputStream(outFile);
-			byte buffer[] = new byte[65536];
-
-			int len = in.read(buffer);
-			out.write(buffer, 0, len);
-
-			in.close();
-			out.close();
+			StreamUtils.copy(in, out);
 			outFile.setExecutable(true);
 
 			return filename;
-		} catch (Exception e) {
+		} catch (IOException e) {
 			Log.e(TAG, "error copying " + fromPath + " -> " + toPath, e);
-
-			try {
-				new File(toPath).delete();
-			} catch (Exception ee) {
-			}
-
+			new File(toPath).delete();
 			return null;
 		}
+	}
+
+	private static boolean deleteSharedPreferences(String preferenceName) {
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+			return mContext.deleteSharedPreferences(preferenceName);
+		}
+
+		SharedPreferences preferences = mContext.getSharedPreferences(
+				preferenceName, Activity.MODE_PRIVATE);
+		preferences.edit().clear().commit();
+		File file = new File(mContext.getApplicationInfo().dataDir + File.separator +
+				"shared_prefs" + File.separator + preferenceName + ".xml");
+		return !file.exists() || file.delete();
 	}
 
 	public synchronized static boolean delete(String uuid) {
@@ -252,10 +265,18 @@ public class ProfileManager {
 
 		mProfiles.remove(uuid);
 
-		File f = new File(mContext.getApplicationInfo().dataDir + File.separator +
-				"shared_prefs" + File.separator + PROFILE_PFX + uuid + ".xml");
+		String selectedProfile = mAppPrefs.getString(
+				QUICK_SETTINGS_PROFILE, QUICK_SETTINGS_LAST_USED);
+		SharedPreferences.Editor appPreferences = mAppPrefs.edit();
+		if (uuid.equals(selectedProfile)) {
+			appPreferences.putString(QUICK_SETTINGS_PROFILE, QUICK_SETTINGS_CHOOSE);
+		}
+		if (uuid.equals(mAppPrefs.getString(LAST_USED_PROFILE, null))) {
+			appPreferences.remove(LAST_USED_PROFILE);
+		}
+		appPreferences.apply();
 
-		if (f.delete()) {
+		if (deleteSharedPreferences(PROFILE_PFX + uuid)) {
 			Log.i(TAG, "deleted profile " + uuid);
 			return true;
 		} else {
@@ -287,6 +308,30 @@ public class ProfileManager {
 
 	public static VpnProfile getLastConnectedVpn() {
 		return mLastConnectedVpn;
+	}
+
+	public synchronized static String getQuickSettingsProfileMode() {
+		return mAppPrefs.getString(QUICK_SETTINGS_PROFILE, QUICK_SETTINGS_LAST_USED);
+	}
+
+	public synchronized static String getQuickSettingsProfileUUID() {
+		String configuredValue = getQuickSettingsProfileMode();
+		Set<String> availableUuids = new HashSet<String>(mProfiles.keySet());
+		String resolved = QuickSettingsProfileSelection.resolve(configuredValue,
+				mAppPrefs.getString(LAST_USED_PROFILE, null), availableUuids);
+
+		if (!QUICK_SETTINGS_LAST_USED.equals(configuredValue) &&
+				!QUICK_SETTINGS_CHOOSE.equals(configuredValue) &&
+				resolved == null) {
+			mAppPrefs.edit()
+					.putString(QUICK_SETTINGS_PROFILE, QUICK_SETTINGS_CHOOSE)
+					.apply();
+		}
+		return resolved;
+	}
+
+	public synchronized static VpnProfile getQuickSettingsProfile() {
+		return get(getQuickSettingsProfileUUID());
 	}
 
 }

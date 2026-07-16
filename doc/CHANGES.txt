@@ -1,3 +1,18 @@
+v1.12.0 - 2026/07/16
+
+ - Add a selectable default VPN profile for the Android Quick Settings tile
+
+ - Reorganize profile and general settings into common, authentication, and
+   advanced sections without removing existing options
+
+ - Fix races when replacing a slow VPN connection with a new connection
+
+ - Fix truncation when importing certificate, key, and CSD files larger than
+   64 KiB
+
+ - Fix file picker crashes after storage permission denial, SecurID profile
+   restoration, stale profile cleanup, and Quick Settings state refresh
+
 v1.11 - 2015/02/21
 
  - Fix "Unknown compression type 0" errors when CSTP and DTLS use

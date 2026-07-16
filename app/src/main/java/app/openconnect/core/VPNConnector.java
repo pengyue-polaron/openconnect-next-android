@@ -34,7 +34,9 @@ import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.os.Handler;
 import android.os.IBinder;
+import android.os.Looper;
 import android.util.Log;
+import androidx.core.content.ContextCompat;
 import app.openconnect.R;
 import app.openconnect.core.OpenVpnService.LocalBinder;
 
@@ -52,6 +54,7 @@ public abstract class VPNConnector {
 	private boolean mIsActivity;
 	private BroadcastReceiver mReceiver;
 	private String mOwnerName;
+	private boolean mBound;
 
 	private Handler mStatsHandler;
 	private Runnable mStatsRunnable;
@@ -65,7 +68,7 @@ public abstract class VPNConnector {
 
 		Intent intent = new Intent(mContext, OpenVpnService.class);
 		intent.setAction(OpenVpnService.START_SERVICE);
-		mContext.bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
+		mBound = mContext.bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
 
 		mReceiver = new BroadcastReceiver() {
 			@Override
@@ -75,11 +78,11 @@ public abstract class VPNConnector {
 				}
 			}
 		};
-		mContext.registerReceiver(mReceiver, new IntentFilter(
-				OpenVpnService.ACTION_VPN_STATUS));
+		ContextCompat.registerReceiver(mContext, mReceiver, new IntentFilter(
+				OpenVpnService.ACTION_VPN_STATUS), ContextCompat.RECEIVER_NOT_EXPORTED);
 		mOwnerName = mContext.getClass().getSimpleName();
 
-    	mStatsHandler = new Handler();
+		mStatsHandler = new Handler(Looper.getMainLooper());
     	mStatsRunnable = new Runnable() {
 			@Override
 			public void run() {
@@ -131,7 +134,10 @@ public abstract class VPNConnector {
 		if (service != null) {
 			service.updateActivityRefcount(mIsActivity ? -1 : 0);
 		}
-		mContext.unbindService(mConnection);
+		if (mBound) {
+			mContext.unbindService(mConnection);
+			mBound = false;
+		}
 	}
 
 	public String getByteCountSummary() {

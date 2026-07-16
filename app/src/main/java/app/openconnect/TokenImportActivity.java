@@ -297,18 +297,18 @@ public class TokenImportActivity extends ToolbarActivity {
 			}
 		});
 
-    	int position = 0;
-    	if (mNewVpnHostname != null) {
-    		// the very last entry in the spinner is "Add new VPN profile..."
-    		position = mVpnProfileList.size();
-    	} else if (mUUID != null) {
-    		for (int i = 0; i < mVpnProfileList.size(); i++) {
-    			if (mVpnProfileList.get(i).getName().equals(mUUID)) {
-    				position = i;
-    			}
-    		}
-    	}
-    	sp.setSelection(position);
+		int position = 0;
+		if (mNewVpnHostname != null) {
+			// the very last entry in the spinner is "Add new VPN profile..."
+			position = mVpnProfileList.size();
+		} else if (mUUID != null) {
+			for (int i = 0; i < mVpnProfileList.size(); i++) {
+				if (mVpnProfileList.get(i).getUUIDString().equals(mUUID)) {
+					position = i;
+				}
+			}
+		}
+		sp.setSelection(position);
 
     	// Update "Finish" button status when chars are added/deleted
     	EditText entry = (EditText)findViewById(R.id.new_vpn_hostname);
@@ -369,10 +369,14 @@ public class TokenImportActivity extends ToolbarActivity {
     	}
     }
 
-    private boolean readFromFile(String filename) {
-		StringBuilder out = new StringBuilder();
+	    private boolean readFromFile(String filename) {
+			StringBuilder out = new StringBuilder();
+			if (filename == null) {
+				updateScreen(SCREEN_ENTER_TOKEN);
+				return false;
+			}
 
-		String s = AssetExtractor.readStringFromFile(filename);
+			String s = AssetExtractor.readStringFromFile(filename);
 		if (s == null || s.length() == 0) {
 			return false;
 		}
@@ -408,7 +412,11 @@ public class TokenImportActivity extends ToolbarActivity {
 	public void onActivityResult(int idx, int resultCode, Intent data) {
 		super.onActivityResult(idx, resultCode, data);
 		if (resultCode == RESULT_OK) {
-			readFromFile(data.getStringExtra(FileSelect.RESULT_DATA));
+			if (data != null) {
+				readFromFile(data.getStringExtra(FileSelect.RESULT_DATA));
+			} else {
+				updateScreen(SCREEN_ENTER_TOKEN);
+			}
 			return;
 		}
 		/* User canceled */

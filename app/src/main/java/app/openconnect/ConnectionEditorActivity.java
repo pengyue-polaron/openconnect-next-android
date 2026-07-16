@@ -77,7 +77,7 @@ public class ConnectionEditorActivity extends ToolbarActivity {
 
 	private void askProfileRemoval() {
 		AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-		dialog.setTitle("Confirm deletion");
+		dialog.setTitle(R.string.confirm_deletion);
 		dialog.setMessage(getString(R.string.remove_vpn_query, mName));
 
 		dialog.setPositiveButton(android.R.string.yes,

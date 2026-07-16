@@ -48,6 +48,7 @@ public class KeepAlive extends BroadcastReceiver {
 	public static final String ACTION_KEEPALIVE_ALARM = "io.pengyue.openconnectnext.KEEPALIVE_ALARM";
 
 	private boolean mConnectionActive;
+	private boolean mQueryInFlight;
 
 	private PendingIntent mPendingIntent;
 
@@ -167,32 +168,43 @@ public class KeepAlive extends BroadcastReceiver {
 
 	private void handleKeepAlive(final Context context) {
 		mPendingIntent = null;
-		if (!mConnectionActive) {
+		if (!mConnectionActive || mQueryInFlight) {
 			return;
 		}
 
-		mWakeLock.acquire();
+		mQueryInFlight = true;
+		mWakeLock.acquire(30000);
 		mDeviceStateReceiver.setKeepalive(true);
 		mWorkerHandler.post(new Runnable() {
 			@Override
 			public void run() {
 				// DNS query runs on worker thread
-				DatagramSocket sock = openSocket();
-				final boolean result;
-				if (sock != null) {
-					result = sendDNSQuery(sock);
-					sock.close();
-				} else {
-					result = false;
+				boolean queryResult = false;
+				DatagramSocket sock = null;
+				try {
+					sock = openSocket();
+					if (sock != null) {
+						queryResult = sendDNSQuery(sock);
+					}
+				} finally {
+					if (sock != null) {
+						sock.close();
+					}
 				}
+				final boolean result = queryResult;
 
 				mMainHandler.post(new Runnable() {
 					@Override
 					public void run() {
 						// this runs back on the main thread
-						scheduleNext(context, result ? mBaseDelayMs : (mBaseDelayMs / 2));
+						if (mConnectionActive) {
+							scheduleNext(context, result ? mBaseDelayMs : (mBaseDelayMs / 2));
+						}
 						mDeviceStateReceiver.setKeepalive(false);
-						mWakeLock.release();
+						mQueryInFlight = false;
+						if (mWakeLock.isHeld()) {
+							mWakeLock.release();
+						}
 					}
 				});
 			}
@@ -210,7 +222,9 @@ public class KeepAlive extends BroadcastReceiver {
 
 	private void scheduleNext(Context context, int delayMs) {
 		Intent intent = new Intent(ACTION_KEEPALIVE_ALARM);
-		mPendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+		intent.setPackage(context.getPackageName());
+		mPendingIntent = PendingIntent.getBroadcast(context, 0, intent,
+				PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
 
 		AlarmManager am = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
 		am.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + delayMs, mPendingIntent);
@@ -224,10 +238,11 @@ public class KeepAlive extends BroadcastReceiver {
 		HandlerThread t = new HandlerThread("KeepAlive");
 		t.start();
 		mWorkerHandler = new Handler(t.getLooper());
-		mMainHandler = new Handler();
+		mMainHandler = new Handler(Looper.getMainLooper());
 
 		PowerManager pm = (PowerManager)context.getSystemService(Context.POWER_SERVICE);
-		mWakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "KeepAlive");
+		mWakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK,
+				context.getPackageName() + ":KeepAlive");
 
 		mConnectionActive = true;
 		scheduleNext(context, mBaseDelayMs);

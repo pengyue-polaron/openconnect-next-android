@@ -7,8 +7,7 @@ F-Droid repository.
 
 - Not submitted to F-Droid yet.
 - Upstream metadata is being added under `fastlane/metadata/android/en-US`.
-- GitHub releases are tagged, but `versionName` still needs to be aligned with
-  the public release tag before a real F-Droid merge request.
+- GitHub releases and Android `versionName` are aligned.
 - The Android application ID is `io.pengyue.openconnectnext`.
 
 ## Important Finding
@@ -74,17 +73,17 @@ RepoType: git
 Repo: https://github.com/pengyue-polaron/openconnect-next-android.git
 
 Builds:
-  - versionName: 1.11.4
-    versionCode: 1119
-    commit: v1.11.4
+  - versionName: 1.12.0
+    versionCode: 1123
+    commit: v1.12.0
     submodules: true
     gradle:
       - yes
 
 AutoUpdateMode: Version
 UpdateCheckMode: Tags
-CurrentVersion: 1.11.4
-CurrentVersionCode: 1119
+CurrentVersion: 1.12.0
+CurrentVersionCode: 1123
 ```
 
 Before submitting this metadata, update `versionName`, `versionCode`, `commit`,
@@ -97,8 +96,8 @@ the `io.pengyue.openconnectnext` application ID.
 - [ ] Update app label, About page, README, and fastlane title consistently.
 - [ ] Decide whether GitHub releases should remain debug-signed or switch to
       a reproducible release signing process.
-- [ ] Align Gradle `versionName` with the public release tag.
-- [ ] Increment `versionCode`.
+- [x] Align Gradle `versionName` with the public release tag.
+- [x] Increment `versionCode`.
 - [ ] Build from a clean clone with submodules.
 - [ ] Run `./gradlew assembleDebug testDebugUnitTest`.
 - [ ] Test profile creation, connection prompt, password visibility, log tab,

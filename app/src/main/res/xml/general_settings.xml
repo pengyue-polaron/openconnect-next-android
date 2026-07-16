@@ -1,29 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-<!--
-    <PreferenceCategory android:title="@string/appbehaviour">
+    <PreferenceCategory android:title="@string/common_settings">
+        <ListPreference
+                android:defaultValue="__last_used__"
+                android:dialogTitle="@string/quick_settings_default_profile"
+                android:key="quick_settings_profile"
+                android:summary="@string/quick_settings_default_profile_summary"
+                android:title="@string/quick_settings_default_profile" />
 
-        <CheckBoxPreference
-                android:defaultValue="false"
-                android:key="restartvpnonboot"
-                android:summary="@string/onbootrestartsummary"
-                android:title="@string/onbootrestart"/>
-
-        <Preference
-                android:key="clearapi"
-                android:persistent="false"
-                android:title="Clear allowed external apps"/>
-    </PreferenceCategory>
--->
-
-    <PreferenceCategory android:title="@string/vpnbehaviour">
-<!--
-        <CheckBoxPreference
-                android:defaultValue="true"
-                android:key="usesystemproxy"
-                android:summary="@string/use_system_proxy_summary"
-                android:title="@string/use_system_proxy"/>
--->
         <CheckBoxPreference
                 android:defaultValue="true"
                 android:key="netchangereconnect"
@@ -35,35 +19,38 @@
                 android:key="screenoff"
                 android:summary="@string/screenoff_summary"
                 android:title="@string/screenoff_title"/>
-
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="@string/device_specific">
-        <CheckBoxPreference
-                android:defaultValue="false"
-                android:key="useCM9Fix"
-                android:summary="@string/owner_fix_summary"
-                android:title="@string/owner_fix"/>
-        <CheckBoxPreference
-                android:defaultValue="false"
-                android:key="loadTunModule"
-                android:summary="@string/setting_loadtun_summary"
-                android:title="@string/setting_loadtun"/>
-    </PreferenceCategory>
+    <PreferenceScreen
+            android:key="advanced_general_settings"
+            android:summary="@string/advanced_general_settings_summary"
+            android:title="@string/advanced">
+        <PreferenceCategory android:title="@string/logging_settings">
+            <ListPreference
+                    android:defaultValue="short"
+                    android:dialogTitle="@string/timestamp_format"
+                    android:entries="@array/log_timestamp_entries"
+                    android:entryValues="@array/log_timestamp_values"
+                    android:key="timestamp_format"
+                    android:title="@string/timestamp_format" />
+            <CheckBoxPreference
+                    android:defaultValue="false"
+                    android:key="trace_log"
+                    android:summary="@string/trace_log_summary"
+                    android:title="@string/trace_log"/>
+        </PreferenceCategory>
 
-    <PreferenceCategory android:title="@string/advanced">
-        <ListPreference
-            android:key="timestamp_format"
-            android:title="@string/timestamp_format"
-            android:dialogTitle="@string/timestamp_format"
-            android:entries="@array/log_timestamp_entries"
-            android:entryValues="@array/log_timestamp_values"
-            android:defaultValue="short" />
-        <CheckBoxPreference
-                android:defaultValue="false"
-                android:key="trace_log"
-                android:summary="@string/trace_log_summary"
-                android:title="@string/trace_log"/>
-    </PreferenceCategory>
-
+        <PreferenceCategory android:title="@string/device_specific">
+            <CheckBoxPreference
+                    android:defaultValue="false"
+                    android:key="useCM9Fix"
+                    android:summary="@string/owner_fix_summary"
+                    android:title="@string/owner_fix"/>
+            <CheckBoxPreference
+                    android:defaultValue="false"
+                    android:key="loadTunModule"
+                    android:summary="@string/setting_loadtun_summary"
+                    android:title="@string/setting_loadtun"/>
+        </PreferenceCategory>
+    </PreferenceScreen>
 </PreferenceScreen>

@@ -84,12 +84,12 @@
         <activity android:name="app.openconnect.FileSelect" />
         <activity
             android:name="app.openconnect.MainActivity"
+            android:exported="true"
             android:uiOptions="splitActionBarWhenNarrow"
             tools:ignore="ExportedActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.BROWSABLE" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -103,6 +103,7 @@
 
         <service
             android:name="app.openconnect.core.OpenVpnService"
+            android:exported="true"
             android:permission="android.permission.BIND_VPN_SERVICE" >
             <intent-filter>
                 <action android:name="android.net.VpnService" />
@@ -133,6 +134,7 @@
 -->
 
         <activity
+            android:exported="true"
             android:permission="io.pengyue.openconnectnext.REMOTE_API"
             android:name="app.openconnect.api.GrantPermissionsActivity">
             <intent-filter>
@@ -140,6 +142,7 @@
             </intent-filter>
         </activity>
         <activity
+            android:exported="true"
             android:permission="io.pengyue.openconnectnext.REMOTE_API"
             android:name="app.openconnect.api.ConfirmDialog" >
             <intent-filter>
@@ -147,7 +150,9 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name="app.openconnect.OnBootReceiver" >
+        <receiver
+            android:name="app.openconnect.OnBootReceiver"
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>

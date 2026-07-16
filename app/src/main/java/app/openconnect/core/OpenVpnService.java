@@ -40,6 +40,7 @@ import android.net.VpnService;
 import android.os.*;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import androidx.core.content.ContextCompat;
 import app.openconnect.MainActivity;
 import app.openconnect.R;
 import app.openconnect.VpnProfile;
@@ -127,7 +128,7 @@ public class OpenVpnService extends VpnService {
 		// Restore service state from disk if available
 		// This gets overwritten if somebody calls startService()
 		mPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-		mUUID = mPrefs.getString("service_mUUID", "");
+		mUUID = mPrefs.getString(ProfileManager.LAST_USED_PROFILE, "");
 
 		mVPNLog.restoreFromFile(getCacheDir().getAbsolutePath() + "/logdata.ser");
 		mConnectionStateNames = getResources().getStringArray(R.array.connection_states);
@@ -154,10 +155,9 @@ public class OpenVpnService extends VpnService {
 	@Override
 	public void onDestroy() {
 		killVPNThread(true);
-		if (mDeviceStateReceiver != null) {
-			this.unregisterReceiver(mDeviceStateReceiver);
-		}
+		unregisterReceivers();
 		mVPNLog.saveToFile(getCacheDir().getAbsolutePath() + "/logdata.ser");
+		super.onDestroy();
 	}
 
 	private synchronized boolean doStopVPN() {
@@ -169,10 +169,14 @@ public class OpenVpnService extends VpnService {
 	}
 
 	private void killVPNThread(boolean joinThread) {
+		Thread vpnThread = mVPNThread;
 		if (doStopVPN() && joinThread) {
 			try {
-				mVPNThread.join(1000);
+				if (vpnThread != null) {
+					vpnThread.join(1000);
+				}
 			} catch (InterruptedException e) {
+				Thread.currentThread().interrupt();
 				Log.e(TAG, "OpenConnect thread did not exit");
 			}
 		}
@@ -185,7 +189,8 @@ public class OpenVpnService extends VpnService {
 		intent.setAction(Intent.ACTION_MAIN);
 		intent.addCategory(Intent.CATEGORY_LAUNCHER);
 
-		PendingIntent startLW = PendingIntent.getActivity(this, 0, intent, 0);
+		PendingIntent startLW = PendingIntent.getActivity(this, 0, intent,
+				PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
 		return startLW;
 	}
 
@@ -197,7 +202,8 @@ public class OpenVpnService extends VpnService {
 		filter.addAction(Intent.ACTION_SCREEN_OFF);
 		filter.addAction(Intent.ACTION_SCREEN_ON);
 		mDeviceStateReceiver = new DeviceStateReceiver(management, mPrefs);
-		registerReceiver(mDeviceStateReceiver, filter);
+		ContextCompat.registerReceiver(this, mDeviceStateReceiver, filter,
+				ContextCompat.RECEIVER_NOT_EXPORTED);
 	}
 
 	private synchronized void registerKeepAlive() {
@@ -229,7 +235,8 @@ public class OpenVpnService extends VpnService {
 
 		IntentFilter filter = new IntentFilter(KeepAlive.ACTION_KEEPALIVE_ALARM);
 		mKeepAlive = new KeepAlive(idle, DNSServer, mDeviceStateReceiver);
-		registerReceiver(mKeepAlive, filter);
+		ContextCompat.registerReceiver(this, mKeepAlive, filter,
+				ContextCompat.RECEIVER_NOT_EXPORTED);
 		mKeepAlive.start(this);
 	}
 
@@ -276,7 +283,7 @@ public class OpenVpnService extends VpnService {
 		if (mUUID == null) {
 			return START_NOT_STICKY;
 		}
-		mPrefs.edit().putString("service_mUUID", mUUID).apply();
+		mPrefs.edit().putString(ProfileManager.LAST_USED_PROFILE, mUUID).apply();
 
 		profile = ProfileManager.get(mUUID);
 		if (profile == null) {
@@ -394,6 +401,7 @@ public class OpenVpnService extends VpnService {
 			@Override
 			public void run() {
 				Intent vpnstatus = new Intent(ACTION_VPN_STATUS);
+				vpnstatus.setPackage(getPackageName());
 				vpnstatus.putExtra(EXTRA_CONNECTION_STATE, mConnectionState);
 				vpnstatus.putExtra(EXTRA_UUID, mUUID);
 				sendBroadcast(vpnstatus, permission.ACCESS_NETWORK_STATE);
@@ -431,11 +439,16 @@ public class OpenVpnService extends VpnService {
 		return ret;
 	}
 
-	public synchronized void threadDone() {
+	public synchronized void threadDone(OpenConnectManagementThread management) {
+		if (mVPN != management) {
+			Log.i(TAG, "ignoring termination from an obsolete VPN thread");
+			return;
+		}
 		final int startId = mStartId;
 
 		Log.i(TAG, "VPN thread has terminated");
 		mVPN = null;
+		mVPNThread = null;
 		mHandler.post(new Runnable() {
 
 			@Override
@@ -449,7 +462,10 @@ public class OpenVpnService extends VpnService {
 		});
 	}
 
-	public synchronized void setConnectionState(int state) {
+	public synchronized void setConnectionState(OpenConnectManagementThread management, int state) {
+		if (mVPN != management) {
+			return;
+		}
 		if (state == OpenConnectManagementThread.STATE_CONNECTED &&
 				mConnectionState != OpenConnectManagementThread.STATE_CONNECTED) {
 			startTime = new Date();
@@ -472,7 +488,10 @@ public class OpenVpnService extends VpnService {
 		}
 	}
 
-	public synchronized void setStats(VPNStats stats) {
+	public synchronized void setStats(OpenConnectManagementThread management, VPNStats stats) {
+		if (mVPN != management) {
+			return;
+		}
 		if (stats != null) {
 			mStats = stats;
 		}
@@ -483,7 +502,11 @@ public class OpenVpnService extends VpnService {
 		return mStats;
 	}
 
-	public synchronized void setIPInfo(LibOpenConnect.IPInfo ipInfo, String serverName) {
+	public synchronized void setIPInfo(OpenConnectManagementThread management,
+			LibOpenConnect.IPInfo ipInfo, String serverName) {
+		if (mVPN != management) {
+			return;
+		}
 		this.ipInfo = ipInfo;
 		this.serverName = serverName;
 	}

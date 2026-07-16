@@ -44,6 +44,7 @@ import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 import app.openconnect.FileSelect;
 import app.openconnect.R;
 
@@ -172,6 +173,11 @@ public class FileSelectionFragment extends ListFragment {
 			currentPath = ROOT;
 			f = new File(currentPath);
 			files = f.listFiles();
+		}
+		if (files == null) {
+			files = new File[0];
+			Toast.makeText(getActivity(), R.string.file_access_unavailable,
+					Toast.LENGTH_LONG).show();
 		}
 
 		myPath.setText(getText(R.string.location) + ": " + currentPath);
