@@ -2,7 +2,6 @@
 <resources>
     <color name="brand_icon_background">#080A0D</color>
     <color name="brand_icon_background_end">#15191E</color>
-    <color name="brand_icon_mark">#FFFFFF</color>
     <color name="brand_icon_outline">#2C3745</color>
     <color name="oc_primary">#96C2FF</color>
     <color name="oc_on_primary">#002F67</color>

@@ -81,8 +81,7 @@
                     android:layout_gravity="center"
                     android:background="@drawable/ic_brand_in_app_background"
                     android:contentDescription="@string/app"
-                    android:src="@drawable/ic_launcher_mark"
-                    app:tint="@color/brand_icon_mark" />
+                    android:src="@drawable/ic_brand_mark" />
 
             </FrameLayout>
 
