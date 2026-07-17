@@ -1,6 +1,6 @@
 # F-Droid Packaging Notes
 
-This document tracks what is needed to submit OpenConnect Next to the official
+This document tracks what is needed to submit OConnect to the official
 F-Droid repository.
 
 ## Current Status
@@ -8,7 +8,7 @@ F-Droid repository.
 - Not submitted to F-Droid yet.
 - Upstream metadata is being added under `fastlane/metadata/android/en-US`.
 - GitHub releases and Android `versionName` are aligned.
-- The Android application ID is `io.pengyue.openconnectnext`.
+- The Android application ID is `io.pengyue.oconnect`.
 
 ## Important Finding
 
@@ -18,7 +18,7 @@ F-Droid already has an active OpenConnect package at
 
 Because this project is a fork, the submission path is:
 
-1. Keep the user-facing name distinct: **OpenConnect Next**.
+1. Keep the user-facing name distinct: **OConnect**.
 2. Keep the Android application ID distinct from existing OpenConnect packages.
 3. Keep affected authorities, permissions, remote API strings, and metadata
    aligned with that ID.
@@ -26,13 +26,14 @@ Because this project is a fork, the submission path is:
 Application ID:
 
 ```text
-io.pengyue.openconnectnext
+io.pengyue.oconnect
 ```
 
 Changing the application ID means this installs as a new app and does not
-upgrade any previously installed `app.openconnect` build. Before F-Droid
-submission, test the VPN service, file provider authority, remote API
-permission, and Android backup/migration behavior.
+upgrade any previously installed `app.openconnect` or
+`io.pengyue.openconnectnext` build. Before F-Droid submission, test the VPN
+service, file provider authority, remote API permission, and Android
+backup/migration behavior.
 
 ## Official Submission Path
 
@@ -88,7 +89,7 @@ CurrentVersionCode: 1123
 
 Before submitting this metadata, update `versionName`, `versionCode`, `commit`,
 `CurrentVersion`, and `CurrentVersionCode` to the final release that contains
-the `io.pengyue.openconnectnext` application ID.
+the `io.pengyue.oconnect` application ID.
 
 ## Pre-Submission Checklist
 

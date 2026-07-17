@@ -59,15 +59,15 @@ import org.infradead.libopenconnect.LibOpenConnect.VPNStats;
 
 public class OpenVpnService extends VpnService {
 
-	public static final String TAG = "OpenConnect";
+	public static final String TAG = "OConnect";
 
-	public static final String START_SERVICE = "io.pengyue.openconnectnext.START_SERVICE";
-	public static final String START_SERVICE_STICKY = "io.pengyue.openconnectnext.START_SERVICE_STICKY";
-	public static final String ALWAYS_SHOW_NOTIFICATION = "io.pengyue.openconnectnext.NOTIFICATION_ALWAYS_VISIBLE";
+	public static final String START_SERVICE = "io.pengyue.oconnect.START_SERVICE";
+	public static final String START_SERVICE_STICKY = "io.pengyue.oconnect.START_SERVICE_STICKY";
+	public static final String ALWAYS_SHOW_NOTIFICATION = "io.pengyue.oconnect.NOTIFICATION_ALWAYS_VISIBLE";
 
-	public static final String ACTION_VPN_STATUS = "io.pengyue.openconnectnext.VPN_STATUS";
-	public static final String EXTRA_CONNECTION_STATE = "io.pengyue.openconnectnext.connectionState";
-	public static final String EXTRA_UUID = "io.pengyue.openconnectnext.UUID";
+	public static final String ACTION_VPN_STATUS = "io.pengyue.oconnect.VPN_STATUS";
+	public static final String EXTRA_CONNECTION_STATE = "io.pengyue.oconnect.connectionState";
+	public static final String EXTRA_UUID = "io.pengyue.oconnect.UUID";
 	public static final String PREF_NOTIFY_USER_INPUT = "notify_user_input";
 
 	// These are valid in the CONNECTED state

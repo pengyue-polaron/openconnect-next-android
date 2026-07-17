@@ -1,10 +1,10 @@
-# OpenConnect Next
+# OConnect
 
 [![License: GPL v2](https://img.shields.io/badge/license-GPL--2.0-blue.svg)](COPYING)
 [![Android](https://img.shields.io/badge/platform-Android-3DDC84.svg)](app/build.gradle)
 [![Latest release](https://img.shields.io/github/v/release/pengyue-polaron/openconnect-next-android)](https://github.com/pengyue-polaron/openconnect-next-android/releases/latest)
 
-OpenConnect Next is a modern Android client for
+OConnect is a modern Android client for
 [OpenConnect](https://www.infradead.org/openconnect/)-compatible SSL VPN
 gateways, including Cisco AnyConnect-compatible servers and ocserv.
 
@@ -18,8 +18,8 @@ project documentation.
 - Distribution: GitHub Releases only for now.
 - Stores: not published on Google Play, F-Droid, or other app stores yet.
 - F-Droid: planned; see [docs/fdroid.md](docs/fdroid.md).
-- App name: **OpenConnect Next**.
-- Android application ID: `io.pengyue.openconnectnext`.
+- App name: **OConnect**.
+- Android application ID: `io.pengyue.oconnect`.
 
 ## Features
 
@@ -149,9 +149,11 @@ F-Droid inclusion is not automatic. The app needs source metadata, a buildable
 tagged release, and a merge request to the `fdroiddata` repository. The current
 preparation notes and checklist live in [docs/fdroid.md](docs/fdroid.md).
 
-The Android application ID has been migrated to `io.pengyue.openconnectnext`
+The Android application ID has been migrated to `io.pengyue.oconnect`
 so this fork can be submitted separately from existing OpenConnect packages in
-the F-Droid ecosystem.
+the F-Droid ecosystem. Because this replaces the previous
+`io.pengyue.openconnectnext` ID, OConnect installs as a separate app instead of
+upgrading an existing OpenConnect Next installation.
 
 ## Contributing
 
@@ -179,7 +181,7 @@ opening a public issue.
 
 ## License
 
-OpenConnect Next is released under the GPLv2 license. See [COPYING](COPYING)
+OConnect is released under the GPLv2 license. See [COPYING](COPYING)
 and [doc/LICENSE.txt](doc/LICENSE.txt).
 
 Much of the Java code was derived from OpenVPN for Android by Arne Schwabe.

@@ -35,7 +35,7 @@ import app.openconnect.update.GitHubUpdateChecker;
 
 public class MainActivity extends ToolbarActivity {
 
-	public static final String TAG = "OpenConnect";
+	public static final String TAG = "OConnect";
 
 	private VPNConnector mConn;
 

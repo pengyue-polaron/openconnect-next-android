@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2026 OpenConnect Next contributors
+ * Copyright (c) 2026 OConnect contributors
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -184,7 +184,7 @@ public final class GitHubUpdateChecker {
 		connection.setRequestProperty("Accept", "application/vnd.github+json");
 		connection.setRequestProperty("X-GitHub-Api-Version", "2022-11-28");
 		connection.setRequestProperty("User-Agent",
-				"OpenConnect-Next-Android/" + BuildConfig.VERSION_NAME);
+				"OConnect-Android/" + BuildConfig.VERSION_NAME);
 
 		int status = connection.getResponseCode();
 		InputStream stream = status >= 200 && status < 300

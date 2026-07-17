@@ -42,7 +42,7 @@ import app.openconnect.R;
 
 public class AboutFragment extends Fragment  {
 
-	public static final String TAG = "OpenConnect";
+	public static final String TAG = "OConnect";
 	private static final String REPO_URL = "https://github.com/pengyue-polaron/openconnect-next-android";
 	private static final String ISSUES_URL = REPO_URL + "/issues";
 	private static final String RELEASES_URL = REPO_URL + "/releases";

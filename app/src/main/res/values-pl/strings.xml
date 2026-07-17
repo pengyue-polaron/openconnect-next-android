@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <string name="app">OpenConnect Next</string>
+  <string name="app">OConnect</string>
   <string name="location">Lokalizacja</string>
   <string name="cant_read_folder">Nie można odczytać katalogu</string>
   <string name="cancel">Anuluj</string>
@@ -40,7 +40,7 @@
   <string name="make_selection_inline">Skopiuj do profilu</string>
   <string name="add">Dodaj</string>
   <string name="prompt">%1$s próby kontroli %2$s</string>
-  <string name="remote_warning">Akceptując, dajesz aplikacji uprawnienia do pełnego kontrolowania przez OpenConnect całego ruchu sieciowego. <b>Nie akceptuj, jeżeli nie ufasz aplikacji w pełni. </b> W przeciwnym razie istnieje ryzyko przejęcia danych przez złośliwe oprogramowanie. </string>
+  <string name="remote_warning">Akceptując, dajesz aplikacji uprawnienia do pełnego kontrolowania przez OConnect całego ruchu sieciowego. <b>Nie akceptuj, jeżeli nie ufasz aplikacji w pełni. </b> W przeciwnym razie istnieje ryzyko przejęcia danych przez złośliwe oprogramowanie. </string>
   <string name="remote_trust">Ufam tej aplikacji.</string>
   <string name="no_external_app_allowed">Żadna aplikacja nie ma pozwolenia do używania zewnętrznego API</string>
   <string name="allowed_apps">Dozwolone aplikacje: %s</string>

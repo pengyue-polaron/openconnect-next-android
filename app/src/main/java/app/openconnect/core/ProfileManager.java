@@ -49,7 +49,7 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 
 public class ProfileManager {
-	public static final String TAG = "OpenConnect";
+	public static final String TAG = "OConnect";
 
 	public static String fileSelectKeys[] =
 		{ "ca_certificate", "user_certificate", "private_key", "custom_csd_wrapper" };

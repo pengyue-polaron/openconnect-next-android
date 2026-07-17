@@ -7,11 +7,11 @@ android {
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "io.pengyue.openconnectnext"
+        applicationId = "io.pengyue.oconnect"
         minSdk = 23
         targetSdk = 36
-        versionCode = 1129
-        versionName = "1.16.0"
+        versionCode = 1130
+        versionName = "1.17.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
     buildFeatures {

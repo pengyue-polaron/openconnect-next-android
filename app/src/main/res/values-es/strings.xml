@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <string name="app">OpenConnect Next</string>
-  <string name="permission_description">Permite que otra aplicación controle OpenConnect</string>
+  <string name="app">OConnect</string>
+  <string name="permission_description">Permite que otra aplicación controle OConnect</string>
   <string name="location">Ubicación</string>
   <string name="cant_read_folder">No se puede leer el directorio</string>
   <string name="ok">Aceptar</string>
@@ -17,7 +17,7 @@
   <string name="needs_work">Necesita mejorar</string>
   <string name="maybe_later">Tal vez luego</string>
   <string name="help_with_translations">Ayudar con las traducciones</string>
-  <string name="about_openconnect">Sobre OpenConnect</string>
+  <string name="about_openconnect">Sobre OConnect</string>
   <string name="securid_none_defined">Ninguno de sus perfiles VPN tiene activada una cadena de autentificadores SecurID.\n\nPara añadir una, importe un archivo \"sdtid\" o haga clic en un URL \"http://127.0.0.1/securid\" de su correo electrónico. Vea las P+F para más información.</string>
   <string name="securid_parse_error">No se puede analizar la cadena de autentificadores SecurID en este perfil.</string>
   <string name="securid_internal_error">No se puede acceder al perfil VPN. Por favor informe del error al autor.</string>
@@ -53,7 +53,7 @@
   <!--ACRA crash reporting-->
   <string name="crash_dialog_text">Se ha producido un error inesperado que ha forzado a detener la aplicación. Puede ayudarnos a corregirlo enviándonos datos del error.</string>
   <string name="crash_dialog_comment_prompt">Por favor, describa qué estaba sucediendo cuando ocurrió el error:</string>
-  <string name="problem_dialog_text">Gracias por sus comentarios para mejorar OpenConnect. Lamentamos que haya encontrado un problema pero vamos a revisar su informe y rastrear el error.</string>
+  <string name="problem_dialog_text">Gracias por sus comentarios para mejorar OConnect. Lamentamos que haya encontrado un problema pero vamos a revisar su informe y rastrear el error.</string>
   <string name="problem_dialog_comment_prompt">Por favor, describa la naturaleza del problema. Si quiere ayudar al autor a solucionarlo, asegúrese de incluir su dirección de correo:</string>
   <string name="copied_entry">Copiado al portapapeles</string>
   <string name="faq">P+F</string>
@@ -88,11 +88,11 @@
   <string name="getproxy_error">Error al obtener la configuración de proxy: %s</string>
   <string name="no_vpn_profiles_defined">No hay perfiles VPN definidos.</string>
   <string name="add_new_vpn_hint">Agregue un perfil VPN para comenzar.</string>
-  <string name="faq_hint">Asegúrese de revisar también las P+F si no ha utilizado OpenConnect antes.</string>
+  <string name="faq_hint">Asegúrese de revisar también las P+F si no ha utilizado OConnect antes.</string>
   <string name="send_minidump">Enviar minivolcado al desarrollador</string>
   <string name="send_minidump_summary">Enviar información de depuración sobre último fallo al desarrollador</string>
   <string name="notification_input_needed">Se necesita entrada del usuario</string>
-  <string name="notification_touch_here">Toque aquí para saltar a OpenConnect</string>
+  <string name="notification_touch_here">Toque aquí para saltar a OConnect</string>
   <string name="state_connected_to">Conectado a %1$s</string>
   <string name="error_connection_failed">Conexión fallida</string>
   <string name="error_invalid_hostname">Nombre de servidor \'%1$s\' inválido</string>
@@ -103,7 +103,7 @@
   <string name="make_selection_inline">Copiar en perfil</string>
   <string name="add">Agregar</string>
   <string name="prompt">%1$s intentos de controlar %2$s</string>
-  <string name="remote_warning">Si continua está permitiendo que la aplicación controle completamente OpenConnect para Android e interceptar todo el tráfico de red. <b> No acepte a menos que confíe en esta aplicación. </b> De lo contrario, usted corre el riesgo de comprometer sus datos ante software malicioso.\"</string>
+  <string name="remote_warning">Si continua está permitiendo que la aplicación controle completamente OConnect e interceptar todo el tráfico de red. <b> No acepte a menos que confíe en esta aplicación. </b> De lo contrario, usted corre el riesgo de comprometer sus datos ante software malicioso.\"</string>
   <string name="remote_trust">Confío en esta aplicación.</string>
   <string name="no_external_app_allowed">Ninguna aplicación autorizada para utilizar la API externa</string>
   <string name="allowed_apps">Aplicaciones autorizadas: %s</string>

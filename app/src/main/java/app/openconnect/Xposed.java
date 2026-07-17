@@ -38,7 +38,7 @@ import de.robv.android.xposed.XposedHelpers;
 
 public class Xposed implements IXposedHookZygoteInit {
 
-	public static final String PKG_NAME = "io.pengyue.openconnectnext";
+	public static final String PKG_NAME = "io.pengyue.oconnect";
 
 	@Override
 	public void initZygote(StartupParam startupParam) throws Throwable {
@@ -58,7 +58,7 @@ public class Xposed implements IXposedHookZygoteInit {
 					// We will swap the argument order so the prepare() call succeeds.
 					a[1] = a[0];
 					a[0] = null;
-					XposedBridge.log("OpenConnect: bypassing VPN confirmation dialog");
+					XposedBridge.log("OConnect: bypassing VPN confirmation dialog");
 				}
 			}
 		});
@@ -87,7 +87,7 @@ public class Xposed implements IXposedHookZygoteInit {
 						param.setResult(null);
 					}
 				} catch (Exception e) {
-					XposedBridge.log("OpenConnect: exception checking UIDs: " + e.getLocalizedMessage());
+					XposedBridge.log("OConnect: exception checking UIDs: " + e.getLocalizedMessage());
 				}
 			}
 		});

@@ -31,7 +31,7 @@ import android.content.SharedPreferences;
 import android.util.Log;
 
 public abstract class UserDialog {
-	public static final String TAG = "OpenConnect";
+	public static final String TAG = "OConnect";
 
 	private Object mResult;
 	private boolean mDialogUp;

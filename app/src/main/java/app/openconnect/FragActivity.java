@@ -30,11 +30,11 @@ import android.util.Log;
 
 public class FragActivity extends ToolbarActivity {
 
-	public static final String TAG = "OpenConnect";
+	public static final String TAG = "OConnect";
 
-	public static final String EXTRA_FRAGMENT_NAME = "io.pengyue.openconnectnext.fragment_name";
+	public static final String EXTRA_FRAGMENT_NAME = "io.pengyue.oconnect.fragment_name";
 	public static final String EXTRA_OPEN_ADD_PROFILE =
-			"io.pengyue.openconnectnext.open_add_profile";
+			"io.pengyue.oconnect.open_add_profile";
 
 	public static final String FRAGMENT_PREFIX = "app.openconnect.fragments.";
 

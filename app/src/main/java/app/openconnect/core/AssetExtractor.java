@@ -46,7 +46,7 @@ import android.util.Log;
 
 public class AssetExtractor {
 
-	public static final String TAG = "OpenConnect";
+	public static final String TAG = "OConnect";
 
 	public static final int FL_FORCE = 0x01;
 	public static final int FL_NOEXEC = 0x02;

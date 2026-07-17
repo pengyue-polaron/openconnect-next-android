@@ -45,7 +45,7 @@ import app.openconnect.core.ProfileManager;
 
 public class TokenParentFragment extends Fragment {
 
-	public static final String TAG = "OpenConnect";
+	public static final String TAG = "OConnect";
 
 	public static final String PREF_TOKEN_UUID = "token_uuid";
 

@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <string name="app">OpenConnect Next</string>
+  <string name="app">OConnect</string>
   <string name="location">場所</string>
   <string name="cant_read_folder">ディレクトリが読み取れません</string>
   <string name="cancel">キャンセル</string>
@@ -47,7 +47,7 @@
   <string name="make_selection_inline">プロファイルにコピー</string>
   <string name="add">追加</string>
   <string name="prompt">%1$s は %2$s を制御しようとしています。</string>
-  <string name="remote_warning">このまま進むと、あなたはOpenConnect for Androidの完全な制御とすべての通信を傍受する権限をアプリケーションに対し与えることになります。<b>アプリケーションが信頼できない限り、承諾しないでください。</b>さもないと、あなたのデータがマルウェアにより漏洩させられる危険があります。</string>
+  <string name="remote_warning">このまま進むと、あなたはOConnectの完全な制御とすべての通信を傍受する権限をアプリケーションに対し与えることになります。<b>アプリケーションが信頼できない限り、承諾しないでください。</b>さもないと、あなたのデータがマルウェアにより漏洩させられる危険があります。</string>
   <string name="remote_trust">私はこのアプリケーションを信頼します</string>
   <string name="no_external_app_allowed">外部APIの使用を許可されたアプリはありません</string>
   <string name="allowed_apps">許可アプリ: %s</string>

@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <string name="app">OpenConnect Next</string>
+  <string name="app">OConnect</string>
   <string name="location">Asukoht</string>
   <string name="cant_read_folder">Kataloog pole loetav</string>
   <string name="cancel">Tühista</string>
@@ -47,7 +47,7 @@
   <string name="make_selection_inline">Kopeeri profiili</string>
   <string name="add">Lisa</string>
   <string name="prompt">%1$s katset et juhtida %2$s</string>
-  <string name="remote_warning">Jätkates annate sellele programmile täieliku kontrolli üle Androidi OpenConnect-i ja samuti õiguse jälgida kogu võrguliiklust. <b> Kui te ei usalda seda programmi, siis ÄRGE NÕUSTUGE. </b> Vastasel juhul riskite te oma andmete privaatsuse või terviklikkuse manipulatsiooniga pahatahtliku tarkvara poolt.\"</string>
+  <string name="remote_warning">Jätkates annate sellele programmile täieliku kontrolli OConnect-i üle ja samuti õiguse jälgida kogu võrguliiklust. <b> Kui te ei usalda seda programmi, siis ÄRGE NÕUSTUGE. </b> Vastasel juhul riskite te oma andmete privaatsuse või terviklikkuse manipulatsiooniga pahatahtliku tarkvara poolt.\"</string>
   <string name="remote_trust">Ma usaldan seda programmi.</string>
   <string name="no_external_app_allowed">Ühelgi programmil pole luba kasutada välist API-t</string>
   <string name="allowed_apps">Lubatud programmid: %s</string>

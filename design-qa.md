@@ -23,7 +23,7 @@
 
 - Fonts and typography: passed. Native Android sans typography, title/body hierarchy, weights, line height, Chinese wrapping, and value contrast match the design intent. No truncation was observed.
 - Spacing and layout rhythm: passed. Top app bar, section header, two basic fields, two navigation rows, and persistent bottom save action preserve the target composition. All controls remain visible at approximately 393 x 851 dp.
-- Colors and visual tokens: passed. Existing OpenConnect Next Material 3 dark tokens map cleanly to the target blue accent, near-black surface, blue icon containers, secondary text, and dividers. Light theme was also verified in `16-profile-main-light.png`.
+- Colors and visual tokens: passed. Existing OConnect Material 3 dark tokens map cleanly to the target blue accent, near-black surface, blue icon containers, secondary text, and dividers. Light theme was also verified in `16-profile-main-light.png`.
 - Image quality and asset fidelity: passed. The screen contains no raster imagery. Navigation, security, settings, chevron, log, share, and expand icons use crisp Android vector assets aligned to the existing icon system.
 - Copy and content: passed. Chinese labels and summaries are coherent, existing functions remain present, unset certificate/key values read `未设置`, and the save action is explicit.
 - Icons: passed. Both navigation icons are centered in tonal circles, chevrons align to row centers, and toolbar/back/overflow icons remain native and accessible.

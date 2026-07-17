@@ -43,7 +43,7 @@ import android.widget.TextView;
 
 public class VPNLog {
 
-	public static final String TAG = "OpenConnect";
+	public static final String TAG = "OConnect";
 
 	public static final String DEFAULT_TIME_FORMAT = "short";
 

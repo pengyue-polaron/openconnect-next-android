@@ -35,7 +35,7 @@ import app.openconnect.core.ProfileManager;
 
 public class OnBootReceiver extends BroadcastReceiver {
 
-	public static final String TAG = "OpenConnect";
+	public static final String TAG = "OConnect";
 
 	// Debug: am broadcast -a android.intent.action.BOOT_COMPLETED
 	@Override

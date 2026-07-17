@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <string name="app">OpenConnect Next</string>
-  <string name="permission_description">Anderen Anwendungen die Steuerung von OpenConnect gestatten</string>
+  <string name="app">OConnect</string>
+  <string name="permission_description">Anderen Anwendungen die Steuerung von OConnect gestatten</string>
   <string name="location">Ort</string>
   <string name="cant_read_folder">Verzeichnis kann nicht gelesen werden</string>
   <string name="ok">OK</string>
@@ -17,7 +17,7 @@
   <string name="needs_work">Bedarf noch kleiner Verbesserungen</string>
   <string name="maybe_later">Eventuell später</string>
   <string name="help_with_translations">Beim Übersetzen helfen</string>
-  <string name="about_openconnect">Über OpenConnect</string>
+  <string name="about_openconnect">Über OConnect</string>
   <string name="securid_none_defined">Keines deiner VPN Profile beinhaltet eine SecurID Schlüsselfolge.\n\nUm eine hinzuzufügen, importiere eine „sdtid“ Datei oder klicke auf Die „http://127.0.0.1/securid“ Adresse in deiner E-Mail. Weitere Infos findest du in den FAQ.</string>
   <string name="securid_parse_error">SecurID Schlüsselfolge dieses Profils konnte nicht verarbeitet werden.</string>
   <string name="securid_internal_error">Auf das VPN Profil konnte nicht zugegriffen werden. Bitte wende dich an den Entwickler und melde diesen Fehler.</string>
@@ -61,13 +61,13 @@
   <string name="error_importing_file">Fehler beim importieren der Datei</string>
   <string name="import_error_message">Konnte Datei nicht vom Dateisystem importieren</string>
   <string name="inline_file_data">[[Eingebettete Datei]]</string>
-  <string name="speed_waiting">Warte auf OpenConnect Status Nachricht…</string>
+  <string name="speed_waiting">Warte auf OConnect Status Nachricht…</string>
   <string name="file_icon">Datei Symbol</string>
   <string name="generalsettings">Einstellungen</string>
   <string name="owner_fix_summary">Versucht den Eigentümer von /dev/tun auf system zu ändern. Einige Cyanogenmod 9 ROM Versionen benötigen diese Option, damit die VPN API funktioniert. Benötigt root.</string>
   <string name="owner_fix">/dev/tun Eigentümer setzen.</string>
   <string name="edit_profile_title">Editiere \"%s\"</string>
-  <string name="netchange_summary">Aktivieren dieser Option zwingt OpenConnect dazu, beim Wechsel des Netzwerkes (WLAN zu Mobilfunk und umgekehrt), neu zu verbinden</string>
+  <string name="netchange_summary">Aktivieren dieser Option zwingt OConnect dazu, beim Wechsel des Netzwerkes (WLAN zu Mobilfunk und umgekehrt), neu zu verbinden</string>
   <string name="netchange">Netzwerkänderungen beachten</string>
   <string name="netstatus">Netzwerkstatus:</string>
   <string name="uptime">Laufzeit:</string>
@@ -84,11 +84,11 @@
   <string name="getproxy_error">Fehler beim Ermitteln der Proxy Einstellungen: %s</string>
   <string name="no_vpn_profiles_defined">Keine VPN Profile definiert.</string>
   <string name="add_new_vpn_hint">Fügen Sie ein VPN-Profil hinzu, um zu beginnen.</string>
-  <string name="faq_hint">Vergewissere dich die FAQ gelesen zu haben wenn du OpenConnect zum ersten mal verwenden solltest.</string>
+  <string name="faq_hint">Vergewissere dich die FAQ gelesen zu haben wenn du OConnect zum ersten mal verwenden solltest.</string>
   <string name="send_minidump">Minidump an Entwickler senden</string>
   <string name="send_minidump_summary">Sendet Debugging Informationen des letzten Absturzes an den Entwickler</string>
   <string name="notification_input_needed">Benutzereingabe notwendig</string>
-  <string name="notification_touch_here">Hier berühren um zu OpenConnect zu gelangen</string>
+  <string name="notification_touch_here">Hier berühren um zu OConnect zu gelangen</string>
   <string name="state_connected_to">Verbunden mit %1$s</string>
   <string name="error_connection_failed">Verbindung fehlgeschlagen</string>
   <string name="error_invalid_hostname">Ungültiger Hostname \'%1$s\'</string>
@@ -100,7 +100,7 @@
   <string name="make_selection_inline">Ins Profil einbetten</string>
   <string name="add">Hinzufügen</string>
   <string name="prompt">%1$s versucht %2$s zu steuern</string>
-  <string name="remote_warning">Wenn Sie fortfahren, gestatten Sie der App OpenConnect für Android komplett zu kontrollieren und den gesamten Netzwerkverkehr abzufangen. <b> Akzeptieren Sie nur, wenn Sie der App vertrauen. </b> Anderenfalls riskieren Sie, dass Ihre Daten von schädlicher Software manipuliert werden.</string>
+  <string name="remote_warning">Wenn Sie fortfahren, gestatten Sie der App OConnect komplett zu kontrollieren und den gesamten Netzwerkverkehr abzufangen. <b> Akzeptieren Sie nur, wenn Sie der App vertrauen. </b> Anderenfalls riskieren Sie, dass Ihre Daten von schädlicher Software manipuliert werden.</string>
   <string name="remote_trust">Ich vertraue dieser App.</string>
   <string name="no_external_app_allowed">Keine App für die Verwendung der API freigegeben</string>
   <string name="allowed_apps">Freigegebene Apps: %s</string>

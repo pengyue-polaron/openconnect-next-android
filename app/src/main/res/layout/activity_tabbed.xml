@@ -21,7 +21,7 @@
             android:background="?attr/colorSurface"
             app:menu="@null"
             app:navigationIconTint="?attr/colorOnSurface"
-            app:titleTextAppearance="@style/TextAppearance.OpenConnect.Toolbar"
+            app:titleTextAppearance="@style/TextAppearance.OConnect.Toolbar"
             app:titleTextColor="?attr/colorOnSurface" />
 
         <com.google.android.material.tabs.TabLayout
@@ -37,7 +37,7 @@
             app:tabMode="fixed"
             app:tabRippleColor="?attr/colorSecondaryContainer"
             app:tabSelectedTextColor="?attr/colorPrimary"
-            app:tabTextAppearance="@style/TextAppearance.OpenConnect.Tab"
+            app:tabTextAppearance="@style/TextAppearance.OConnect.Tab"
             app:tabTextColor="?attr/colorOnSurfaceVariant" />
 
     </com.google.android.material.appbar.AppBarLayout>

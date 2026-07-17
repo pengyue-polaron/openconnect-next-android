@@ -58,7 +58,7 @@ import com.google.android.material.textfield.TextInputLayout;
 public class AuthFormHandler extends UserDialog
 		implements DialogInterface.OnClickListener, DialogInterface.OnDismissListener {
 
-	public static final String TAG = "OpenConnect";
+	public static final String TAG = "OConnect";
 
 	private LibOpenConnect.AuthForm mForm;
 	private Context mContext;

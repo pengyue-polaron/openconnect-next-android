@@ -14,5 +14,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = 'OpenConnectNextAndroid'
+rootProject.name = 'OConnectAndroid'
 include ':app'

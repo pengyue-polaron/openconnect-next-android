@@ -56,9 +56,9 @@ import org.stoken.LibStoken;
 
 public class TokenImportActivity extends ToolbarActivity {
 
-	public static final String TAG = "OpenConnect";
+	public static final String TAG = "OConnect";
 
-	public static final String EXTRA_UUID = "io.pengyue.openconnectnext.UUID";
+	public static final String EXTRA_UUID = "io.pengyue.oconnect.UUID";
 
 	private static final int ALERT_NONE = 0;
 	private static final int ALERT_BAD_TOKEN = 1;

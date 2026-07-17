@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <string name="app">OpenConnect Next</string>
+  <string name="app">OConnect</string>
   <string name="location">位置</string>
   <string name="cant_read_folder">無法讀取檔案目錄</string>
   <string name="cancel">取消</string>
@@ -16,9 +16,9 @@
   <string name="no_data">沒有資料</string>
   <string name="client_certificate_title">客戶端證書</string>
   <string name="securid_info">SecurID 資訊</string>
-  <string name="about_openconnect">關於 OpenConnect Next</string>
+  <string name="about_openconnect">關於 OConnect</string>
   <string name="about_title">關於</string>
-  <string name="about_version">OpenConnect Next v%1$s</string>
+  <string name="about_version">OConnect v%1$s</string>
   <string name="about_summary">一個專注於 OpenConnect 相容 SSL VPN 的 Android 客戶端。</string>
   <string name="about_project_links">專案與支援</string>
   <string name="about_project_links_summary">原始碼、支援與版本發布。</string>
@@ -46,7 +46,7 @@
   <string name="quick_settings_connecting_to">正在連線至 %1$s</string>
   <string name="quick_settings_connected_to">已連線至 %1$s</string>
   <string name="quick_settings_action_required">需要處理 %1$s</string>
-  <string name="quick_settings_label">OpenConnect</string>
+  <string name="quick_settings_label">OConnect</string>
   <string name="quick_settings_default_profile">狀態列快速開關</string>
   <string name="quick_settings_default_profile_summary">選擇狀態列開關預設連線的設定檔</string>
   <string name="quick_settings_last_used">上次使用的 VPN</string>
@@ -74,12 +74,12 @@
   <string name="update_view_release">查看發布頁</string>
   <string name="update_later">稍後</string>
   <string name="update_up_to_date_title">已經是最新版</string>
-  <string name="update_up_to_date_message">OpenConnect Next %1$s 是最新正式版。</string>
+  <string name="update_up_to_date_message">OConnect %1$s 是最新正式版。</string>
   <string name="update_check_failed_title">無法檢查更新</string>
   <string name="update_check_failed_message">無法存取 GitHub Releases。\n\n%1$s</string>
   <string name="clear_log">清除記錄檔</string>
   <string name="share_log">分享日誌</string>
-  <string name="log_share_subject">OpenConnect Next 連線日誌</string>
+  <string name="log_share_subject">OConnect 連線日誌</string>
   <string name="log_empty_title">暫無連線日誌</string>
   <string name="log_empty_summary">連線 VPN 後，這裡會顯示連線進度和用於排查問題的詳細資訊。</string>
   <string name="remove_vpn">移除VPN</string>
@@ -153,7 +153,7 @@
   <string name="connection_status_disconnected">已中斷連線</string>
   <string name="connection_status_disconnected_message">到設定檔頁選擇一個設定檔來啟動 VPN 連線。</string>
   <string name="connection_status_reconnect_message">上一次工作階段是 %1$s。可以重新連線重試，或選擇其他設定檔。</string>
-  <string name="connection_status_progress_message">保持 OpenConnect Next 開啟，並依 VPN 伺服器要求完成登入、憑證或權杖提示。</string>
+  <string name="connection_status_progress_message">保持 OConnect 開啟，並依 VPN 伺服器要求完成登入、憑證或權杖提示。</string>
   <string name="log_state_disconnected">已中斷 - 請選擇一個設定檔連線</string>
   <string name="log_state_reconnect">已中斷 - 可重新連線至 %1$s，或選擇其他設定檔</string>
   <string name="log_state_connected">已連線%1$s</string>
@@ -182,7 +182,7 @@
   <string name="make_selection_inline">複製到設定檔</string>
   <string name="add">新增</string>
   <string name="prompt">%1$s 正在嘗試控制 %2$s</string>
-  <string name="remote_warning">如果繼續，你將允許該應用完全控制 OpenConnect Next，並攔截所有網路流量。<b>除非你信任該應用，否則請不要繼續。</b>如果該應用是惡意應用，你需要自行承擔所有後果。</string>
+  <string name="remote_warning">如果繼續，你將允許該應用完全控制 OConnect，並攔截所有網路流量。<b>除非你信任該應用，否則請不要繼續。</b>如果該應用是惡意應用，你需要自行承擔所有後果。</string>
   <string name="remote_trust">我信任此應用。</string>
   <string name="no_external_app_allowed">沒有允許使用外部 API 的應用</string>
   <string name="allowed_apps">已授權的應用：%s</string>

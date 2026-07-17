@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <string name="app">OpenConnect Next</string>
+  <string name="app">OConnect</string>
   <string name="location">Locaţie</string>
   <string name="cant_read_folder">Directorul nu poate fi citit</string>
   <string name="cancel">Anulare</string>
@@ -47,7 +47,7 @@
   <string name="make_selection_inline">Copiaţi în profil</string>
   <string name="add">Adauga</string>
   <string name="prompt">%1$s încercări de a controla %2$s</string>
-  <string name="remote_warning">Continuând, daţi permisiunea aplicaţiei de a controla complet OpenConnect pentru Android și de a intercepta tot traficul de rețea. <b>Nu acceptaţi decât dacă aveți încredere în aplicație</b> În caz contrar, riscaţi să aveţi datele compromise de software maliţios.\"</string>
+  <string name="remote_warning">Continuând, daţi permisiunea aplicaţiei de a controla complet OConnect și de a intercepta tot traficul de rețea. <b>Nu acceptaţi decât dacă aveți încredere în aplicație</b> În caz contrar, riscaţi să aveţi datele compromise de software maliţios.\"</string>
   <string name="remote_trust">Am încredere în această aplicaţie.</string>
   <string name="no_external_app_allowed">Nici o aplicaţie nu are permisiunea de a folosi API-ul extern</string>
   <string name="allowed_apps">Aplicaţii permise: %s</string>

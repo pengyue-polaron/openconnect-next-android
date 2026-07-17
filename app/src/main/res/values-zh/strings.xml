@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <string name="app">OpenConnect Next</string>
-  <string name="permission_description">允许另一个应用程序来控制 OpenConnect Next</string>
+  <string name="app">OConnect</string>
+  <string name="permission_description">允许另一个应用程序来控制 OConnect</string>
   <string name="location">位置</string>
   <string name="cant_read_folder">无法读取目录</string>
   <string name="ok">确定</string>
@@ -22,9 +22,9 @@
   <string name="maybe_later">或许以后</string>
   <string name="help_with_translations">通过翻译帮助</string>
   <string name="report_problem">GitHub 问题反馈</string>
-  <string name="about_openconnect">关于 OpenConnect Next</string>
+  <string name="about_openconnect">关于 OConnect</string>
   <string name="about_title">关于</string>
-  <string name="about_version">OpenConnect Next v%1$s</string>
+  <string name="about_version">OConnect v%1$s</string>
   <string name="about_summary">一个专注于 OpenConnect 兼容 SSL VPN 的 Android 客户端。</string>
   <string name="about_project_links">项目与支持</string>
   <string name="about_project_links_summary">源码、支持与版本发布。</string>
@@ -37,7 +37,7 @@
   <string name="securid_empty_title">尚未配置 SecurID 令牌</string>
   <string name="securid_open_profiles">返回 VPN 配置</string>
   <string name="securid_parse_error">无法解析这个配置文件中的 SecurID 令牌字符串</string>
-  <string name="securid_internal_error">无法访问 VPN 配置文件。请从“关于 OpenConnect”页面打开 GitHub Issues 反馈。</string>
+  <string name="securid_internal_error">无法访问 VPN 配置文件。请从“关于 OConnect”页面打开 GitHub Issues 反馈。</string>
   <string name="securid_encrypted">这个配置文件的 SecurID 令牌字符串是加密的。请尝试重新导入。</string>
   <string name="copy">复制</string>
   <string name="next_tokencode">下一个令牌代码：</string>
@@ -63,7 +63,7 @@
   <string name="reconnect_to">重新连接至 %1$s</string>
   <string name="clear_log">清除日志</string>
   <string name="share_log">分享日志</string>
-  <string name="log_share_subject">OpenConnect Next 连接日志</string>
+  <string name="log_share_subject">OConnect 连接日志</string>
   <string name="log_empty_title">暂无连接日志</string>
   <string name="log_empty_summary">连接 VPN 后，这里会显示连接进度和用于排查问题的详细信息。</string>
   <string name="remove_vpn">删除 VPN</string>
@@ -135,7 +135,7 @@
   <string name="send_minidump">向开发人员发送小型转储</string>
   <string name="send_minidump_summary">向开发人员发送有关上次崩溃的调试信息</string>
   <string name="notification_input_needed">需要用户输入</string>
-  <string name="notification_touch_here">触摸此处跳转至 OpenConnect Next</string>
+  <string name="notification_touch_here">触摸此处跳转至 OConnect</string>
   <string name="notify_user_input">需要操作时提醒</string>
   <string name="notify_user_input_summary">登录或错误等待处理时发送通知。</string>
   <string name="notification_channel_vpn">VPN 连接</string>
@@ -149,7 +149,7 @@
   <string name="quick_settings_connecting_to">正在连接到 %1$s</string>
   <string name="quick_settings_connected_to">已连接到 %1$s</string>
   <string name="quick_settings_action_required">需要处理 %1$s</string>
-  <string name="quick_settings_label">OpenConnect</string>
+  <string name="quick_settings_label">OConnect</string>
   <string name="quick_settings_default_profile">状态栏快捷开关</string>
   <string name="quick_settings_default_profile_summary">选择状态栏开关默认连接的配置</string>
   <string name="quick_settings_last_used">上次使用的 VPN</string>
@@ -172,7 +172,7 @@
   <string name="update_view_release">查看发布页</string>
   <string name="update_later">稍后</string>
   <string name="update_up_to_date_title">已经是最新版</string>
-  <string name="update_up_to_date_message">OpenConnect Next %1$s 是最新正式版。</string>
+  <string name="update_up_to_date_message">OConnect %1$s 是最新正式版。</string>
   <string name="update_check_failed_title">无法检查更新</string>
   <string name="update_check_failed_message">无法访问 GitHub Releases。\n\n%1$s</string>
   <string name="state_connected_to">连接至 %1$s</string>
@@ -180,7 +180,7 @@
   <string name="connection_status_disconnected">已断开</string>
   <string name="connection_status_disconnected_message">到配置文件页选择一个配置来启动 VPN 连接。</string>
   <string name="connection_status_reconnect_message">上一次会话是 %1$s。可以重连重试，或选择其他配置。</string>
-  <string name="connection_status_progress_message">保持 OpenConnect Next 打开，并按 VPN 服务器要求完成登录、证书或令牌提示。</string>
+  <string name="connection_status_progress_message">保持 OConnect 打开，并按 VPN 服务器要求完成登录、证书或令牌提示。</string>
   <string name="log_state_disconnected">已断开 - 请选择一个配置连接</string>
   <string name="log_state_reconnect">已断开 - 可重连至 %1$s，或选择其他配置</string>
   <string name="log_state_connected">已连接%1$s</string>
@@ -197,7 +197,7 @@
   <string name="make_selection_inline">复制到配置文件</string>
   <string name="add">添加</string>
   <string name="prompt">%1$s 试图控制 %2$s</string>
-  <string name="remote_warning">如果继续操作，您将允许该应用程序完全控制 OpenConnect Next 并截获所有的网络流量。<b>除非您信任该应用程序，否则请不要接受。</b>否则，您就会处于资料被恶意软件破坏的风险中。</string>
+  <string name="remote_warning">如果继续操作，您将允许该应用程序完全控制 OConnect 并截获所有的网络流量。<b>除非您信任该应用程序，否则请不要接受。</b>否则，您就会处于资料被恶意软件破坏的风险中。</string>
   <string name="remote_trust">我信任这个应用程序。</string>
   <string name="no_external_app_allowed">没有应用程序被允许使用外部 API</string>
   <string name="allowed_apps">所允许的应用程序：%s</string>

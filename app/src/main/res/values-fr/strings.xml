@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <string name="app">OpenConnect Next</string>
+  <string name="app">OConnect</string>
   <string name="location">Emplacement</string>
   <string name="cant_read_folder">Le dossier ne peut être lu !</string>
   <string name="cancel">Annuler</string>
@@ -47,7 +47,7 @@
   <string name="make_selection_inline">Copier dans le profil</string>
   <string name="add">Ajouter</string>
   <string name="prompt">%1$s essais de controler %2$s</string>
-  <string name="remote_warning">En continuant vous donnerez la permission a l\'application de contrôler complètement OpenConnect pour Android et d\'intercepter tout le trafic réseau. <b> N\'acceptez que si vous faite confiance à l\'application. </b> Sinon vous vous exposez au risque de voir vos données compromises par une application malicieuse.</string>
+  <string name="remote_warning">En continuant vous donnerez la permission a l\'application de contrôler complètement OConnect et d\'intercepter tout le trafic réseau. <b> N\'acceptez que si vous faite confiance à l\'application. </b> Sinon vous vous exposez au risque de voir vos données compromises par une application malicieuse.</string>
   <string name="remote_trust">Faire confiance à cette application.</string>
   <string name="no_external_app_allowed">Aucune appli. autorisée pour utiliser l\'API externe</string>
   <string name="allowed_apps">Applications autorisées: %s</string>

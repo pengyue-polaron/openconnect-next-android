@@ -60,11 +60,11 @@ import app.openconnect.core.ProfileManager;
 
 public class TokenDiagFragment extends Fragment {
 
-	public static final String TAG = "OpenConnect";
+	public static final String TAG = "OConnect";
 
-	public static final String EXTRA_UUID = "io.pengyue.openconnectnext.UUID";
-	public static final String EXTRA_PIN = "io.pengyue.openconnectnext.PIN";
-	public static final String EXTRA_PIN_PROMPTED = "io.pengyue.openconnectnext.PIN_PROMPTED";
+	public static final String EXTRA_UUID = "io.pengyue.oconnect.UUID";
+	public static final String EXTRA_PIN = "io.pengyue.oconnect.PIN";
+	public static final String EXTRA_PIN_PROMPTED = "io.pengyue.oconnect.PIN_PROMPTED";
 
 	private LibStoken mStoken;
 	private TextView mTokencode;

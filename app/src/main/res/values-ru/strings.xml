@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <string name="app">OpenConnect Next</string>
+  <string name="app">OConnect</string>
   <string name="location">Расположение</string>
   <string name="cant_read_folder">Не могу прочитать директорию</string>
   <string name="cancel">Отмена</string>
@@ -27,7 +27,7 @@
   <string name="speed_waiting">Ожидание сообщения о состоянии…</string>
   <string name="file_icon">файл значка</string>
   <string name="generalsettings">Настройки</string>
-  <string name="owner_fix_summary">Попытаться изменить владельца для /dev/tun. Некоторые прошивки CM9 требуют этого для корректной работы API OpenConnect. Требуется root.</string>
+  <string name="owner_fix_summary">Попытаться изменить владельца для /dev/tun. Некоторые прошивки CM9 требуют этого для корректной работы API OConnect. Требуется root.</string>
   <string name="owner_fix">Исправить права для /dev/tun</string>
   <string name="edit_profile_title">Правка \"%s\"</string>
   <string name="netchange_summary">Включение этого параметра заставит переподключиться, если состояние сети изменения (WIFI с мобильного)</string>
@@ -47,7 +47,7 @@
   <string name="make_selection_inline">Скопировать в профиль</string>
   <string name="add">Добавить</string>
   <string name="prompt">%1$s пытается управлять %2$s</string>
-  <string name="remote_warning">Продолжая, вы даете приложению права на управление \"OpenConnect для Android\" и перехват всего сетевого трафика. <b> Не продолжайте, если не доверяете полностью этому приложению. </b> В противном случае вы рискуете утечкой  и использованием ваших данных злоумышленниками.</string>
+  <string name="remote_warning">Продолжая, вы даете приложению права на управление OConnect и перехват всего сетевого трафика. <b> Не продолжайте, если не доверяете полностью этому приложению. </b> В противном случае вы рискуете утечкой  и использованием ваших данных злоумышленниками.</string>
   <string name="remote_trust">Я доверяю этому приложению.</string>
   <string name="no_external_app_allowed">Нет приложений, авторизованных для внешнего API</string>
   <string name="allowed_apps">Авторизованные приложения: %s</string>

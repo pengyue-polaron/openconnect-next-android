@@ -55,7 +55,7 @@ import app.openconnect.core.VPNLog;
 import app.openconnect.core.VPNLog.LogArrayAdapter;
 
 public class LogFragment extends ListFragment {
-	public static final String TAG = "OpenConnect";
+	public static final String TAG = "OConnect";
 
 	private VPNConnector mConn;
 

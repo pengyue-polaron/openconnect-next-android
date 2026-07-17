@@ -1,8 +1,8 @@
-# OpenConnect Next app-wide design audit
+# OConnect app-wide design audit
 
 ## Audit scope
 
-- Product: OpenConnect Next for Android
+- Product: OConnect for Android
 - Goal: connect to and manage an SSL VPN with a clean primary flow while retaining advanced configuration depth
 - Mode: combined UX, visual consistency, and screenshot-based accessibility audit
 - Evidence viewport: Android emulator, 1080 × 2340 px at 440 dpi, Simplified Chinese, dark theme

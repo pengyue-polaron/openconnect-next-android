@@ -42,7 +42,7 @@ import app.openconnect.core.OpenVpnService.LocalBinder;
 
 public abstract class VPNConnector {
 
-	public static final String TAG = "OpenConnect";
+	public static final String TAG = "OConnect";
 
 	public OpenVpnService service;
 	public VPNStats oldStats = new VPNStats();

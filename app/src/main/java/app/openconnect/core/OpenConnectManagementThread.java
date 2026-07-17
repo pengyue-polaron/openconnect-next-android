@@ -60,7 +60,7 @@ import app.openconnect.VpnProfile;
 
 public class OpenConnectManagementThread implements Runnable, OpenVPNManagement {
 
-	public static final String TAG = "OpenConnect";
+	public static final String TAG = "OConnect";
 
 	// Keep these in sync with the "connection_states" string array
 	public static final int STATE_AUTHENTICATING = 1;

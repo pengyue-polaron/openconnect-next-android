@@ -12,7 +12,7 @@
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorSurface"
         app:navigationIconTint="?attr/colorOnSurface"
-        app:titleTextAppearance="@style/TextAppearance.OpenConnect.Toolbar"
+        app:titleTextAppearance="@style/TextAppearance.OConnect.Toolbar"
         app:titleTextColor="?attr/colorOnSurface" />
 
     <FrameLayout
