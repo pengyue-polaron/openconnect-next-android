@@ -5,7 +5,7 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/pengyue-polaron/openconnect-next-android/releases/latest"><img src="https://img.shields.io/github/v/release/pengyue-polaron/openconnect-next-android?display_name=tag&style=flat-square&color=3487F6" alt="Latest release"></a>
+  <a href="https://github.com/pengyue-polaron/oconnect-android/releases/latest"><img src="https://img.shields.io/github/v/release/pengyue-polaron/oconnect-android?display_name=tag&style=flat-square&color=3487F6" alt="Latest release"></a>
   <a href="app/build.gradle"><img src="https://img.shields.io/badge/Android-6.0%2B-3487F6?style=flat-square&logo=android&logoColor=white" alt="Android 6.0 or newer"></a>
   <a href="COPYING"><img src="https://img.shields.io/badge/license-GPLv2-3487F6?style=flat-square" alt="GPLv2 license"></a>
 </p>
@@ -16,9 +16,9 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/pengyue-polaron/openconnect-next-android/releases/latest"><strong>Download the latest APK</strong></a>
+  <a href="https://github.com/pengyue-polaron/oconnect-android/releases/latest"><strong>Download the latest APK</strong></a>
   · <a href="docs/README.md">Documentation</a>
-  · <a href="https://github.com/pengyue-polaron/openconnect-next-android/issues">Report an issue</a>
+  · <a href="https://github.com/pengyue-polaron/oconnect-android/issues">Report an issue</a>
 </p>
 
 ## Why OConnect
@@ -65,13 +65,8 @@ are available in [`screenshots/readme`](screenshots/readme/).
 ## Install
 
 OConnect is currently distributed through
-[GitHub Releases](https://github.com/pengyue-polaron/openconnect-next-android/releases/latest).
+[GitHub Releases](https://github.com/pengyue-polaron/oconnect-android/releases/latest).
 Download the latest APK and open it on a device running Android 6.0 or newer.
-
-> [!IMPORTANT]
-> OConnect uses the application ID `io.pengyue.oconnect`. It installs as a
-> separate app and does not automatically migrate profiles or settings from
-> OpenConnect Next (`io.pengyue.openconnectnext`) or other OpenConnect apps.
 
 GitHub APK installations do not receive updates through an app store. OConnect
 can check GitHub for new stable releases, but installation still requires user
@@ -111,8 +106,8 @@ Automatic login reuses credentials saved from a normal login prompt.
 - Git submodules initialized.
 
 ```bash
-git clone https://github.com/pengyue-polaron/openconnect-next-android.git
-cd openconnect-next-android
+git clone https://github.com/pengyue-polaron/oconnect-android.git
+cd oconnect-android
 git submodule update --init --recursive
 make -C external install
 ./gradlew testDebugUnitTest lintDebug assembleDebug

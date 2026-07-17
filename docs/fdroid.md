@@ -68,12 +68,12 @@ Categories:
   - Connectivity
 License: GPL-2.0-or-later
 AuthorName: pengyue-polaron
-SourceCode: https://github.com/pengyue-polaron/openconnect-next-android
-IssueTracker: https://github.com/pengyue-polaron/openconnect-next-android/issues
-Changelog: https://github.com/pengyue-polaron/openconnect-next-android/releases
+SourceCode: https://github.com/pengyue-polaron/oconnect-android
+IssueTracker: https://github.com/pengyue-polaron/oconnect-android/issues
+Changelog: https://github.com/pengyue-polaron/oconnect-android/releases
 
 RepoType: git
-Repo: https://github.com/pengyue-polaron/openconnect-next-android.git
+Repo: https://github.com/pengyue-polaron/oconnect-android.git
 
 Builds:
   - versionName: 1.17.0

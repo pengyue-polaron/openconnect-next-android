@@ -17,7 +17,7 @@ documentation that accompanies the source code.
   draft, and pre-submission checklist.
 - [Fastlane metadata](../fastlane/metadata/android/en-US) — store title,
   descriptions, changelogs, icon, and phone screenshots.
-- [GitHub Releases](https://github.com/pengyue-polaron/openconnect-next-android/releases)
+- [GitHub Releases](https://github.com/pengyue-polaron/oconnect-android/releases)
   — current APK distribution channel.
 
 ## Release Notes

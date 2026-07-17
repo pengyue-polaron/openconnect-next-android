@@ -46,7 +46,7 @@ public final class GitHubUpdateChecker {
 
 	private static final String TAG = "GitHubUpdateChecker";
 	private static final String LATEST_RELEASE_API =
-			"https://api.github.com/repos/pengyue-polaron/openconnect-next-android/releases/latest";
+			"https://api.github.com/repos/pengyue-polaron/oconnect-android/releases/latest";
 	private static final long AUTOMATIC_CHECK_INTERVAL_MS = 24L * 60L * 60L * 1000L;
 	private static final String PREF_LAST_PROMPTED = "update_last_prompted";
 	private static final ExecutorService EXECUTOR = Executors.newSingleThreadExecutor();

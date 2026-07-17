@@ -3,9 +3,9 @@
 ## Comparison target
 
 - Source visual truth: `/home/pengyue/.codex/generated_images/019f6a1d-f7d3-7852-a42a-a6657f715925/call_Oc59mUTLp5GwUYSJwpU2W7vn.png`
-- Implementation screenshot: `/home/pengyue/Codespace/openconnect-next-android/screenshots/verification/settings-redesign/13-profile-main-final.png`
-- Full-view comparison: `/home/pengyue/Codespace/openconnect-next-android/screenshots/verification/settings-redesign/14-design-comparison-full.png`
-- Focused comparison: `/home/pengyue/Codespace/openconnect-next-android/screenshots/verification/settings-redesign/15-design-comparison-focus.png`
+- Implementation screenshot: `screenshots/verification/settings-redesign/13-profile-main-final.png`
+- Full-view comparison: `screenshots/verification/settings-redesign/14-design-comparison-full.png`
+- Focused comparison: `screenshots/verification/settings-redesign/15-design-comparison-focus.png`
 - Viewport: Android emulator, 1080 x 2340 px at 440 dpi, approximately 393 x 851 dp
 - State: Chinese locale, dark theme, profile `Example`, server `vpn.example.com`, profile editor main screen
 
