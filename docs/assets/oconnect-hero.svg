@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="500" viewBox="0 0 1200 500" role="img" aria-labelledby="title description">
+  <title id="title">OConnect</title>
+  <desc id="description">OpenConnect VPN, refined for Android.</desc>
+  <defs>
+    <linearGradient id="background" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#111722"/>
+      <stop offset="0.56" stop-color="#090c12"/>
+      <stop offset="1" stop-color="#05070a"/>
+    </linearGradient>
+    <linearGradient id="panel" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#1b2431"/>
+      <stop offset="1" stop-color="#0b0f15"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#3487f6" stop-opacity="0.28"/>
+      <stop offset="1" stop-color="#3487f6" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse">
+      <circle cx="1" cy="1" r="1" fill="#ffffff" fill-opacity="0.055"/>
+    </pattern>
+  </defs>
+
+  <rect x="1" y="1" width="1198" height="498" rx="42" fill="url(#background)" stroke="#28303c" stroke-width="2"/>
+  <rect x="1" y="1" width="1198" height="498" rx="42" fill="url(#grid)"/>
+  <ellipse cx="940" cy="90" rx="390" ry="330" fill="url(#glow)"/>
+  <path d="M720 500C790 354 914 265 1200 219V500Z" fill="#3487f6" fill-opacity="0.055"/>
+
+  <g transform="translate(78 110)">
+    <rect width="280" height="280" rx="72" fill="url(#panel)" stroke="#303947" stroke-width="2"/>
+    <circle cx="130" cy="132" r="78" fill="none" stroke="#f7f9fc" stroke-width="8"/>
+    <ellipse cx="130" cy="132" rx="38" ry="78" fill="none" stroke="#f7f9fc" stroke-width="7"/>
+    <path d="M57 104C101 124 159 124 203 104M54 157C102 139 158 139 206 157" fill="none" stroke="#f7f9fc" stroke-width="7" stroke-linecap="round"/>
+    <path d="M186 151L235 169V209C235 245 214 267 186 281C158 267 137 245 137 209V169Z" fill="#f7f9fc" stroke="#0a0d12" stroke-width="7" stroke-linejoin="round"/>
+    <path d="M160 211L179 230L216 188" fill="none" stroke="#0a0d12" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+
+  <g transform="translate(420 112)">
+    <rect x="0" y="0" width="166" height="38" rx="19" fill="#3487f6" fill-opacity="0.14" stroke="#3487f6" stroke-opacity="0.42"/>
+    <text x="83" y="25" fill="#77adff" font-family="Inter, Roboto, Arial, sans-serif" font-size="14" font-weight="700" letter-spacing="1.8" text-anchor="middle">ANDROID VPN</text>
+    <text x="0" y="125" fill="#f7f9fc" font-family="Inter, Roboto, Arial, sans-serif" font-size="78" font-weight="720" letter-spacing="-2.5">OConnect</text>
+    <text x="2" y="180" fill="#b7bfcb" font-family="Inter, Roboto, Arial, sans-serif" font-size="31" font-weight="450">OpenConnect VPN, refined for Android.</text>
+
+    <g transform="translate(0 230)" font-family="Inter, Roboto, Arial, sans-serif" font-size="16" font-weight="600">
+      <rect width="250" height="48" rx="24" fill="#171d26" stroke="#313a47"/>
+      <circle cx="25" cy="24" r="5" fill="#3487f6"/>
+      <text x="42" y="30" fill="#d7dce4">OpenConnect-compatible</text>
+
+      <rect x="266" width="142" height="48" rx="24" fill="#171d26" stroke="#313a47"/>
+      <circle cx="291" cy="24" r="5" fill="#3487f6"/>
+      <text x="308" y="30" fill="#d7dce4">Android 6+</text>
+
+      <rect x="424" width="116" height="48" rx="24" fill="#171d26" stroke="#313a47"/>
+      <circle cx="449" cy="24" r="5" fill="#3487f6"/>
+      <text x="466" y="30" fill="#d7dce4">GPLv2</text>
+    </g>
+  </g>
+</svg>

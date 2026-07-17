@@ -1,189 +1,175 @@
 # OConnect
 
-[![License: GPL v2](https://img.shields.io/badge/license-GPL--2.0-blue.svg)](COPYING)
-[![Android](https://img.shields.io/badge/platform-Android-3DDC84.svg)](app/build.gradle)
-[![Latest release](https://img.shields.io/github/v/release/pengyue-polaron/openconnect-next-android)](https://github.com/pengyue-polaron/openconnect-next-android/releases/latest)
+<p align="center">
+  <img src="docs/assets/oconnect-hero.svg" width="100%" alt="OConnect — OpenConnect VPN, refined for Android">
+</p>
 
-OConnect is a modern Android client for
-[OpenConnect](https://www.infradead.org/openconnect/)-compatible SSL VPN
-gateways, including Cisco AnyConnect-compatible servers and ocserv.
+<p align="center">
+  <a href="https://github.com/pengyue-polaron/openconnect-next-android/releases/latest"><img src="https://img.shields.io/github/v/release/pengyue-polaron/openconnect-next-android?display_name=tag&style=flat-square&color=3487F6" alt="Latest release"></a>
+  <a href="app/build.gradle"><img src="https://img.shields.io/badge/Android-6.0%2B-3487F6?style=flat-square&logo=android&logoColor=white" alt="Android 6.0 or newer"></a>
+  <a href="COPYING"><img src="https://img.shields.io/badge/license-GPLv2-3487F6?style=flat-square" alt="GPLv2 license"></a>
+</p>
 
-This repository is a maintained fork of the original OpenConnect for Android
-codebase. It keeps the existing VPN core while updating the Android build,
-the Material interface, onboarding, saved-credential login, localization, and
-project documentation.
+<p align="center">
+  <strong>A focused, open-source Android client for OpenConnect-compatible SSL VPN gateways.</strong><br>
+  Clear profiles, modern Android controls, and the full OpenConnect connection engine—without root.
+</p>
 
-## Status
+<p align="center">
+  <a href="https://github.com/pengyue-polaron/openconnect-next-android/releases/latest"><strong>Download the latest APK</strong></a>
+  · <a href="docs/README.md">Documentation</a>
+  · <a href="https://github.com/pengyue-polaron/openconnect-next-android/issues">Report an issue</a>
+</p>
 
-- Distribution: GitHub Releases only for now.
-- Stores: not published on Google Play, F-Droid, or other app stores yet.
-- F-Droid: planned; see [docs/fdroid.md](docs/fdroid.md).
-- App name: **OConnect**.
-- Android application ID: `io.pengyue.oconnect`.
+## Why OConnect
 
-## Features
+| Focused | Compatible | Android-native |
+| --- | --- | --- |
+| A clear dashboard, guided profile setup, and settings organized around real connection tasks. | Works with OpenConnect-compatible gateways, including Cisco AnyConnect-compatible servers and ocserv. | Material light and dark themes, Quick Settings integration, notifications, update checks, and modern Android behavior. |
+
+OConnect keeps the proven OpenConnect VPN core while modernizing the Android
+experience around it. It is maintained as a distinct app with its own identity,
+application ID, release channel, and product documentation.
+
+## Interface
+
+These screenshots were captured from OConnect v1.17.0 on Android 16 using only
+fictional example data.
+
+| Dashboard | Profile setup |
+| :---: | :---: |
+| <img src="screenshots/readme/dashboard.png" width="360" alt="OConnect dashboard with an example VPN profile"> | <img src="screenshots/readme/profile-editor.png" width="360" alt="OConnect VPN profile editor"> |
+
+| Settings | About OConnect |
+| :---: | :---: |
+| <img src="screenshots/readme/settings.png" width="360" alt="OConnect general settings"> | <img src="screenshots/readme/about.png" width="360" alt="OConnect About screen"> |
+
+Additional current screenshots, including onboarding and Simplified Chinese,
+are available in [`screenshots/readme`](screenshots/readme/).
+
+## Capabilities
 
 - OpenConnect-compatible SSL VPN connections without root.
-- Profile-based setup for organization, school, and self-hosted VPN gateways.
+- Profiles for organization, school, and self-hosted VPN gateways.
 - Saved credentials and automatic login for repeat connections.
 - RSA SecurID and TOTP software token support.
-- Connection log, status view, byte counters, local IP details, and reconnect
+- Certificate, private-key, client-identity, CSD, PFS, XML POST, DPD, and
+  split-tunneling options.
+- Connection status, byte counters, local IP details, logs, and reconnect
   handling.
-- Android Quick Settings tile with a selectable default profile, last-used
-  behavior, or an app-selection fallback.
-- Material 3 UI with light and dark mode.
-- English, Simplified Chinese, and Traditional Chinese copy for the refreshed
-  onboarding, settings, FAQ, and connection flows.
-
-## Screenshots
-
-<p>
-  <img src="screenshots/verification/profiles-empty-new-icon.png" width="220" alt="First VPN setup screen">
-  <img src="screenshots/verification/add-profile-blue-polish.png" width="220" alt="Add profile dialog">
-  <img src="screenshots/verification/profile-list-blue-polish.png" width="220" alt="Profile list">
-</p>
-
-<p>
-  <img src="screenshots/verification/login-dialog-password-toggle.png" width="220" alt="Login dialog with password visibility controls">
-  <img src="screenshots/verification/profile-list-dark.png" width="220" alt="Dark mode profile list">
-  <img src="screenshots/verification/profile-list-blue-polish-zh-cn.png" width="220" alt="Simplified Chinese profile list">
-</p>
-
-<p>
-  <img src="screenshots/verification/quick-settings-tile-zh-cn.png" width="220" alt="Android Quick Settings VPN tile">
-  <img src="screenshots/verification/settings-redesign/13-profile-main-final.png" width="220" alt="Redesigned VPN profile settings">
-  <img src="screenshots/verification/settings-redesign/07-log-empty.png" width="220" alt="Connection log empty state">
-  <img src="screenshots/verification/settings-redesign/08-faq-collapsed.png" width="220" alt="Collapsible FAQ">
-</p>
+- Quick Settings tile with a default profile, last-used behavior, or an app
+  selection fallback.
+- Material interface with light and dark themes.
+- Refreshed English, Simplified Chinese, and Traditional Chinese product copy.
 
 ## Install
 
-Download the latest APK from
-[GitHub Releases](https://github.com/pengyue-polaron/openconnect-next-android/releases/latest)
-and install it on your Android device.
+OConnect is currently distributed through
+[GitHub Releases](https://github.com/pengyue-polaron/openconnect-next-android/releases/latest).
+Download the latest APK and open it on a device running Android 6.0 or newer.
 
-Current release APKs are published directly from this repository while store
-distribution is being prepared. If you install an APK manually, Android will
-not receive updates from an app store automatically.
+> [!IMPORTANT]
+> OConnect uses the application ID `io.pengyue.oconnect`. It installs as a
+> separate app and does not automatically migrate profiles or settings from
+> OpenConnect Next (`io.pengyue.openconnectnext`) or other OpenConnect apps.
 
-## Basic Use
+GitHub APK installations do not receive updates through an app store. OConnect
+can check GitHub for new stable releases, but installation still requires user
+confirmation.
 
-1. Open the app.
-2. Choose **Add VPN profile**.
-3. Enter the VPN gateway address from your organization.
-4. Tap the profile row to connect.
-5. Complete the login, certificate, group, or token prompts sent by the VPN
-   server.
-6. Open the **Log** tab if a connection fails.
+## Quick Start
 
-The profile editor keeps the common profile name and server address on the
-first screen. Certificates, private keys, software tokens, and saved login
-behavior are grouped under Authentication. Split tunneling, reported OS, CSD,
-PFS, XML POST, and DPD options remain available under Advanced.
+1. Open OConnect and choose **Add VPN profile**.
+2. Enter the VPN gateway supplied by your organization.
+3. Review the generated profile name and configure certificates, tokens, or
+   advanced options when required.
+4. Save the profile, choose **Connect**, and complete the prompts sent by the
+   VPN server.
+5. Open **Connection details** or the **Log** view when troubleshooting.
 
-General Settings keeps everyday VPN behavior and the Quick Settings default on
-the first screen. Logging and legacy device compatibility options are grouped
-under Advanced.
+<details>
+<summary><strong>Automatic login behavior</strong></summary>
 
-## Automatic Login
+Automatic login reuses credentials saved from a normal login prompt.
 
-Automatic login is the passwordless flow previously exposed as **Batch mode**.
-It reuses credentials saved from a normal login prompt.
+- **Ask every time** always shows the VPN server login prompt.
+- **Use saved credentials when available** reuses known fields and asks only
+  for missing or changed prompts.
+- **Use saved credentials only** never opens a login prompt. The connection
+  stops if required data is missing so the profile can be updated.
 
-- **Ask every time**: always show the VPN server login prompt.
-- **Use saved credentials when available**: reuse saved fields and ask only for
-  missing or changed prompts.
-- **Use saved credentials only**: never show login prompts. If required data is
-  missing, the connection stops so the profile can be updated.
+</details>
 
 ## Build From Source
 
 ### Requirements
 
 - JDK 17 or newer.
-- Android SDK with platform tools.
+- Android SDK and platform tools.
 - Android NDK r27c (`ndk;27.2.12479018`).
-- GNU build tools (`make`, Autoconf, Automake, Libtool, pkg-config).
+- GNU Make, Autoconf, Automake, Libtool, and pkg-config.
 - Git submodules initialized.
-
-### Build
 
 ```bash
 git clone https://github.com/pengyue-polaron/openconnect-next-android.git
 cd openconnect-next-android
 git submodule update --init --recursive
 make -C external install
-./gradlew assembleDebug
+./gradlew testDebugUnitTest lintDebug assembleDebug
 ```
 
 The native build pins OpenConnect v9.21, stoken v0.93, curl 8.21.0, and the
 cryptographic dependencies declared by OpenConnect's Android build. Native
-executables and shared libraries are linked for 16 KB Android page sizes.
+executables and shared libraries support 16 KB Android page sizes.
+
 Override the NDK location when needed:
 
 ```bash
 make -C external install ANDROID_NDK="$ANDROID_HOME/ndk/27.2.12479018"
 ```
 
-The debug APK is written to:
-
-```text
-app/build/outputs/apk/debug/app-debug.apk
-```
-
-Install it on a connected device or emulator:
+The debug APK is written to `app/build/outputs/apk/debug/app-debug.apk` and can
+be installed on a connected device with:
 
 ```bash
 adb install -r app/build/outputs/apk/debug/app-debug.apk
 ```
 
-Run the current verification command:
+## Distribution and Project Status
 
-```bash
-./gradlew testDebugUnitTest lintDebug assembleDebug
-```
+- **Current channel:** GitHub Releases.
+- **Google Play:** not published.
+- **F-Droid:** preparation in progress; see
+  [the packaging notes](docs/fdroid.md).
+- **Application ID:** `io.pengyue.oconnect`.
+- **Minimum Android version:** Android 6.0 / API 23.
 
-## F-Droid
-
-F-Droid inclusion is not automatic. The app needs source metadata, a buildable
-tagged release, and a merge request to the `fdroiddata` repository. The current
-preparation notes and checklist live in [docs/fdroid.md](docs/fdroid.md).
-
-The Android application ID has been migrated to `io.pengyue.oconnect`
-so this fork can be submitted separately from existing OpenConnect packages in
-the F-Droid ecosystem. Because this replaces the previous
-`io.pengyue.openconnectnext` ID, OConnect installs as a separate app instead of
-upgrading an existing OpenConnect Next installation.
+Brand guidance, packaging notes, and release documentation are indexed in
+[`docs/README.md`](docs/README.md).
 
 ## Contributing
 
-Issues and pull requests are welcome. Useful contributions include:
-
-- Android compatibility fixes.
-- VPN server compatibility reports.
-- UI and accessibility polish.
-- Translation improvements.
-- F-Droid packaging work.
-- Reproducible build and release signing improvements.
+Issues and pull requests are welcome. Useful contributions include Android and
+VPN-server compatibility fixes, accessibility polish, translations, F-Droid
+packaging, and reproducible release signing.
 
 When reporting a connection issue, include the Android version, device model,
-VPN gateway type if known, and relevant Log tab output. Do not include
-passwords, private keys, tokens, or organization secrets.
+gateway type if known, and relevant Log output. Never include passwords,
+private keys, tokens, cookies, or organization secrets.
 
 ## Security
 
-This is VPN software and can route device traffic through a configured server.
-Only install APKs from a source you trust, and only connect to VPN gateways you
-control or are authorized to use.
+OConnect can route device traffic through a configured VPN gateway. Only
+install APKs from a source you trust and only connect to gateways you control
+or are authorized to use. Report security-sensitive issues privately to the
+repository owner before opening a public issue.
 
-Please report security-sensitive issues privately to the repository owner before
-opening a public issue.
+## Lineage and License
 
-## License
+OConnect is released under the GPLv2 license. See [COPYING](COPYING) and
+[doc/LICENSE.txt](doc/LICENSE.txt).
 
-OConnect is released under the GPLv2 license. See [COPYING](COPYING)
-and [doc/LICENSE.txt](doc/LICENSE.txt).
-
-Much of the Java code was derived from OpenVPN for Android by Arne Schwabe.
-This package also includes OpenConnect, GnuTLS, GMP, Nettle, Libxml2, OATH
+This project is a maintained fork of the original OpenConnect for Android
+codebase. Much of the Java code was derived from OpenVPN for Android by Arne
+Schwabe. The app also includes OpenConnect, GnuTLS, GMP, Nettle, Libxml2, OATH
 Toolkit, stoken, LibTomCrypt, and cURL components.

@@ -6,9 +6,11 @@ F-Droid repository.
 ## Current Status
 
 - Not submitted to F-Droid yet.
-- Upstream metadata is being added under `fastlane/metadata/android/en-US`.
+- Upstream text, icon, screenshots, and changelog metadata are available under
+  `fastlane/metadata/android/en-US`.
 - GitHub releases and Android `versionName` are aligned.
 - The Android application ID is `io.pengyue.oconnect`.
+- The current public release is `v1.17.0` (`versionCode` 1130).
 
 ## Important Finding
 
@@ -74,33 +76,33 @@ RepoType: git
 Repo: https://github.com/pengyue-polaron/openconnect-next-android.git
 
 Builds:
-  - versionName: 1.12.0
-    versionCode: 1123
-    commit: v1.12.0
+  - versionName: 1.17.0
+    versionCode: 1130
+    commit: v1.17.0
     submodules: true
     gradle:
       - yes
 
 AutoUpdateMode: Version
 UpdateCheckMode: Tags
-CurrentVersion: 1.12.0
-CurrentVersionCode: 1123
+CurrentVersion: 1.17.0
+CurrentVersionCode: 1130
 ```
 
-Before submitting this metadata, update `versionName`, `versionCode`, `commit`,
-`CurrentVersion`, and `CurrentVersionCode` to the final release that contains
-the `io.pengyue.oconnect` application ID.
+Before submitting this metadata, verify `versionName`, `versionCode`, `commit`,
+`CurrentVersion`, and `CurrentVersionCode` against the newest tagged release.
 
 ## Pre-Submission Checklist
 
 - [x] Change application ID from `app.openconnect`.
-- [ ] Update app label, About page, README, and fastlane title consistently.
+- [x] Update app label, About page, README, and fastlane title consistently.
+- [x] Add a current OConnect icon and public screenshots to Fastlane metadata.
 - [ ] Decide whether GitHub releases should remain debug-signed or switch to
       a reproducible release signing process.
 - [x] Align Gradle `versionName` with the public release tag.
 - [x] Increment `versionCode`.
 - [ ] Build from a clean clone with submodules.
-- [ ] Run `./gradlew assembleDebug testDebugUnitTest`.
+- [x] Run unit tests, Android lint, and Debug/Release APK builds for v1.17.0.
 - [ ] Test profile creation, connection prompt, password visibility, log tab,
       and dark mode.
-- [ ] Prepare a fresh release tag for F-Droid.
+- [x] Prepare a tagged release containing the distinct OConnect application ID.
